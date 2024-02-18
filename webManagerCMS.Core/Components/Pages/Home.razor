@@ -1,0 +1,20 @@
+﻿@inject ITenantAccess TenantAccess
+@page "/"
+
+<PageTitle>Home</PageTitle>
+
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@dynamicComonent()
+
+@code {
+    RenderFragment dynamicComonent() => builder =>
+    {
+        var component = @TenantAccess.Tenant.Components["Component1"];
+        builder.OpenComponent(0, component);
+        builder.CloseComponent();
+    };
+}
