@@ -1,4 +1,5 @@
 ﻿@inject ITenantAccess TenantAccess
+@inject NavigationManager NavManager
 @page "/"
 
 <PageTitle>Home</PageTitle>
@@ -9,12 +10,27 @@
 Welcome to your new app.
 
 @dynamicComonent()
+<h1>Mutation alias: @mutationAlias</h1>
+<h2>Whole URL: @url</h2>
 
 @code {
     RenderFragment dynamicComonent() => builder =>
+        {
+            var component = @TenantAccess.Tenant.Components["Component1"];
+            builder.OpenComponent(0, component);
+            builder.CloseComponent();
+        };
+
+    string mutationAlias = "";
+    string url = "";
+
+    protected override void OnInitialized()
     {
-        var component = @TenantAccess.Tenant.Components["Component1"];
-        builder.OpenComponent(0, component);
-        builder.CloseComponent();
-    };
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        url = uri.ToString();
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("rMutationAlias", out var _mutationAlias))
+        {
+            mutationAlias = _mutationAlias;
+        }
+    }
 }

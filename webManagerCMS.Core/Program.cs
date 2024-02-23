@@ -9,6 +9,9 @@ using webManagerCMS.Data.Models;
 using webManagerCMS.Core.Middlewares;
 using webManagerCMS.Core.Services.ComponentService;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Rewrite;
+using System.Net;
+using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,8 +56,25 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+if (app.Environment.IsDevelopment())
+{
+	var options = new RewriteOptions()
+		.AddRewrite(@"^(cz|en|de|it|sk)(?:(/[^\?]+)|/)?(?:(\?.+)|(\?)?)?$", "(?2$2:/)(?3$3&:(?4$4:?))rMutationAlias=$1", skipRemainingRules: false)
+		.AddRewrite(@"^(.*)(\?.*)?$", "/?$2", skipRemainingRules: false);
+    //.AddRewrite(@"(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "(?4/$4:)(?5$5&:?)(?1rAlias0=$1&rPage0=$2:(?3rAlias0=$3))",
+    //	skipRemainingRules: false)
+    //.AddRewrite(@"(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "(?4/$4:)(?5$5&:?)(?1rAlias1=$1&rPage1=$2:(?3rAlias1=$3))",
+    //	skipRemainingRules: false)
+    //.AddRewrite(@"(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "(?4/$4:)(?5$5&:?)(?1rAlias2=$1&rPage2=$2:(?3rAlias2=$3))",
+    //	skipRemainingRules: false);
+
+    app.UseRewriter(options);
+}
+
 app.UseStaticFiles();
 app.UseAntiforgery();
+
+
 app.UseMiddleware<TenantMiddleware>();
 
 app.MapRazorComponents<App>();
