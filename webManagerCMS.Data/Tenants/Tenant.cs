@@ -11,7 +11,11 @@ namespace webManagerCMS.Data.Tenants
     {
 		public int IdWWW { get; set; }
 
-		public string DomainName { get; set; }
+		public int IdWWWRoot { get; set; }
+
+		public Dictionary<string, int> IdWWWRoots { get; set; }
+
+        public string DomainName { get; set; }
 
 		public bool IsHttpSecured { get; set; }
 

@@ -10,7 +10,9 @@ namespace webManagerCMS.Core.Middlewares
 	public class TenantMiddleware
 	{
 		internal const string ConstHttpContextItemKeyTenant = "Tenant";
-		private const string ConstTemplatesFolderName = "Templates";
+        internal const string ConstTemplatesFolderName = "Templates";
+		internal const string ConstApplicationSettingsKeyIdWWWRoots = "IdWWWRoots";
+		internal const string ConstRequestQueryStringKeyMutationAlias = "rMutationAlias";
 
 		public TenantMiddleware(RequestDelegate next, ILogger<TenantMiddleware> logger, IDataStorageAccess dataStorageAccess, IComponentService componentService)
 		{
@@ -34,13 +36,17 @@ namespace webManagerCMS.Core.Middlewares
 			if (applicationSettings == null || applicationSettings.Tenants == null)
 				throw new InvalidOperationException("Unable to read tenants from the application settings.");
 
-			var domain = context.Request.Host.Value;
-			domain = "localhost";
+            var domain = context.Request.Host.Value;
+			var rootAlias = context.Request.Query[ConstRequestQueryStringKeyMutationAlias];
+
+			//TODO: doladit
+            domain = "localhost";
 
 			ITenant tenant = null;
 
 			if (applicationSettings.Tenants.ContainsKey(domain))
 				tenant = applicationSettings.Tenants[domain];
+				
 
 			if (tenant == null)
 				throw new AccessDeniedException($"Unable to get a tenant for the [{domain}] domain - bad domain or tenant data.");
@@ -48,6 +54,8 @@ namespace webManagerCMS.Core.Middlewares
 			{
 				tenant.DomainName = domain;
 				tenant.Components = (Dictionary<string, Type>)this._componentService.GetTenantDynamicComponent(tenant.IdWWW).Components;
+				//TODO: kontrola
+				tenant.IdWWWRoot = applicationSettings.Tenants[domain].IdWWWRoots[rootAlias];
 			}
 
 			context.Items[ConstHttpContextItemKeyTenant] = tenant;

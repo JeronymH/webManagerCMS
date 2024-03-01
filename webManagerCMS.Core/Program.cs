@@ -21,7 +21,8 @@ builder.Services.AddRazorComponents();
 // The following is here because the middleware TenantMiddleware need access to HTTP context
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-builder.Services.AddSingleton<ITenantAccess, HttpContextTenantAccess>();// current tenant access
+// Current tenant access
+builder.Services.AddSingleton<ITenantAccess, HttpContextTenantAccess>();
 
 // Application settings
 var applicationSettings = new ApplicationSettings();
@@ -56,17 +57,15 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//rewriting for development
 if (app.Environment.IsDevelopment())
 {
-	var options = new RewriteOptions()
-		.AddRewrite(@"^(cz|en|de|it|sk)(?:(/[^\?]+)|/)?(?:(\?.+)|(\?)?)?$", "(?2$2:/)(?3$3&:(?4$4:?))rMutationAlias=$1", skipRemainingRules: false)
+    app.UseMiddleware<MyRewriteMiddleware>();
+
+    var options = new RewriteOptions()
+		.AddRewrite(@"^(cz|en|de|it|sk)(?:(/[^\?]+)|/)?(?:(\?.+)|(\?)?)?$", "/$2/$3&$4?rMutationAlias=$1", skipRemainingRules: false)
+		.AddRewrite(@"^(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "/$4$5?&1rAlias0=$1&rPage0=$2&3rAlias0=$3", skipRemainingRules: false)
 		.AddRewrite(@"^(.*)(\?.*)?$", "/?$2", skipRemainingRules: false);
-    //.AddRewrite(@"(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "(?4/$4:)(?5$5&:?)(?1rAlias0=$1&rPage0=$2:(?3rAlias0=$3))",
-    //	skipRemainingRules: false)
-    //.AddRewrite(@"(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "(?4/$4:)(?5$5&:?)(?1rAlias1=$1&rPage1=$2:(?3rAlias1=$3))",
-    //	skipRemainingRules: false)
-    //.AddRewrite(@"(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "(?4/$4:)(?5$5&:?)(?1rAlias2=$1&rPage2=$2:(?3rAlias2=$3))",
-    //	skipRemainingRules: false);
 
     app.UseRewriter(options);
 }

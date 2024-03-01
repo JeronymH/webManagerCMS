@@ -10,6 +10,10 @@ namespace webManagerCMS.Data.Tenants
 	{
 		int IdWWW { get; set; }
 
+		int IdWWWRoot { get; set; }
+
+        Dictionary<string, int> IdWWWRoots { get; set; }
+
 		string DomainName { get; set; }
 
 		bool IsHttpSecured { get; set; }

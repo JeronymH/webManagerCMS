@@ -11,5 +11,7 @@ namespace webManagerCMS.Data.Tenants
 		ITenant Tenant { get; }
 
 		int IdWWW { get; }
+
+		int IdWWWRoot { get; }
 	}
 }

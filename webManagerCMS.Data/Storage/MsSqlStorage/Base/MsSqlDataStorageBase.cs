@@ -29,6 +29,9 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage.Base
 
 		public int IdWWW => this.DataAccess.TenantAccess.IdWWW;
 
+		//TODO: dodělat
+		public int IdWWWRoot => this.DataAccess.TenantAccess.IdWWW;
+
 		#endregion
 	}
 }
