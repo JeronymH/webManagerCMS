@@ -12,7 +12,9 @@ namespace webManagerCMS.Data.Storage
 	{
 		ITenantAccess TenantAccess { get; }
 
-		ILogDataStorage LogDataStorage { get; }
+        ISystemDataStorage SystemDataStorage { get; }
+
+        ILogDataStorage LogDataStorage { get; }
 
 		IWebContentDataStorage WebContentDataStorage { get; }
 	}

@@ -16,6 +16,8 @@ namespace webManagerCMS.Core.Tenants
 
 		public int IdWWW => this.Tenant?.IdWWW ?? throw new NullReferenceException("Unable to retrieve IdWWW from current HttpContext.");
 
-		public int IdWWWRoot => this.Tenant?.IdWWWRoot ?? throw new NullReferenceException("Unable to retrieve IdWWWRoot from current HttpContext.");
+		public int IdWWWRoot => this.Tenant?.WWWSettings.IdWWWRoot ?? throw new NullReferenceException("Unable to retrieve IdWWWRoot from current HttpContext.");
+
+		public int IdLanguage => this.Tenant?.WWWSettings.IdLanguage ?? throw new NullReferenceException("Unable to retrieve IdLanguage from current HttpContext.");
 	}
 }

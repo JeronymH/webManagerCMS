@@ -22,6 +22,16 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage.Access
 			this._tenantAccess = tenantAccess ?? throw new ArgumentNullException(nameof(tenantAccess));
 		}
 
+		public ISystemDataStorage SystemDataStorage
+		{
+			get
+			{
+				this._SystemDataStorage ??= new MsSqlSystemDataStorage(this, this._settings);
+				return this._SystemDataStorage;
+			}
+		}
+		private ISystemDataStorage _SystemDataStorage;
+
 		public IWebContentDataStorage WebContentDataStorage
 		{
 			get

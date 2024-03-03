@@ -37,26 +37,29 @@ namespace webManagerCMS.Core.Middlewares
 				throw new InvalidOperationException("Unable to read tenants from the application settings.");
 
             var domain = context.Request.Host.Value;
-			var rootAlias = context.Request.Query[ConstRequestQueryStringKeyMutationAlias];
+			var tenantKey = domain;
+            string? mutationAlias = context.Request.Query[ConstRequestQueryStringKeyMutationAlias];
+			if (mutationAlias == null)
+                mutationAlias = "";
 
-			//TODO: doladit
-            domain = "localhost";
+            //when developing, domain is always with different port, so this removes the port for tenantKey
+            if (applicationSettings.WebDevelopmentBehaviorEnabled)
+                tenantKey = "localhost";
 
 			ITenant tenant = null;
 
-			if (applicationSettings.Tenants.ContainsKey(domain))
-				tenant = applicationSettings.Tenants[domain];
+			if (applicationSettings.Tenants.ContainsKey(tenantKey))
+				tenant = applicationSettings.Tenants[tenantKey];
 				
 
 			if (tenant == null)
-				throw new AccessDeniedException($"Unable to get a tenant for the [{domain}] domain - bad domain or tenant data.");
+				throw new AccessDeniedException($"Unable to get a tenant for the [{tenantKey}] domain - bad domain or tenant data.");
 			else
 			{
 				tenant.DomainName = domain;
 				tenant.Components = (Dictionary<string, Type>)this._componentService.GetTenantDynamicComponent(tenant.IdWWW).Components;
-				//TODO: kontrola
-				tenant.IdWWWRoot = applicationSettings.Tenants[domain].IdWWWRoots[rootAlias];
-			}
+				tenant.WWWSettings = this._dataStorageAccess.SystemDataStorage.GetWWWSettings(tenant.IdWWW, tenant.GetWebBaseUrl(), mutationAlias, applicationSettings.WebDevelopmentBehaviorEnabled);
+            }
 
 			context.Items[ConstHttpContextItemKeyTenant] = tenant;
 

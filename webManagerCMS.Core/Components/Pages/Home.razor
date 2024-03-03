@@ -1,4 +1,4 @@
-﻿@inject ITenantAccess TenantAccess
+﻿@inject IDataStorageAccess Storage
 @inject NavigationManager NavManager
 @page "/"
 
@@ -10,8 +10,10 @@
 Welcome to your new app.
 
 @dynamicComonent()
-<h1>Mutation alias: @mutationAlias</h1>
+<h1>Mutation alias from query: @mutationAlias</h1>
+<h1>Mutation alias from tenant: @Storage.TenantAccess.Tenant.WWWSettings.MutationAlias</h1>
 <h2>Whole URL: @url</h2>
+<h3>IdWWWRoot: @Storage.TenantAccess.IdWWWRoot</h3>
 
 @* Kontrola redirectu na resizer *@
 <img src="/r/files/14346/content/about-us/img_6828.jpg" alt="Testování redirect" />
@@ -19,7 +21,7 @@ Welcome to your new app.
 @code {
     RenderFragment dynamicComonent() => builder =>
         {
-            var component = @TenantAccess.Tenant.Components["Component1"];
+            var component = @Storage.TenantAccess.Tenant.Components["Component1"];
             builder.OpenComponent(0, component);
             builder.CloseComponent();
         };

@@ -13,5 +13,7 @@ namespace webManagerCMS.Data.Tenants
 		int IdWWW { get; }
 
 		int IdWWWRoot { get; }
+
+		int IdLanguage { get; }
 	}
 }

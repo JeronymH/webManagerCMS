@@ -28,14 +28,6 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 
                 using (var dataReader = this.ExecReader(cmd))
                 {
-                    if (dataReader.Read())
-                    {
-                        return new PageBasicData()
-                        {
-
-                            Type = (PageType)(int)dataReader["IDPageType"]
-                        };
-                    }
                     return null;
                 }
             }

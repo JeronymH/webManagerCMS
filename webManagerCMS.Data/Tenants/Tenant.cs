@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using webManagerCMS.Data.Models;
 
 
 namespace webManagerCMS.Data.Tenants
@@ -11,9 +12,7 @@ namespace webManagerCMS.Data.Tenants
     {
 		public int IdWWW { get; set; }
 
-		public int IdWWWRoot { get; set; }
-
-		public Dictionary<string, int> IdWWWRoots { get; set; }
+		public WWWSettings WWWSettings { get; set; }
 
         public string DomainName { get; set; }
 
@@ -24,14 +23,6 @@ namespace webManagerCMS.Data.Tenants
 		public string RootFullPath { get; set; }
 
 		public string ComponentsFolderName { get; set; }
-
-		public bool IsSecureZoneEnabled { get; set; }
-
-		public int MaxCountItemInTree { get; set; }
-
-		public int MaxCountItemNodeInTree { get; set; }
-
-		public string PageSuffix { get; set; }
 
 		public Dictionary<string, Type> Components { get; set; }
 
