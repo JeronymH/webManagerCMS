@@ -17,7 +17,9 @@ namespace webManagerCMS.Data.Tenants
 
 		bool IsHttpSecured { get; set; }
 
-		string WebBaseUrl { get; set; }
+		bool IsAdminView { get; set; }
+
+        string WebBaseUrl { get; set; }
 
 		string RootFullPath { get; set; }
 

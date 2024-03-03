@@ -18,7 +18,10 @@ namespace webManagerCMS.Data.Tenants
 
 		public bool IsHttpSecured { get; set; }
 
-		public string WebBaseUrl { get; set; }
+		//prepared for AdminView logic - Admin view emables non public data
+		public bool IsAdminView { get; set; } = false;
+
+        public string WebBaseUrl { get; set; }
 
 		public string RootFullPath { get; set; }
 
