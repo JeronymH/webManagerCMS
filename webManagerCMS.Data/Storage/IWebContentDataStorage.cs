@@ -9,6 +9,9 @@ namespace webManagerCMS.Data.Storage
 {
 	public interface IWebContentDataStorage
 	{
-        Page GetHomePage(int idPage);
+        Page? GetHomePage();
+        Page? GetPage(string pageAlias);
+        Page? GetAlias(int step, int idPage, int idAliasTableName, string alias);
+
     }
 }

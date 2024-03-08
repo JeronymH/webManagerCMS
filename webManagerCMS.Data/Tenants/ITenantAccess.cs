@@ -15,5 +15,7 @@ namespace webManagerCMS.Data.Tenants
 		int IdWWWRoot { get; }
 
 		int IdLanguage { get; }
-	}
+
+		bool IsAdminView { get; }
+    }
 }

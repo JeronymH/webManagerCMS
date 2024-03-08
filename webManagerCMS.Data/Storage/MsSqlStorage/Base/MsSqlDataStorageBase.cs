@@ -33,6 +33,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage.Base
 
 		public int IdLanguage => this.DataAccess.TenantAccess.IdLanguage;
 
-		#endregion
-	}
+		public bool IsAdminView => this.DataAccess.TenantAccess.IsAdminView;
+        #endregion
+    }
 }
