@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webManagerCMS.Core", "webMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webManagerCMS.Data", "webManagerCMS.Data\webManagerCMS.Data.csproj", "{DCF96B88-1D40-4FD5-A852-DABDF302A9E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "Components\Components.csproj", "{370522EB-7794-488C-9BC0-C864CA753F2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Components", "Components\Components.csproj", "{370522EB-7794-488C-9BC0-C864CA753F2E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

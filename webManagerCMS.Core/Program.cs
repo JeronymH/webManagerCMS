@@ -12,8 +12,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Rewrite;
 using System.Net;
 using System.Text.RegularExpressions;
+using S9.Core.Middlewares;
+using webManagerCMS.Core.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddDataStorageLogger(options => { });
 
 // Add services to the container.
 builder.Services.AddRazorComponents();
@@ -50,6 +53,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+	app.UseGlobalExceptionHandler();
 	app.UseExceptionHandler("/Error", createScopeForErrors: true);
 	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
@@ -60,7 +64,7 @@ app.UseHttpsRedirection();
 //rewriting for development
 if (app.Environment.IsDevelopment())
 {
-    app.UseMiddleware<MyRewriteMiddleware>();
+    app.UseMyRewriteMiddleware();
 
     var options = new RewriteOptions()
 		.AddRewrite(@"^(cz|en|de|it|sk)(?:(/[^\?]+)|/)?(?:(\?.+)|(\?)?)?$", "/$2/$3&$4?rMutationAlias=$1", skipRemainingRules: false)
@@ -73,8 +77,7 @@ if (app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-
-app.UseMiddleware<TenantMiddleware>();
+app.UseTenant();
 
 app.MapRazorComponents<App>();
 
