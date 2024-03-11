@@ -16,7 +16,8 @@ using S9.Core.Middlewares;
 using webManagerCMS.Core.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Logging.AddDataStorageLogger(options => { });
+//TODO: complete logging
+//builder.Logging.AddDataStorageLogger(options => { });
 
 // Add services to the container.
 builder.Services.AddRazorComponents();
@@ -68,7 +69,7 @@ if (app.Environment.IsDevelopment())
 
     var options = new RewriteOptions()
 		.AddRewrite(@"^(cz|en|de|it|sk)(?:(/[^\?]+)|/)?(?:(\?.+)|(\?)?)?$", "/$2/$3&$4?rMutationAlias=$1", skipRemainingRules: false)
-		.AddRewrite(@"^(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "/$4$5?&1rAlias0=$1&rPage0=$2&3rAlias0=$3", skipRemainingRules: false)
+		.AddRewrite(@"^(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "/$4$5?&rAlias0=$1&rPage0=$2&rAlias0=$3", skipRemainingRules: false)
 		.AddRewrite(@"^(.*)(\?.*)?$", "/?$2", skipRemainingRules: false);
 
     app.UseRewriter(options);

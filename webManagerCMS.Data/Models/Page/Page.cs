@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace webManagerCMS.Data.Models.Page
 {
-    //TODO: dodělat databázi
     public class Page
     {
         public int Id { get; set; }

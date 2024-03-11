@@ -25,6 +25,7 @@
 
     @* Kontrola redirectu na resizer *@
     <img src="/r/files/14346/content/about-us/img_6828.jpg" alt="Testování redirect" />
+
 </body>
 
 </html>
@@ -42,14 +43,13 @@
 
     string mutationAlias = "";
     string url = "";
-
-    protected override void OnInitialized()
-    {
-        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
-        url = uri.ToString();
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("rMutationAlias", out var _mutationAlias))
-        {
-            mutationAlias = _mutationAlias;
-        }
-    }
+    // protected override void OnInitialized()
+    // {
+    //     var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+    //     url = uri.ToString();
+    //     if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("rMutationAlias", out var _mutationAlias))
+    //     {
+    //         mutationAlias = _mutationAlias;
+    //     }
+    // }
 }

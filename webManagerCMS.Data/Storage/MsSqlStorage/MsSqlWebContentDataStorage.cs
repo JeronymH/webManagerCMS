@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using webManagerCMS.Data.Storage.MsSqlStorage.Access;
 using webManagerCMS.Data.Storage.MsSqlStorage.Base;
+using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Models.Page;
 
 namespace webManagerCMS.Data.Storage.MsSqlStorage
@@ -35,23 +36,23 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                             Id = (int)dataReader["IDWWWPage"],
                             IdDB = (int)dataReader["IDWWWPage"],
                             IdPageType = (int)dataReader["IDPageType"],
-                            Parent = (int)dataReader["Parent"],
-                            MySort = (int)dataReader["MySort"],
-                            Lvl = (int)dataReader["lvl"],
-                            TemplateNum = (int)dataReader["IDTemplateNum"],
+                            Parent = (dataReader["Parent"] as int?) ?? 0,
+                            MySort = (dataReader["MySort"] as int?) ?? 0,
+                            Lvl = (dataReader["lvl"] as int?) ?? 0,
+                            TemplateNum = (dataReader["IDTemplateNum"] as int?) ?? 0,
                             Name = dataReader["Name"] as string,
                             Description = dataReader["DESCR"] as string,
                             Url = dataReader["URL"] as string,
                             PageAlias = dataReader["PageAlias"] as string,
-                            IsHomePage = (bool)dataReader["IsHomePage"],
-                            VisibleInTree = (bool)dataReader["VisibleInTree"],
+                            IsHomePage = (short)dataReader["IsHomePage"] == 1 ? true : false,
+                            VisibleInTree = (short)dataReader["VisibleInTree"] == -1 ? true : false,
                         };
                     }
                     return null;
                 }
             }
         }
-        public Page? GetPage(string pageAlias)
+        public Page? GetPage(string? pageAlias)
         {
             using (var cmd = this.NewCommandProc("dbo.pubSelectPageAlias"))
             {
@@ -72,51 +73,60 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                             Id = (int)dataReader["IDWWWPage"],
                             IdDB = (int)dataReader["IDWWWPage"],
                             IdPageType = (int)dataReader["IDPageType"],
-                            Parent = (int)dataReader["Parent"],
-                            MySort = (int)dataReader["MySort"],
-                            Lvl = (int)dataReader["lvl"],
-                            TemplateNum = (int)dataReader["IDTemplateNum"],
+                            Parent = (dataReader["Parent"] as int?) ?? 0,
+                            MySort = (dataReader["MySort"] as int?) ?? 0,
+                            Lvl = (dataReader["lvl"] as int?) ?? 0,
+                            TemplateNum = (dataReader["IDTemplateNum"] as int?) ?? 0,
                             Name = dataReader["Name"] as string,
                             Description = dataReader["DESCR"] as string,
                             Url = dataReader["URL"] as string,
                             PageAlias = dataReader["PageAlias"] as string,
-                            IsHomePage = (bool)dataReader["IsHomePage"],
-                            VisibleInTree = (bool)dataReader["VisibleInTree"],
+                            IsHomePage = (short)dataReader["IsHomePage"] == 1 ? true : false,
+                            VisibleInTree = (int)dataReader["VisibleInTree"] == -1 ? true : false,
                         };
                     }
                     return null;
                 }
             }
         }
-        public Page? GetAlias(int step, int idPage, int idAliasTableName, string alias)
+        public Alias? GetAlias(int step, int idPage, int idAliasTableName, int templateNumber, string alias)
         {
             using (var cmd = this.NewCommandProc("dbo.pubSelectAlias"))
             {
-                cmd.AddParam("@IDWWWPage", idPage);
+                if (idAliasTableName > 0)
+                {
+                    cmd.AddParam("@IDWWWPage", 0);
+                    cmd.AddParam("@IDAliasTableName", step);
+                } 
+                else
+                {
+                    cmd.AddParam("@IDWWWPage", idPage);
+                }
+
                 cmd.AddParam("@IDWWWRoot", this.IdWWWRoot);
                 cmd.AddParam("@AliasValue", alias);
                 cmd.AddParam("@Step", step);
-                cmd.AddParam("@IDAliasTableName", step);
 
                 using (var dataReader = this.ExecReader(cmd))
                 {
                     if (dataReader.Read())
                     {
-                        return new Page()
+                        int templateNum = (int)dataReader["IDTemplateNum"];
+                        if (templateNum < 0)
+                            templateNum = templateNumber;
+
+                        return new Alias()
                         {
-                            Id = (int)dataReader["IDWWWPage"],
-                            IdDB = (int)dataReader["IDWWWPage"],
-                            IdPageType = (int)dataReader["IDPageType"],
-                            Parent = (int)dataReader["Parent"],
-                            MySort = (int)dataReader["MySort"],
-                            Lvl = (int)dataReader["lvl"],
-                            TemplateNum = (int)dataReader["IDTemplateNum"],
+                            IsHomePage = false,
                             Name = dataReader["Name"] as string,
-                            Description = dataReader["DESCR"] as string,
-                            Url = dataReader["URL"] as string,
-                            PageAlias = dataReader["PageAlias"] as string,
-                            IsHomePage = (bool)dataReader["IsHomePage"],
-                            VisibleInTree = (bool)dataReader["VisibleInTree"],
+                            Id = (int)dataReader["IDRecord"],
+                            IdDB = (int)dataReader["IDRecord"],
+                            IdPageContent = (int)dataReader["IDRecordPageContent"],
+                            IdContentCols = (int)dataReader["IDContentCols"],
+                            IdTemplateNum = templateNum,
+                            IdState = (int)dataReader["IDState"],
+                            IdTableName = (int)dataReader["IDAliasTableName"],
+                            IdClassCollection = (int)dataReader["IDClassCollection"]
                         };
                     }
                     return null;
