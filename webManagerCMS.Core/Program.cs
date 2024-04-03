@@ -66,10 +66,8 @@ app.UseHttpsRedirection();
 if (app.Environment.IsDevelopment())
 {
     app.UseMyRewriteMiddleware();
-
+	app.UseRouting();
     var options = new RewriteOptions()
-		.AddRewrite(@"^(cz|en|de|it|sk)(?:(/[^\?]+)|/)?(?:(\?.+)|(\?)?)?$", "/$2/$3&$4?rMutationAlias=$1", skipRemainingRules: false)
-		.AddRewrite(@"^(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$", "/$4$5?&rAlias0=$1&rPage0=$2&rAlias0=$3", skipRemainingRules: false)
 		.AddRewrite(@"^(.*)(\?.*)?$", "/?$2", skipRemainingRules: false);
 
     app.UseRewriter(options);
