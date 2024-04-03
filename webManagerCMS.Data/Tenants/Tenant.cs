@@ -29,7 +29,7 @@ namespace webManagerCMS.Data.Tenants
 
 		public Dictionary<string, Type> Components { get; set; }
 
-		public dynamic DynamicComponents { get; set; }
+		public IDynamicComponents DynamicComponents { get; set; }
 
 		public string GetWebBaseUrl()
 		{

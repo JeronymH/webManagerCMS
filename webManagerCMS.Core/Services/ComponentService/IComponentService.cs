@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using webManagerCMS.Data.Tenants;
 
 namespace webManagerCMS.Core.Services.ComponentService
 {

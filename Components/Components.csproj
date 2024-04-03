@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\webManagerCMS.Core\webManagerCMS.Core.csproj" />
+    <ProjectReference Include="..\webManagerCMS.Data\webManagerCMS.Data.csproj" />
   </ItemGroup>
 
 </Project>

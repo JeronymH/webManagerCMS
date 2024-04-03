@@ -4,7 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using webManagerCMS.Core.Services.ComponentService;
+using webManagerCMS.Data.Tenants;
 
 namespace Components
 {
@@ -18,5 +18,10 @@ namespace Components
 		public string test() {
 			return "xxx";
 		}
+
+        public string test2()
+        {
+            return "yyy";
+        }
     }
 }
