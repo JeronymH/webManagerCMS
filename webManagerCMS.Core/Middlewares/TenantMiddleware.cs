@@ -50,19 +50,18 @@ namespace webManagerCMS.Core.Middlewares
 
 			if (applicationSettings.Tenants.ContainsKey(tenantKey))
 				tenant = applicationSettings.Tenants[tenantKey];
-				
 
 			if (tenant == null)
 				throw new AccessDeniedException($"Unable to get a tenant for the [{tenantKey}] domain - bad domain or tenant data.");
 			else
 			{
 				tenant.DomainName = domain;
-				tenant.Components = (Dictionary<string, Type>)this._componentService.GetTenantDynamicComponent(tenant.IdWWW).Components;
-				tenant.WWWSettings = this._dataStorageAccess.SystemDataStorage.GetWWWSettings(tenant.IdWWW, tenant.GetWebBaseUrl(), mutationAlias, applicationSettings.WebDevelopmentBehaviorEnabled);
+				tenant.DynamicComponents = this._componentService.GetTenantDynamicComponent(tenant.IdWWW);
+				tenant.Components = (Dictionary<string, Type>)tenant.DynamicComponents.Components;
+                tenant.WWWSettings = this._dataStorageAccess.SystemDataStorage.GetWWWSettings(tenant.IdWWW, tenant.GetWebBaseUrl(), mutationAlias, applicationSettings.WebDevelopmentBehaviorEnabled);
             }
 
 			context.Items[ConstHttpContextItemKeyTenant] = tenant;
-
 			await this._next.Invoke(context);
 		}
 	}

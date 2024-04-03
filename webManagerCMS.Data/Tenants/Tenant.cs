@@ -29,6 +29,8 @@ namespace webManagerCMS.Data.Tenants
 
 		public Dictionary<string, Type> Components { get; set; }
 
+		public dynamic DynamicComponents { get; set; }
+
 		public string GetWebBaseUrl()
 		{
 			if (this._WebBaseUrl == null)

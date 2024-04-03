@@ -7,6 +7,6 @@ namespace webManagerCMS.Core.Services.ComponentService
 		Dictionary<int, IEnumerable<Type>> DynamicComponents {  get; }
 		void LoadDynamicComponents();
 
-		IDynamicComponents GetTenantDynamicComponent(int IdWWW);
+        IDynamicComponents GetTenantDynamicComponent(int IdWWW);
 	}
 }

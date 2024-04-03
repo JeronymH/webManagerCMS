@@ -38,6 +38,7 @@
         {
             var component = @Storage.TenantAccess.Tenant.Components["Component1"];
             builder.OpenComponent(0, component);
+            builder.AddAttribute(1, "Title", @Storage.TenantAccess.Tenant.DynamicComponents);
             builder.CloseComponent();
         };
 
@@ -50,6 +51,6 @@
     //     if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("rMutationAlias", out var _mutationAlias))
     //     {
     //         mutationAlias = _mutationAlias;
-        //     }
+    //         }
     // }
 }

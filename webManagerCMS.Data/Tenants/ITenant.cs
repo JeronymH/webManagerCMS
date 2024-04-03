@@ -27,6 +27,8 @@ namespace webManagerCMS.Data.Tenants
 
 		Dictionary<string, Type> Components { get; set; }
 
+        dynamic DynamicComponents { get; set; }
+
 		string GetWebBaseUrl();
 		string GetComponentsPath();
 	}
