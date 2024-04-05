@@ -6,6 +6,8 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using WebManager.NET.Core.Caching;
+using webManagerCMS.Data.Caching;
 using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Storage.MsSqlStorage.Access;
 using webManagerCMS.Data.Storage.MsSqlStorage.Base;
@@ -39,6 +41,42 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                         };
                     }
                     return null;
+                }
+            }
+        }
+
+        public IDictionary<string, LocalizedText> GetLocalizedTexts(int idWWW, bool fromCache)
+        {
+            Func<IDictionary<string, LocalizedText>> getLocalizedTextsFunc = () => this.GetDictionaryWithLocalizedTextsFromDb(idWWW);
+
+            return fromCache ?
+                this.CacheStorageAccess.CacheStorage.GetItem<IDictionary<string, LocalizedText>>(idWWW, SiteScopedCacheItemKey.LocalizedTexts, new GetDataForCacheDelegate<IDictionary<string, LocalizedText>>(getLocalizedTextsFunc))
+                : getLocalizedTextsFunc();
+        }
+
+        private IDictionary<string, LocalizedText> GetDictionaryWithLocalizedTextsFromDb(int idWWW)
+        {
+            return this.GetLocalizedTextsFromDb(idWWW).ToDictionary(t => t.Identifier, t => t);
+        }
+
+        private IEnumerable<LocalizedText> GetLocalizedTextsFromDb(int idWWW)
+        {
+            using (var cmd = this.NewCommandProc("dbo.pubSelectTexts"))
+            {
+                cmd.AddParam("@IDWWW", idWWW);
+
+                using (var dataReader = this.ExecReader(cmd))
+                {
+                    while (dataReader.Read())
+                    {
+                        yield return new LocalizedText()
+                        {
+                            IdLanguage = (int)dataReader["IDLanguage"],
+                            IdCategory = (int)dataReader["IDCategory"],
+                            Code = (string)dataReader["Code"],
+                            Text = (string)dataReader["Text"]
+                        };
+                    }
                 }
             }
         }
