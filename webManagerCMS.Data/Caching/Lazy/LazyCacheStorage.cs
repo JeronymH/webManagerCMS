@@ -13,7 +13,6 @@ namespace webManagerCMS.Data.Caching.Lazy
 		private const string ConstItemKeySitePrefixTemplate = "S{0}-";
 		private const string ConstItemKeySitePartPrefixTemplate = "S{0}-P{1}-";
 		private const string ConstSitePartScopedItemKeyTemplate = "S{0}-P{1}-{2}";
-		private const string ConstUserScopedItemKeyTemplate = "S{0}-U{1}";
 
 		public LazyCacheStorage(CacheStorageSettings settings)
 		{
@@ -167,11 +166,6 @@ namespace webManagerCMS.Data.Caching.Lazy
 		private static string GenerateItemKey(int siteId, int sitePartId, SitePartScopedCacheItemKey itemKey)
 		{
 			return string.Format(ConstSitePartScopedItemKeyTemplate, siteId, sitePartId, (int)itemKey);
-		}
-
-		private static string GenerateItemKey(int siteId, long userId)
-		{
-			return string.Format(ConstUserScopedItemKeyTemplate, siteId, userId);
 		}
 
 		#endregion
