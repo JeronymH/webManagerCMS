@@ -21,7 +21,14 @@ namespace webManagerCMS.Core.Components
 			var page = GetPage();
 			var urlAliases = GetUrlAliases(page);
 
+	if (urlAliases.CheckAllData())
+			{
 
+			}
+			else
+			{
+
+			}
 		}
 
 		private string? GetQueryStringData(string name)
@@ -56,14 +63,18 @@ namespace webManagerCMS.Core.Components
 			var step = 0;
 
 			urlAliases.AddData(page.IsHomePage, page.Name, page.Id, page.IdDB, 0, 0, page.TemplateNum, step, page.PageAlias, 0, 0, true); //add first level alias
+			step++;
 
 			for (int i = step; i < urlAliases.QueryAliases.Length; i++)
 			{
-				urlAliases.AddData(DataStorageAccess?.WebContentDataStorage.GetAlias(step, page.Id, idAliasTableName, templateNumber, urlAliases.QueryAliases[i]));
+				if (string.IsNullOrEmpty(urlAliases.QueryAliases[i]))
+					break;
+
+                urlAliases.AddData(DataStorageAccess?.WebContentDataStorage.GetAlias(step, page.Id, idAliasTableName, templateNumber, urlAliases.QueryAliases[i]));
 				step++;
 
 				if (urlAliases.Aliases[i] == null)
-					i = urlAliases.QueryAliases.Length;
+					break;
 			}
 
 

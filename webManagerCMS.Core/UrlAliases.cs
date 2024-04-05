@@ -12,8 +12,8 @@ namespace webManagerCMS.Core
         /// <summary>
         /// Number of alias levels recognized within app
         /// </summary>
-        private int LevelCount = 1;
-        public string? QueryAliasName { get; set; }
+        private int LevelCount = 3;
+        public string? QueryAliasName { get; } = "rAlias";
 
         private readonly IHttpContextAccessor? _contextAccessor;
 
@@ -58,6 +58,15 @@ namespace webManagerCMS.Core
                 queryName = QueryAliasName + i.ToString();
                 QueryAliases[i] = _contextAccessor?.HttpContext?.Request.Query[queryName];
             }
+        }
+
+        public bool CheckAllData() {
+            if (Aliases.Count == 0) return false;
+            foreach (var alias in Aliases)
+            {
+                if (!(alias.Id > 0)) return false;
+            }
+            return true;
         }
     }
 }

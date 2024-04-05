@@ -22,6 +22,7 @@ namespace webManagerCMS.Core.Middlewares
                 GetPageAliasLvl(context, 0);
                 GetPageAliasLvl(context, 1);
                 GetPageAliasLvl(context, 2);
+                GetPageAliasLvl(context, 3);
             }
 
             await _next(context);
