@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using webManagerCMS.Data.Caching;
 using webManagerCMS.Data.Storage.MsSqlStorage.Access;
 using webManagerCMS.Data.Tenants;
 
@@ -23,9 +24,14 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage.Base
 			get { return this._dataAccess; }
 		}
 
-		#region ITenantAccess implementation
+        protected ICacheStorageAccess CacheStorageAccess
+        {
+            get { return this.DataAccess.CacheStorageAccess; }
+        }
 
-		public ITenant Tenant => this.DataAccess.TenantAccess.Tenant;
+        #region ITenantAccess implementation
+
+        public ITenant Tenant => this.DataAccess.TenantAccess.Tenant;
 
 		public int IdWWW => this.DataAccess.TenantAccess.IdWWW;
 

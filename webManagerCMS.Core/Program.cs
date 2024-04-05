@@ -4,6 +4,8 @@ using webManagerCMS.Core.Components;
 using webManagerCMS.Data.Storage.MsSqlStorage.Access;
 using webManagerCMS.Data.Storage;
 using webManagerCMS.Data.Tenants;
+using webManagerCMS.Data.Caching;
+using webManagerCMS.Data.Caching.Lazy;
 using webManagerCMS.Core.Tenants;
 using webManagerCMS.Data.Models;
 using webManagerCMS.Core.Middlewares;
@@ -14,6 +16,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using S9.Core.Middlewares;
 using webManagerCMS.Core.Extentions;
+using webManagerCMS.Core.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 //TODO: complete logging
@@ -42,6 +45,22 @@ builder.Services.AddSingleton<IComponentService>(_ =>
 	return service;
 });
 
+// Cache storage access
+var cacheStorageConfigSettings = new CacheStorageConfigSettings();
+builder.Configuration.GetSection("CacheStorageSettings").Bind(cacheStorageConfigSettings);
+
+builder.Services.AddSingleton<ICacheStorageAccess>(services =>
+    new LazyCacheStorageAccess(
+        new webManagerCMS.Data.Caching.CacheStorageSettings()
+        {
+            DefaultCacheDurationMinutes = cacheStorageConfigSettings.StandardCacheStorageSettings.DefaultCacheDurationMinutes,
+            SlidingExpiration = new TimeSpan(
+                cacheStorageConfigSettings.StandardCacheStorageSettings.SlidingExpirationHours,
+                cacheStorageConfigSettings.StandardCacheStorageSettings.SlidingExpirationMinutes,
+                cacheStorageConfigSettings.StandardCacheStorageSettings.SlidingExpirationSeconds
+            )
+        }
+));
 
 // Data storage access
 var dataStorageConfigSettings = new DataStorageConfigSettings();
@@ -105,7 +124,8 @@ void ConfigureMsSqlDataStorage(WebApplicationBuilder builder, DataStorageConfigS
 		new MsSqlDataStorageAccess(
 			createMsSqlSettings("MsSqlConnectionString"),
 			createMsSqlSettings("MsSqlConnectionStringLog"),
-			services.GetService<ITenantAccess>()
+            services.GetService<ICacheStorageAccess>(),
+            services.GetService<ITenantAccess>()
 	)) ;
 
 	// for logging (see DataStorageLoggerProvider)

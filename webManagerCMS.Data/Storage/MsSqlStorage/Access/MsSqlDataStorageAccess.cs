@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using webManagerCMS.Data.Tenants;
+using webManagerCMS.Data.Caching;
 
 namespace webManagerCMS.Data.Storage.MsSqlStorage.Access
 {
@@ -13,12 +14,14 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage.Access
 	{
 		private readonly MsSqlDataStorageSettings _settings;
 		private readonly MsSqlDataStorageSettings _settingsLogDb;
+		private readonly ICacheStorageAccess _cacheStorageAccess;
 		private readonly ITenantAccess _tenantAccess;
 
-		public MsSqlDataStorageAccess(MsSqlDataStorageSettings settings, MsSqlDataStorageSettings settingsLogDb, ITenantAccess tenantAccess)
+		public MsSqlDataStorageAccess(MsSqlDataStorageSettings settings, MsSqlDataStorageSettings settingsLogDb, ICacheStorageAccess cacheStorageAccess, ITenantAccess tenantAccess)
 		{
 			this._settings = settings ?? throw new ArgumentNullException(nameof(settings));
 			this._settingsLogDb = settingsLogDb ?? throw new ArgumentNullException(nameof(settingsLogDb));
+			this._cacheStorageAccess = cacheStorageAccess ?? throw new ArgumentNullException(nameof(cacheStorageAccess));
 			this._tenantAccess = tenantAccess ?? throw new ArgumentNullException(nameof(tenantAccess));
 		}
 
@@ -42,7 +45,12 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage.Access
 		}
 		private IWebContentDataStorage _WebContentDataStorage;
 
-		public ITenantAccess TenantAccess
+        public ICacheStorageAccess CacheStorageAccess
+        {
+            get { return _cacheStorageAccess; }
+        }
+
+        public ITenantAccess TenantAccess
 		{
 			get { return _tenantAccess; }
 		}
