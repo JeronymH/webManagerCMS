@@ -10,6 +10,7 @@ using webManagerCMS.Data.Storage.MsSqlStorage.Access;
 using webManagerCMS.Data.Storage.MsSqlStorage.Base;
 using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Models.Page;
+using webManagerCMS.Data.Caching;
 
 namespace webManagerCMS.Data.Storage.MsSqlStorage
 {
@@ -31,19 +32,22 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 {
                     if (dataReader.Read())
                     {
+                        // Empty string for roots and null aliases
+                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? String.Empty : (dataReader["PageAlias"] as string) ?? String.Empty;
+
                         return new Page()
                         {
                             Id = (int)dataReader["IDWWWPage"],
                             IdDB = (int)dataReader["IDWWWPage"],
                             IdPageType = (int)dataReader["IDPageType"],
-                            Parent = (dataReader["Parent"] as int?) ?? 0,
+                            Parent = dataReader["Parent"] as int?,
                             MySort = (dataReader["MySort"] as int?) ?? 0,
                             Lvl = (dataReader["lvl"] as int?) ?? 0,
                             TemplateNum = (dataReader["IDTemplateNum"] as int?) ?? 0,
                             Name = dataReader["Name"] as string,
                             Description = dataReader["DESCR"] as string,
                             Url = dataReader["URL"] as string,
-                            PageAlias = dataReader["PageAlias"] as string,
+                            PageAlias = alias,
                             IsHomePage = (short)dataReader["IsHomePage"] == 1 ? true : false,
                             VisibleInTree = (short)dataReader["VisibleInTree"] == -1 ? true : false,
                         };
@@ -52,6 +56,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 }
             }
         }
+
         public Page? GetPage(string? pageAlias)
         {
             using (var cmd = this.NewCommandProc("dbo.pubSelectPageAlias"))
@@ -68,19 +73,22 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 {
                     if (dataReader.Read())
                     {
+                        // Empty string for roots and null aliases
+                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? String.Empty : (dataReader["PageAlias"] as string) ?? String.Empty;
+
                         return new Page()
                         {
                             Id = (int)dataReader["IDWWWPage"],
                             IdDB = (int)dataReader["IDWWWPage"],
                             IdPageType = (int)dataReader["IDPageType"],
-                            Parent = (dataReader["Parent"] as int?) ?? 0,
+                            Parent = dataReader["Parent"] as int?,
                             MySort = (dataReader["MySort"] as int?) ?? 0,
                             Lvl = (dataReader["lvl"] as int?) ?? 0,
                             TemplateNum = (dataReader["IDTemplateNum"] as int?) ?? 0,
                             Name = dataReader["Name"] as string,
                             Description = dataReader["DESCR"] as string,
                             Url = dataReader["URL"] as string,
-                            PageAlias = dataReader["PageAlias"] as string,
+                            PageAlias = alias,
                             IsHomePage = (short)dataReader["IsHomePage"] == 1 ? true : false,
                             VisibleInTree = (int)dataReader["VisibleInTree"] == -1 ? true : false,
                         };
@@ -89,6 +97,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 }
             }
         }
+
         public Alias? GetAlias(int step, int idPage, int idAliasTableName, int templateNumber, string alias)
         {
             using (var cmd = this.NewCommandProc("dbo.pubSelectAlias"))
@@ -130,6 +139,58 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                         };
                     }
                     return null;
+                }
+            }
+        }
+
+        public Dictionary<int, Page> LoadPagesDictionary(bool fromCache)
+        {
+            Func<Dictionary<int, Page>> getPagesDictionaryFunc = () => this.LoadPagesDictionary();
+
+            return fromCache ?
+                this.CacheStorageAccess.CacheStorage.GetItem<Dictionary<int, Page>>(this.IdWWW, this.IdWWWRoot, SitePartScopedCacheItemKey.WebContentPages, new GetDataForCacheDelegate<Dictionary<int, Page>>(getPagesDictionaryFunc))
+                : getPagesDictionaryFunc();
+        }
+
+        private Dictionary<int, Page> LoadPagesDictionary()
+        {
+            return this.LoadPagesFromDb().ToDictionary(p => p.IdDB, p => p);
+        }
+
+        private IEnumerable<Page> LoadPagesFromDb()
+        {
+            using (var cmd = this.NewCommandProc("dbo.pubSelectPageTree"))
+            {
+                cmd.AddParam("@IDWWW", this.IdWWW);
+                cmd.AddParam("@IDWWWRoot", this.IdWWWRoot);
+                cmd.AddParam("@IDRow", Convert.ToInt32(0));
+                cmd.AddParam("@Typ", "TREE");
+                cmd.AddParam("@IsAdmin", -1);
+
+                using (var dataReader = this.ExecReader(cmd))
+                {
+                    while (dataReader.Read())
+                    {
+                        // Empty string for roots and null aliases
+                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? String.Empty : (dataReader["PageAlias"] as string) ?? String.Empty;
+
+                        yield return new Page()
+                        {
+                            Id = (int)dataReader["IDWWWPage"],
+                            IdDB = (int)dataReader["IDWWWPageDB"],
+                            IdPageType = (int)dataReader["IDPageType"],
+                            Parent = dataReader["Parent"] as int?,
+                            MySort = (dataReader["MySort"] as int?) ?? 0,
+                            Lvl = (dataReader["lvl"] as int?) ?? 0,
+                            TemplateNum = (dataReader["IDTemplateNum"] as int?) ?? 0,
+                            Name = dataReader["Name"] as string,
+                            Description = dataReader["DESCR"] as string,
+                            Url = dataReader["URL"] as string,
+                            PageAlias = alias,
+                            IsHomePage = (short)dataReader["IsHomePage"] == 1 ? true : false,
+                            VisibleInTree = (int)dataReader["VisibleInTree"] == -1 ? true : false,
+                        };
+                    }
                 }
             }
         }

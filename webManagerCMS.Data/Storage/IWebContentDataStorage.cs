@@ -13,6 +13,7 @@ namespace webManagerCMS.Data.Storage
         Page? GetHomePage();
         Page? GetPage(string? pageAlias);
         Alias? GetAlias(int step, int idPage, int idAliasTableName, int templateNumber, string alias);
+        Dictionary<int, Page> LoadPagesDictionary(bool fromCache);
 
     }
 }

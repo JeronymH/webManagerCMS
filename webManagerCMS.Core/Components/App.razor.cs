@@ -20,8 +20,9 @@ namespace webManagerCMS.Core.Components
 		{
 			var page = GetPage();
 			var urlAliases = GetUrlAliases(page);
+			var pageTree = new PageTree(0, 0, DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(true));
 
-	if (urlAliases.CheckAllData())
+			if (urlAliases.CheckAllData())
 			{
 
 			}
