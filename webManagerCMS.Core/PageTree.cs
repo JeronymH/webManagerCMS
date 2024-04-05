@@ -1,22 +1,18 @@
 ﻿using System.Collections.Generic;
-using webManagerCMS.Data.Models.Page;
+using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 
 namespace webManagerCMS.Core
 {
-    public class PageTree
+    public class PageTree : PageContentPlugin
     {
-        public string? Template { get; set; }
-        public string TemplateName { get; } = "TREE_CORE";
-        public int TemplateNum { get; set; }
-        public int TemplateState { get; set; }
+        public new PageContentPluginType TemplateName { get; } = PageContentPluginType.PAGE_TREE;
 
         public Dictionary<int, Page> Pages { get; private set; }
         private Dictionary<string, int>? AliasMapper { get; set; } = null;
         private Dictionary<int, List<int>>? LvlMapper { get; set; } = null;
 
         public int MaxLevel { get; private set; }
-
 
         public PageTree(int templateNum, int templateState, Dictionary<int, Page> pages) {
 

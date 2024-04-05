@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using webManagerCMS.Data.Models;
-using webManagerCMS.Data.Models.Page;
+using webManagerCMS.Data.Models.PageContent;
 
 namespace webManagerCMS.Data.Storage
 {

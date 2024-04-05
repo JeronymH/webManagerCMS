@@ -41,7 +41,7 @@ namespace webManagerCMS.Core.Components
 			return data;
 		}
 
-		private Data.Models.Page.Page? GetPage()
+		private Data.Models.PageContent.Page? GetPage()
 		{
 			string? alias = GetQueryStringData("rAlias0");
 			var page = DataStorageAccess?.WebContentDataStorage.GetPage(alias);
@@ -52,7 +52,7 @@ namespace webManagerCMS.Core.Components
 			return page;
 		}
 
-		private UrlAliases GetUrlAliases(Data.Models.Page.Page? page)
+		private UrlAliases GetUrlAliases(Data.Models.PageContent.Page? page)
 		{
 			var urlAliases = new UrlAliases(httpContextAccessor);
 

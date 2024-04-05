@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using webManagerCMS.Data.Storage.MsSqlStorage.Access;
 using webManagerCMS.Data.Storage.MsSqlStorage.Base;
 using webManagerCMS.Data.Models;
-using webManagerCMS.Data.Models.Page;
+using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Caching;
 
 namespace webManagerCMS.Data.Storage.MsSqlStorage
