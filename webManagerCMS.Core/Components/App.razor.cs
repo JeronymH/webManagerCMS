@@ -20,7 +20,7 @@ namespace webManagerCMS.Core.Components
 		[Inject]
 		IHttpContextAccessor? httpContextAccessor { get; set; }
 
-		public PageContent? PageContent { get; set; }
+		public PageContentNS.PageContent? PageContent { get; set; }
 
 		protected override void OnInitialized()
 		{
@@ -37,7 +37,7 @@ namespace webManagerCMS.Core.Components
                 urlAliases = urlAliases
 			};
 
-            PageContent = new PageContent(page.TemplateNum, urlAliases.ActState, pluginParameters, DataStorageAccess);
+            PageContent = new PageContentNS.PageContent(page.TemplateNum, urlAliases.ActState, pluginParameters, DataStorageAccess);
 
 			if (urlAliases.CheckAllData())
 			{

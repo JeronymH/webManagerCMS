@@ -224,6 +224,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                                 (int)dataReader["IDTemplateNum"],
                                 0,
                                 (int)dataReader["IDWWWPageContent"],
+                                (int)dataReader["IDWWWPage"],
                                 dataReader["Title"] as string,
                                 dataReader["Subtitle"] as string,
                                 dataReader["DESCR"] as string,

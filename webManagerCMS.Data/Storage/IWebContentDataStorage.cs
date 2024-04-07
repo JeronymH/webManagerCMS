@@ -17,6 +17,7 @@ namespace webManagerCMS.Data.Storage
 		IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId, PageContentPluginType? onlyOnePlugin);
 		IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId);
 
+		DocHtmlData? GetDocHtmlData(int idPage, int idPlugin);
 
 	}
 }

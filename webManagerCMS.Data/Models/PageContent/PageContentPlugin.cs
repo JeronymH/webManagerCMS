@@ -21,6 +21,7 @@ namespace webManagerCMS.Data.Models.PageContent
         public PageContentPluginParameters? PluginParameters { get; set; }
 
         public int Id { get; set; }
+        public int IdPage { get; set; }
 
         //Plugin settings additional data
         public string? Title {  get; set; }
@@ -31,12 +32,13 @@ namespace webManagerCMS.Data.Models.PageContent
 
         protected Dictionary<string, string>? CustomProperties { get; set; }
 
-        public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, string? title, string? subtitle, string? description, string? note, string? pictureFileAlias)
+        public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, string? title, string? subtitle, string? description, string? note, string? pictureFileAlias)
 		{
 			TemplateName = templateName;
 			TemplateNum = templateNum;
 			TemplateState = templateState;
 			Id = id;
+			IdPage = idPage;
 			Title = title;
 			Subtitle = subtitle;
 			Description = description;
@@ -44,10 +46,24 @@ namespace webManagerCMS.Data.Models.PageContent
 			PictureFileAlias = pictureFileAlias;
 		}
 
-        public PageContentPlugin(int id)
+		//This constructor is for content plugins without settings section -> TREE_CORE, PAGE_CORE, PICHEADER, LINKFOOTER...
+		public PageContentPlugin(int id)
         {
             Id = id;
 		}
+
+        public PageContentPlugin(PageContentPlugin plugin) : this(
+            plugin.TemplateName,
+            plugin.TemplateNum,
+            plugin.TemplateState,
+            plugin.Id,
+            plugin.IdPage,
+            plugin.Title,
+            plugin.Subtitle,
+            plugin.Description,
+            plugin.Note,
+            plugin.PictureFileAlias
+        ){ }
 
 		//TODO: implement this function
 		public string GetLocalizedText(int idLanguage, string textCode)
