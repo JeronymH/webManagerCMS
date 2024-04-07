@@ -8,7 +8,15 @@ namespace webManagerCMS.Data.Models.PageContent
 {
     public enum PageContentPluginType
     {
-        PAGE_CORE,
-        PAGE_TREE
-    }
+		DOC_H1TEXT = -3,
+        PAGE_CORE = 1,
+        TREE_CORE = 2,
+		GALLERY1 = 3,
+		NOTE1 = 4,
+		PICHEADER = 5,
+		LINKFOOTER = 6,
+		TXTHEADER = 7,
+		TREEDISPLAYDEFINED1 = 31,
+		DOC_HTML = 40
+	}
 }
