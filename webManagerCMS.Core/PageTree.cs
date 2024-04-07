@@ -25,10 +25,10 @@ namespace webManagerCMS.Core
         public void SetPages(Dictionary<int, Page> pages)
         {
             Pages = pages;
-            SetAliasMapper();
+            InitMappers();
         }
 
-        private void SetAliasMapper()
+        private void InitMappers()
         {
             AliasMapper = new Dictionary<string, int>();
             LvlMapper = new Dictionary<int, List<int>>();
