@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
+using webManagerCMS.Core.PageContent;
 using webManagerCMS.Data.Storage;
 using webManagerCMS.Data.Tenants;
 
 namespace webManagerCMS.Core.Components
 {
-	public partial class App
+    public partial class App
 	{
 		[Inject]
 		IDataStorageAccess? DataStorageAccess { get; set; }
@@ -20,7 +21,7 @@ namespace webManagerCMS.Core.Components
 		{
 			var page = GetPage();
 			var urlAliases = GetUrlAliases(page);
-			var pageTree = new PageTree(0, 0, DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(true));
+			var pageTree = new PageTree(DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(true));
 
 			if (urlAliases.CheckAllData())
 			{

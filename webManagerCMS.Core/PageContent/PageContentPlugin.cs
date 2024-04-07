@@ -4,11 +4,17 @@ using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 using webManagerCMS.Data.Tenants;
 
-namespace webManagerCMS.Core
+namespace webManagerCMS.Core.PageContent
 {
     public class PageContentPlugin
     {
-        public string? Template { get; set; }
+        public string Template
+        {
+            get
+            {
+                return GetTemplate(TemplateName, TemplateState, TemplateNum);
+            }
+        }
         public PageContentPluginType TemplateName { get; }
         public int TemplateNum { get; set; }
         public int TemplateState { get; set; }
@@ -25,15 +31,23 @@ namespace webManagerCMS.Core
         public Page ActualPage { get; private set; }
         public PageTree PageTree { get; private set; }
         public UrlAliases UrlAliases { get; private set; }
+        public static PageContentPluginParameters PluginParameters { get; private set; }
 
-        public string GetLocalizedText(int idLanguage, string textCode)
+
+        //TODO: implement this function
+        public static string GetLocalizedText(int idLanguage, string textCode)
         {
             return "";
         }
 
-        public string GetLocalizedText(SystemLanguageType languageType, string textCode)
+        public static string GetLocalizedText(SystemLanguageType languageType, string textCode)
         {
             return GetLocalizedText((int)languageType, textCode);
+        }
+
+        private static string GetTemplate(PageContentPluginType templateName, int templateState, int templateNum)
+        {
+            return $"{templateName}-{templateState}-{templateNum}";
         }
     }
 }

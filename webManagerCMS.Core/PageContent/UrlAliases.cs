@@ -1,10 +1,11 @@
 ﻿using S9.Core.Data.Storage.MsSqlStorage;
 using System.Xml.Linq;
 using webManagerCMS.Data.Models;
+using webManagerCMS.Data.Interfaces;
 
-namespace webManagerCMS.Core
+namespace webManagerCMS.Core.PageContent
 {
-    public class UrlAliases
+    public class UrlAliases : IUrlAliases
     {
         public int ActLevel { get; private set; }
         public List<Alias> Aliases { get; }
@@ -17,8 +18,9 @@ namespace webManagerCMS.Core
 
         private readonly IHttpContextAccessor? _contextAccessor;
 
-        public UrlAliases(IHttpContextAccessor? contextAccessor) {
-            this._contextAccessor = contextAccessor;
+        public UrlAliases(IHttpContextAccessor? contextAccessor)
+        {
+            _contextAccessor = contextAccessor;
 
             ActLevel = -1;
             Aliases = new List<Alias>();
@@ -27,10 +29,12 @@ namespace webManagerCMS.Core
             InitQueryAliases();
         }
 
-        public void AddData(bool? isHomepage, string? name, int? id, int? iddb, int? idPageContent, int? idContentCols, int? idTemplateNum, int? idState, string? aliasName, int? idTableName, int? idClassCollection, bool? rootLineVisible) {
+        public void AddData(bool? isHomepage, string? name, int? id, int? iddb, int? idPageContent, int? idContentCols, int? idTemplateNum, int? idState, string? aliasName, int? idTableName, int? idClassCollection, bool? rootLineVisible)
+        {
             ActLevel++;
 
-            Aliases.Add(new Alias() {
+            Aliases.Add(new Alias()
+            {
                 IsHomePage = isHomepage,
                 Name = name,
                 Id = id,
@@ -47,11 +51,13 @@ namespace webManagerCMS.Core
             });
         }
 
-        public void AddData(Alias? alias) {
+        public void AddData(Alias? alias)
+        {
             AddData(alias?.IsHomePage, alias?.Name, alias?.Id, alias?.IdDB, alias?.IdPageContent, alias?.IdContentCols, alias?.IdTemplateNum, alias?.IdState, alias?.AliasName, alias?.IdTableName, alias?.IdClassCollection, alias?.RootLineVisible);
         }
 
-        public void InitQueryAliases() {
+        public void InitQueryAliases()
+        {
             string? queryName;
             for (int i = 0; i < LevelCount; i++)
             {
@@ -60,7 +66,8 @@ namespace webManagerCMS.Core
             }
         }
 
-        public bool CheckAllData() {
+        public bool CheckAllData()
+        {
             if (Aliases.Count == 0) return false;
             foreach (var alias in Aliases)
             {

@@ -1,24 +1,20 @@
 ﻿using System.Collections.Generic;
+using webManagerCMS.Data.Interfaces;
 using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 
-namespace webManagerCMS.Core
+namespace webManagerCMS.Core.PageContent
 {
-    public class PageTree : PageContentPlugin
+    public class PageTree : IPageTree
     {
-        public new PageContentPluginType TemplateName { get; } = PageContentPluginType.PAGE_TREE;
-
         public Dictionary<int, Page> Pages { get; private set; }
         private Dictionary<string, int>? AliasMapper { get; set; } = null;
         private Dictionary<int, List<int>>? LvlMapper { get; set; } = null;
 
         public int MaxLevel { get; private set; }
 
-        public PageTree(int templateNum, int templateState, Dictionary<int, Page> pages) {
-
-            TemplateNum = templateNum;
-            TemplateState = templateState;
-
+        public PageTree(Dictionary<int, Page> pages)
+        {
             SetPages(pages);
         }
 
@@ -40,13 +36,13 @@ namespace webManagerCMS.Core
                 PageIdDB = page.Key;
                 PageLvl = page.Value.Lvl;
 
-                if (!(AliasMapper.ContainsKey(page.Value.PageAlias)))
+                if (!AliasMapper.ContainsKey(page.Value.PageAlias))
                     AliasMapper.Add(page.Value.PageAlias, PageIdDB);
 
                 if (LvlMapper.ContainsKey(PageLvl))
                     LvlMapper[PageLvl].Add(PageIdDB);
                 else
-                    LvlMapper.Add(PageLvl, new List<int>{PageIdDB});
+                    LvlMapper.Add(PageLvl, new List<int> { PageIdDB });
             }
         }
 
@@ -67,7 +63,5 @@ namespace webManagerCMS.Core
 
             return Pages.Where(x => keys.Contains(x.Key)).Select(x => x.Value);
         }
-
-
     }
 }
