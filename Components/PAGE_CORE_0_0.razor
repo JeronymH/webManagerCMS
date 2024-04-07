@@ -1,9 +1,35 @@
-﻿<h3>PAGE_CORE_0_0</h3>
+﻿
 
-@Objref.RenderPlugin(tree)
-<hr>
-<hr>
-@Objref.RenderTree(0,0)
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="public/css/style.css" />
+    <base href="/" />
+</head>
+
+<body>
+    <h3>PAGE_CORE_0_0</h3>
+
+    @Objref.RenderPlugin(tree)
+    <hr>
+    <hr>
+    @Objref.RenderTree(0,0)
+    <hr>
+    <hr>
+    <PAGE_TREE_0_0 Objref="tree" />
+    <hr>
+    <hr>
+    <PAGE_HEADER Objref="Objref" />
+</body>
+
+</html>
+
+
 
 @code {
 	[Parameter]

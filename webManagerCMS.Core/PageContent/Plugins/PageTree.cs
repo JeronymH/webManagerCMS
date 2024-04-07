@@ -14,6 +14,5 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
             PluginParameters = pluginParameters;
         }
 
-
     }
 }

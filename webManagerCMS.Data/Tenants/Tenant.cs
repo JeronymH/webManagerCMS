@@ -50,5 +50,15 @@ namespace webManagerCMS.Data.Tenants
 
 		}
 		private string _ComponentsPath;
+
+		public string GetRootAlias()
+		{
+			string url = "/";
+			if (WWWSettings.MutationAlias == "")
+				return url;
+
+			url += WWWSettings.MutationAlias + "/";
+			return url;
+		}
 	}
 }

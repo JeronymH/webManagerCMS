@@ -14,8 +14,10 @@ namespace webManagerCMS.Data.Interfaces
 
         void SetPages(Dictionary<int, Page> pages);
 
-        public Page? GetPageByAlias(string alias);
+        Page? GetPageByAlias(string alias);
 
-        public IEnumerable<Page>? GetPagesByLvl(int lvl);
-    }
+        IEnumerable<Page>? GetPagesByLvl(int lvl);
+
+        IEnumerable<Page>? GetPagesForMenu();
+	}
 }

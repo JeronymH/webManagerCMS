@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Interfaces;
+using webManagerCMS.Data.Tenants;
 
 namespace webManagerCMS.Core.PageContentNS
 {
@@ -18,10 +19,12 @@ namespace webManagerCMS.Core.PageContentNS
         public string? QueryAliasName { get; } = "rAlias";
 
         private readonly IHttpContextAccessor? _contextAccessor;
+        private readonly ITenantAccess? _tenantAccess;
 
-        public UrlAliases(IHttpContextAccessor? contextAccessor)
+        public UrlAliases(IHttpContextAccessor? contextAccessor, ITenantAccess tenantAccess)
         {
             _contextAccessor = contextAccessor;
+			_tenantAccess = tenantAccess;
 
             ActLevel = -1;
 			ActState = 0;
@@ -77,6 +80,16 @@ namespace webManagerCMS.Core.PageContentNS
                 if (!(alias.Id > 0)) return false;
             }
             return true;
+        }
+
+        public string GetItemUrl(Alias alias)
+        {
+            string url = _tenantAccess.Tenant.GetRootAlias();
+            if (string.IsNullOrEmpty(alias.AliasName))
+                return url;
+
+            url += alias.AliasName + "/";
+			return url;
         }
     }
 }

@@ -63,5 +63,10 @@ namespace webManagerCMS.Core.PageContentNS
 
             return Pages.Where(x => keys.Contains(x.Key)).Select(x => x.Value);
         }
-    }
+
+        public IEnumerable<Page>? GetPagesForMenu()
+        {
+            return GetPagesByLvl(1).Where(x => x.VisibleInTree);
+		}
+	}
 }

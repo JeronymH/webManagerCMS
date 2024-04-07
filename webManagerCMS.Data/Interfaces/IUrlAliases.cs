@@ -23,5 +23,6 @@ namespace webManagerCMS.Data.Interfaces
 
         public bool CheckAllData();
 
+        public string GetItemUrl(Alias alias);
     }
 }

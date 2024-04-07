@@ -71,7 +71,7 @@ namespace webManagerCMS.Core.Components
 
 		private UrlAliases GetUrlAliases(Data.Models.PageContent.Page? page)
 		{
-			var urlAliases = new UrlAliases(httpContextAccessor);
+			var urlAliases = new UrlAliases(httpContextAccessor, TenantAccess);
 
 			if (page == null)
 				return urlAliases;

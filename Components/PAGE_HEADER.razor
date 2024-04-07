@@ -1,0 +1,47 @@
+﻿<h3>PAGE_HEADER</h3>
+
+<header class="header" id="header">
+	<div class="container">
+		<div class="header__bottom">
+			<a class="header__logo" href="@Objref.PluginParameters.tenantAccess.Tenant.GetWebBaseUrl()">
+				<span class="icon icon--logo"><svg><use xlink:href="/public/images/sprite.svg#logo"></use></svg></span>
+			</a>
+			<nav class="header__nav-primary">
+				<ul>
+					@Objref.RenderTree(0,0)
+				</ul>
+			</nav>
+			<nav class="header__nav-secondary">
+				<ul class="header__nav-secondary__actions">
+					<li>
+						<button class="header__search js-open-search">
+							<svg class="svg-icon svg-icon--search"><use xlink:href="/public/images/sprite.svg#lupa"></use></svg>
+						</button>
+					</li>
+				</ul>
+			</nav>
+
+			<div class="header-mobile__actions">
+				<button class="header__search js-open-search">
+					<svg class="svg-icon svg-icon--search">
+						<use xlink:href="/public/images/sprite.svg#lupa"></use>
+					</svg>
+				</button>
+				<button class="header-mobile__expander" id="header-expander" aria-label="">
+					<span class="hamburger">
+						<span class="hamburger__inner"></span>
+					</span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="header-mobile__bg">
+		<svg><use xlink:href="/public/images/sprite.svg#header-bg"></use></svg>
+	</div>
+</header>
+
+
+@code {
+	[Parameter]
+	public PageContent Objref { get; set; }
+}
