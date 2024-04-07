@@ -7,22 +7,26 @@ namespace webManagerCMS.Core.Middlewares
 	public class MyRewriteMiddleware
 	{
 		private readonly RequestDelegate _next;
+        public bool SkipRemainingRules;
 
-		public MyRewriteMiddleware(RequestDelegate next)
+        public MyRewriteMiddleware(RequestDelegate next)
 		{
 			_next = next;
-		}
+            SkipRemainingRules = false;
+        }
 
 		public async Task InvokeAsync(HttpContext context)
 		{
-			if (context.Request.Path.Value != null)
+            if (context.Request.Path.Value != null)
 			{
-				RedirectToResizer(context);
+                EnableStaticFiles(context);
+                RedirectToResizer(context);
                 GetMutationAlias(context);
                 GetPageAliasLvl(context, 0);
                 GetPageAliasLvl(context, 1);
                 GetPageAliasLvl(context, 2);
                 GetPageAliasLvl(context, 3);
+                NavigateToAppEndpoint(context);
             }
 
             await _next(context);
@@ -30,6 +34,9 @@ namespace webManagerCMS.Core.Middlewares
 
 		private void RedirectToResizer(HttpContext context) {
             Match match = Regex.Match(context.Request.Path.Value + context.Request.QueryString, @"^/r/files/(.*)$");
+
+            if (SkipRemainingRules)
+                return;
 
             if (!match.Success)
 				return;
@@ -39,6 +46,9 @@ namespace webManagerCMS.Core.Middlewares
 
         private void GetMutationAlias(HttpContext context)
         {
+            if (SkipRemainingRules)
+                return;
+
             Match match = Regex.Match(context.Request.Path.Value + context.Request.QueryString, @"^/(cz|en|de|it|sk)(?:(/[^\?]+)|/)?(?:(\?.+)|(\?)?)?$");
 
             if (!match.Success)
@@ -70,6 +80,9 @@ namespace webManagerCMS.Core.Middlewares
 
         private void GetPageAliasLvl(HttpContext context, int lvl)
         {
+            if (SkipRemainingRules)
+                return;
+
             Match match = Regex.Match(context.Request.Path.Value + context.Request.QueryString, @"^(?:/(?:([^/\.\?]*)(?=-\d+(?:$|\?|\.html|/))-(\d+)|([^/\.\?]*))(?:/|\.html)?([^\?]+(?<!\.asp))?)?(?:$|(\?.+)?)$");
 
             if (!match.Success)
@@ -104,6 +117,29 @@ namespace webManagerCMS.Core.Middlewares
 
             context.Request.Path = newUrl;
             context.Request.QueryString = new QueryString(newQueryString);
+        }
+
+        private void EnableStaticFiles(HttpContext context)
+        {
+            if (SkipRemainingRules)
+                return;
+
+            Match match = Regex.Match(context.Request.Path.Value + context.Request.QueryString, @"^(/root/.*|/public/.*|/global/.*|/archive/.*|.*\.ico|.*\.txt|.*\.gif)$");
+
+            SkipRemainingRules = match.Success;
+        }
+
+        private void NavigateToAppEndpoint(HttpContext context)
+        {
+            if (SkipRemainingRules)
+                return;
+
+            Match match = Regex.Match(context.Request.Path.Value + context.Request.QueryString, @"^(.*)(\?.*)?$");
+
+            var queryString = match.Groups[2].Value;
+
+            context.Request.Path = "/";
+            context.Request.QueryString = new QueryString(queryString);
         }
     }
 }

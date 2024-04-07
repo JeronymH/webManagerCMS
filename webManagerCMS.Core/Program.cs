@@ -86,10 +86,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseMyRewriteMiddleware();
 	app.UseRouting();
-    var options = new RewriteOptions()
-		.AddRewrite(@"^(.*)(\?.*)?$", "/?$2", skipRemainingRules: false);
-
-    app.UseRewriter(options);
 }
 
 app.UseStaticFiles();
