@@ -11,6 +11,9 @@ using webManagerCMS.Data.Storage.MsSqlStorage.Base;
 using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Caching;
+using System.Collections;
+using S9.Core.Extensions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace webManagerCMS.Data.Storage.MsSqlStorage
 {
@@ -33,7 +36,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                     if (dataReader.Read())
                     {
                         // Empty string for roots and null aliases
-                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? String.Empty : (dataReader["PageAlias"] as string) ?? String.Empty;
+                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? System.String.Empty : (dataReader["PageAlias"] as string) ?? System.String.Empty;
 
                         return new Page()
                         {
@@ -74,7 +77,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                     if (dataReader.Read())
                     {
                         // Empty string for roots and null aliases
-                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? String.Empty : (dataReader["PageAlias"] as string) ?? String.Empty;
+                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? System.String.Empty : (dataReader["PageAlias"] as string) ?? System.String.Empty;
 
                         return new Page()
                         {
@@ -165,14 +168,17 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 cmd.AddParam("@IDWWWRoot", this.IdWWWRoot);
                 cmd.AddParam("@IDRow", Convert.ToInt32(0));
                 cmd.AddParam("@Typ", "TREE");
-                cmd.AddParam("@IsAdmin", -1);
+				if (this.IsAdminView)
+					cmd.AddParam("@IsAdmin", 1);
+				else
+					cmd.AddParam("@IsAdmin", null);
 
                 using (var dataReader = this.ExecReader(cmd))
                 {
                     while (dataReader.Read())
                     {
                         // Empty string for roots and null aliases
-                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? String.Empty : (dataReader["PageAlias"] as string) ?? String.Empty;
+                        var alias = ((dataReader["IsHomePage"] as short?) ?? 0) == 1 ? System.String.Empty : (dataReader["PageAlias"] as string) ?? System.String.Empty;
 
                         yield return new Page()
                         {
@@ -194,5 +200,44 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 }
             }
         }
-    }
+
+		public IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId, PageContentPluginType? onlyOnePlugin)
+		{
+			using (var cmd = this.NewCommandProc("dbo.pubSelectWWWPageContent"))
+			{
+				cmd.AddParam("@IDWWW", this.IdWWW);
+				cmd.AddParam("@IDWWWPage", pageId);
+				cmd.AddParam("@IDWWWContentCols", contentColumnId);
+				cmd.AddParam("@IDLanguage", this.IdLanguage);
+				if (onlyOnePlugin != null) cmd.AddParam("@OnlyOneClass", onlyOnePlugin.Value);
+				if (this.IsAdminView)
+					cmd.AddParam("@IsAdmin", 1);
+				else
+					cmd.AddParam("@IsAdmin", null);
+
+				using (var dataReader = this.ExecReader(cmd))
+				{
+					while (dataReader.Read())
+					{
+                        yield return new PageContentPlugin(
+								(PageContentPluginType)Enum.ToObject(typeof(PageContentPluginType), (int)dataReader["IDClassCollection"]),
+                                (int)dataReader["IDTemplateNum"],
+                                0,
+                                (int)dataReader["IDWWWPageContent"],
+                                dataReader["Title"] as string,
+                                dataReader["Subtitle"] as string,
+                                dataReader["DESCR"] as string,
+                                dataReader["Note"] as string,
+                                dataReader["PictureFileAlias"] as string
+                            );
+                    }
+				}
+			}
+		}
+
+		public IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId)
+		{
+            return LoadPageContent(pageId, contentColumnId, null);
+		}
+	}
 }

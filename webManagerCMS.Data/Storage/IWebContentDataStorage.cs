@@ -14,6 +14,9 @@ namespace webManagerCMS.Data.Storage
         Page? GetPage(string? pageAlias);
         Alias? GetAlias(int step, int idPage, int idAliasTableName, int templateNumber, string alias);
         Dictionary<int, Page> LoadPagesDictionary(bool fromCache);
+		IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId, PageContentPluginType? onlyOnePlugin);
+		IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId);
 
-    }
+
+	}
 }
