@@ -3,7 +3,7 @@ using webManagerCMS.Data.Interfaces;
 using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 
-namespace webManagerCMS.Core.PageContent
+namespace webManagerCMS.Core.PageContentNS
 {
     public class PageTree : IPageTree
     {

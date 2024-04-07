@@ -12,7 +12,8 @@ namespace Components
     {
 		public IDictionary<string, Type> Components => new Dictionary<string, Type>
 		{
-			{ "Component1", typeof(Component1) }
+			{ "Component1", typeof(Component1) },
+			{ "TREE_CORE_0_0", typeof(Component1) }
 		};
 
 		public string test() {

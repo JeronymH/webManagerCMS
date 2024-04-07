@@ -3,7 +3,7 @@ using System.Xml.Linq;
 using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Interfaces;
 
-namespace webManagerCMS.Core.PageContent
+namespace webManagerCMS.Core.PageContentNS
 {
     public class UrlAliases : IUrlAliases
     {

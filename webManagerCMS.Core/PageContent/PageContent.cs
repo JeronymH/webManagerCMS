@@ -1,23 +1,27 @@
 ﻿using Microsoft.AspNetCore.Components;
+using webManagerCMS.Data.Interfaces;
 using webManagerCMS.Data.Models.PageContent;
+using webManagerCMS.Data.Storage;
 
-namespace webManagerCMS.Core.PageContent
+namespace webManagerCMS.Core.PageContentNS
 {
     public class PageContent : PageContentPlugin
     {
         public new PageContentPluginType TemplateName { get; } = PageContentPluginType.PAGE_CORE;
 
-        //public RenderFragment RenderPageTree()
-        //{
-        //    //RenderFragment dynamicComonent() => builder =>
-        //    //{
-        //    //    var component = @Storage.TenantAccess.Tenant.Components["Component1"];
-        //    //    builder.OpenComponent(0, component);
-        //    //    builder.AddAttribute(1, "Title", @Storage.TenantAccess.Tenant.DynamicComponents);
-        //    //    builder.CloseComponent();
-        //    //};
+        private IDataStorageAccess _dataStorageAccess;
 
-        //    //return dynamicComonent();
-        //}
+        public PageContent(IDataStorageAccess dataStorageAccess) {
+            _dataStorageAccess = dataStorageAccess;
+        }
+
+        public RenderFragment RenderPlugin(IPageContentPlugin plugin) => builder =>
+        {
+            var component = _dataStorageAccess.TenantAccess.Tenant.Components[plugin.Template];
+            builder.OpenComponent(0, component);
+            builder.AddAttribute(1, "Object", plugin);
+            builder.CloseComponent();
+        };
+
     }
 }

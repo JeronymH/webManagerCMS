@@ -5,7 +5,13 @@
 <h1>@Title.test()</h1>
 <h1>@Title.test2()</h1>
 
+
+<h1>@Object.Template</h1>
+
 @code{
     [Parameter]
     public DynamicComponents? Title { get; set; }
+
+    [Parameter]
+	public PageTree? Object { get; set; }
 }

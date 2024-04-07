@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
-using webManagerCMS.Core.PageContent;
+using webManagerCMS.Core.PageContentNS;
+using webManagerCMS.Core.PageContentNS.Plugins;
+using webManagerCMS.Data.Interfaces;
+using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 using webManagerCMS.Data.Tenants;
+using PageTree = webManagerCMS.Core.PageContentNS.PageTree;
 
 namespace webManagerCMS.Core.Components
 {
@@ -16,6 +20,8 @@ namespace webManagerCMS.Core.Components
 		[Inject]
 		IHttpContextAccessor? httpContextAccessor { get; set; }
 
+		public PageContent? PageContent { get; set; }
+		public PageContentNS.Plugins.PageTree? PageTreePlugin { get; set; }
 
 		protected override void OnInitialized()
 		{
@@ -23,10 +29,20 @@ namespace webManagerCMS.Core.Components
 			var urlAliases = GetUrlAliases(page);
 			var pageTree = new PageTree(DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(true));
 
+            PageContent = new PageContent(DataStorageAccess);
+			var pluginParameters = new PageContentPluginParameters() {
+				dataStorageAccess = DataStorageAccess,
+				tenantAccess = TenantAccess,
+                contextAccessor = httpContextAccessor,
+				currentPage = page,
+				pageTree = pageTree,
+                urlAliases = urlAliases
+			};
+
 			if (urlAliases.CheckAllData())
 			{
-
-			}
+                PageTreePlugin = new PageContentNS.Plugins.PageTree(0, 0, pluginParameters);
+            }
 			else
 			{
 
