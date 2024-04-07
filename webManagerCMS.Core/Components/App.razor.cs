@@ -26,7 +26,7 @@ namespace webManagerCMS.Core.Components
 		{
 			var page = GetPage();
 			var urlAliases = GetUrlAliases(page);
-			var pageTree = new PageTree(DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(true));
+			var pageTree = new PageTree(DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(true), TenantAccess);
 
 			var pluginParameters = new PageContentPluginParameters() {
 				dataStorageAccess = DataStorageAccess,

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using webManagerCMS.Data.Interfaces;
+using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
+using webManagerCMS.Data.Tenants;
 
 namespace webManagerCMS.Core.PageContentNS
 {
@@ -13,9 +15,13 @@ namespace webManagerCMS.Core.PageContentNS
 
         public int MaxLevel { get; private set; }
 
-        public PageTree(Dictionary<int, Page> pages)
+		private readonly ITenantAccess? _tenantAccess;
+
+		public PageTree(Dictionary<int, Page> pages, ITenantAccess tenantAccess)
         {
-            SetPages(pages);
+            _tenantAccess = tenantAccess;
+
+			SetPages(pages);
         }
 
         public void SetPages(Dictionary<int, Page> pages)
@@ -48,25 +54,55 @@ namespace webManagerCMS.Core.PageContentNS
 
         public Page? GetPageByAlias(string alias)
         {
-            return Pages[AliasMapper[alias]];
+            if (!AliasMapper.ContainsKey(alias))
+                return null;
+
+			return Pages[AliasMapper[alias]];
         }
 
-        public IEnumerable<Page>? GetPagesByLvl(int lvl)
+        public IEnumerable<Page> GetPagesByLvl(int lvl)
         {
             if (!LvlMapper.ContainsKey(lvl))
-                return null;
+                return Enumerable.Empty<Page>();
 
             List<int> keys = LvlMapper[lvl];
 
             if (!(keys.Count > 0))
-                return null;
+                return Enumerable.Empty<Page>();
 
             return Pages.Where(x => keys.Contains(x.Key)).Select(x => x.Value);
         }
 
-        public IEnumerable<Page>? GetPagesForMenu()
+        public IEnumerable<Page> GetPagesForMenu()
         {
             return GetPagesByLvl(1).Where(x => x.VisibleInTree);
+		}
+
+        public IEnumerable<Page> GetPagesForMenu(string alias)
+        {
+            Page? parentPage = GetPageByAlias(alias);
+
+            if (parentPage == null) return Enumerable.Empty<Page>();
+
+            int parent = parentPage.Id;
+			int level = parentPage.Lvl + 1;
+
+			return GetPagesByLvl(level).Where(x => x.VisibleInTree && x.Parent == parent);
+		}
+
+		public string GetPageUrl(Page page)
+		{
+            return GetPageUrl(page.PageAlias);
+		}
+
+		public string GetPageUrl(string pageAlias)
+		{
+			string url = _tenantAccess.Tenant.GetRootAlias();
+			if (string.IsNullOrEmpty(pageAlias))
+				return url;
+
+			url += pageAlias + "/";
+			return url;
 		}
 	}
 }

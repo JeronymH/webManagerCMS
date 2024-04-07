@@ -1,7 +1,16 @@
 ﻿@foreach (var item in @Objref.PluginParameters.pageTree.GetPagesForMenu())
 {
 	<li>
-		<a href="/@item.PageAlias">
+		<a href="@Objref.PluginParameters.pageTree.GetPageUrl(item)">
+			@item.Name
+		</a>
+	</li>
+}
+
+@foreach (var item in @Objref.PluginParameters.pageTree.GetPagesForMenu("socialni-site"))
+{
+	<li>
+		<a href="@Objref.PluginParameters.pageTree.GetPageUrl(item)">
 			@item.Name
 		</a>
 	</li>
