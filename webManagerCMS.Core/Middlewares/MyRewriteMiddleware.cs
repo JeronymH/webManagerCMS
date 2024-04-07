@@ -17,7 +17,9 @@ namespace webManagerCMS.Core.Middlewares
 
 		public async Task InvokeAsync(HttpContext context)
 		{
-            if (context.Request.Path.Value != null)
+            SkipRemainingRules = false;
+
+			if (context.Request.Path.Value != null)
 			{
                 EnableStaticFiles(context);
                 RedirectToResizer(context);
@@ -134,9 +136,9 @@ namespace webManagerCMS.Core.Middlewares
             if (SkipRemainingRules)
                 return;
 
-            Match match = Regex.Match(context.Request.Path.Value + context.Request.QueryString, @"^(.*)(\?.*)?$");
+            Match match = Regex.Match(context.Request.Path.Value + context.Request.QueryString, @"\?(.*)");
 
-            var queryString = match.Groups[2].Value;
+            var queryString = match.Groups[0].Value;
 
             context.Request.Path = "/";
             context.Request.QueryString = new QueryString(queryString);
