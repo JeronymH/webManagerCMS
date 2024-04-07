@@ -22,7 +22,5 @@ namespace webManagerCMS.Data.Interfaces
         public void InitQueryAliases();
 
         public bool CheckAllData();
-
-        public string GetItemUrl(Alias alias);
     }
 }
