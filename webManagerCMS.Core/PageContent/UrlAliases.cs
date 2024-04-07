@@ -8,6 +8,7 @@ namespace webManagerCMS.Core.PageContentNS
     public class UrlAliases : IUrlAliases
     {
         public int ActLevel { get; private set; }
+        public int ActState { get; private set; }
         public List<Alias> Aliases { get; }
         public string?[] QueryAliases { get; private set; }
         /// <summary>
@@ -23,6 +24,7 @@ namespace webManagerCMS.Core.PageContentNS
             _contextAccessor = contextAccessor;
 
             ActLevel = -1;
+			ActState = 0;
             Aliases = new List<Alias>();
             QueryAliases = new string[LevelCount];
 
@@ -32,8 +34,9 @@ namespace webManagerCMS.Core.PageContentNS
         public void AddData(bool? isHomepage, string? name, int? id, int? iddb, int? idPageContent, int? idContentCols, int? idTemplateNum, int? idState, string? aliasName, int? idTableName, int? idClassCollection, bool? rootLineVisible)
         {
             ActLevel++;
+			ActState = idState ?? 0;
 
-            Aliases.Add(new Alias()
+			Aliases.Add(new Alias()
             {
                 IsHomePage = isHomepage,
                 Name = name,

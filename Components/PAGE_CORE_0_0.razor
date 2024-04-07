@@ -1,0 +1,18 @@
+﻿<h3>PAGE_CORE_0_0</h3>
+
+@Objref.RenderPlugin(tree)
+<hr>
+<hr>
+@Objref.RenderTree(0,0)
+
+@code {
+	[Parameter]
+	public PageContent? Objref { get; set; }
+
+
+	protected override void OnInitialized()
+	{
+		tree =  new webManagerCMS.Core.PageContentNS.Plugins.PageTree(0, 0, Objref.PluginParameters);
+	}
+	public webManagerCMS.Core.PageContentNS.Plugins.PageTree tree { get; set; }
+}

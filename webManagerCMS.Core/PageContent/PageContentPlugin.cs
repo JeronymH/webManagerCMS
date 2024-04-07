@@ -16,7 +16,7 @@ namespace webManagerCMS.Core.PageContentNS
                 return GetTemplate(TemplateName, TemplateState, TemplateNum);
             }
         }
-        public PageContentPluginType TemplateName { get; }
+        public PageContentPluginType TemplateName { get; protected set; }
         public int TemplateNum { get; set; }
         public int TemplateState { get; set; }
 

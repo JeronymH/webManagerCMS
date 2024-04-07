@@ -7,11 +7,15 @@ namespace webManagerCMS.Core.PageContentNS
 {
     public class PageContent : PageContentPlugin
     {
-        public new PageContentPluginType TemplateName { get; } = PageContentPluginType.PAGE_CORE;
-
         private IDataStorageAccess _dataStorageAccess;
 
-        public PageContent(IDataStorageAccess dataStorageAccess) {
+        public PageContent(int templateNum, int templateState, PageContentPluginParameters pluginParameters, IDataStorageAccess dataStorageAccess) {
+            TemplateName = PageContentPluginType.PAGE_CORE;
+
+            TemplateNum = templateNum;
+            TemplateState = templateState;
+            PluginParameters = pluginParameters;
+
             _dataStorageAccess = dataStorageAccess;
         }
 
@@ -19,9 +23,20 @@ namespace webManagerCMS.Core.PageContentNS
         {
             var component = _dataStorageAccess.TenantAccess.Tenant.Components[plugin.Template];
             builder.OpenComponent(0, component);
-            builder.AddAttribute(1, "Object", plugin);
+            builder.AddAttribute(1, "Objref", plugin);
             builder.CloseComponent();
         };
 
-    }
+        public RenderFragment RenderPage()
+        {
+            return RenderPlugin(this);
+		}
+
+        public RenderFragment RenderTree(int templateNum, int templateState)
+		{
+            var pageTreePlugin = new Plugins.PageTree(templateNum, templateState, PluginParameters);
+            return RenderPlugin(pageTreePlugin);
+		}
+
+	}
 }

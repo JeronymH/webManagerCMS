@@ -21,7 +21,6 @@ namespace webManagerCMS.Core.Components
 		IHttpContextAccessor? httpContextAccessor { get; set; }
 
 		public PageContent? PageContent { get; set; }
-		public PageContentNS.Plugins.PageTree? PageTreePlugin { get; set; }
 
 		protected override void OnInitialized()
 		{
@@ -29,7 +28,6 @@ namespace webManagerCMS.Core.Components
 			var urlAliases = GetUrlAliases(page);
 			var pageTree = new PageTree(DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(true));
 
-            PageContent = new PageContent(DataStorageAccess);
 			var pluginParameters = new PageContentPluginParameters() {
 				dataStorageAccess = DataStorageAccess,
 				tenantAccess = TenantAccess,
@@ -39,9 +37,11 @@ namespace webManagerCMS.Core.Components
                 urlAliases = urlAliases
 			};
 
+            PageContent = new PageContent(page.TemplateNum, urlAliases.ActState, pluginParameters, DataStorageAccess);
+
 			if (urlAliases.CheckAllData())
 			{
-                PageTreePlugin = new PageContentNS.Plugins.PageTree(0, 0, pluginParameters);
+
             }
 			else
 			{
