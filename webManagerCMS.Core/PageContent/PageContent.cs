@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using webManagerCMS.Core.PageContentNS.Plugins;
 using webManagerCMS.Data.Interfaces;
 using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
@@ -46,13 +47,17 @@ namespace webManagerCMS.Core.PageContentNS
 
 			foreach (var plugin in content)
             {
+                plugin.PluginParameters = PluginParameters; 
 				pageContentPlugin = GetPageContentPlugin(plugin);
                 if (pageContentPlugin != null)
                 {
-				    component = _dataStorageAccess.TenantAccess.Tenant.Components[pageContentPlugin.Template];
-				    builder.OpenComponent(0, component);
-				    builder.AddAttribute(1, "Objref", pageContentPlugin);
-			        builder.CloseComponent();
+				    component = _dataStorageAccess.TenantAccess.Tenant.GetComponent(pageContentPlugin.Template);
+                    if (component != null)
+                    {
+                        builder.OpenComponent(0, component);
+                        builder.AddAttribute(1, "Objref", pageContentPlugin);
+                        builder.CloseComponent();
+                    }
                 }
             }
 		};
@@ -62,35 +67,34 @@ namespace webManagerCMS.Core.PageContentNS
             switch (plugin.TemplateName)
             {
                 case PageContentPluginType.DOC_H1TEXT:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.PAGE_CORE:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.TREE_CORE:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.GALLERY1:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.NOTE1:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.PICHEADER:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.LINKFOOTER:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.TXTHEADER:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.TREEDISPLAYDEFINED1:
-                    throw new NotImplementedException();
+                    
                     break;
                 case PageContentPluginType.DOC_HTML:
-                    throw new NotImplementedException();
-                    break;
+                    return new DocHtml(plugin);
             }
             return null;
         }

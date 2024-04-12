@@ -19,5 +19,6 @@ namespace webManagerCMS.Data.Storage
 
 		DocHtmlData? GetDocHtmlData(int idPage, int idPlugin);
 
+		IEnumerable<FileAlias> LoadFileAliases(HashSet<int> fileIds);
 	}
 }

@@ -1,0 +1,50 @@
+﻿<section class="section data-panel">
+	<div class="container">
+		@if (Objref.GetItemValue(1) != null)
+		{
+			<h3>@Objref.GetItemValue(1)</h3>
+		}
+
+		<div class="row">
+			@for (int i = 1; i <= Objref.GetDynamicIntervalCount("txt", 10, 1); i++)
+			{
+				<div class="col-3 md:col-12 data-panel__item gs_reveal">
+					@if (Objref.GetItemValue(i, 10, 1) != "" || Objref.GetItemValue(i, 10, 2) != "")
+					{
+						<div class="data-panel__item__text">
+							@if (Objref.GetItemValue(i, 10, 1) != "")
+							{
+								<h4 class="data-panel__title">@Objref.GetItemValueWithHMTL(i, 10, 1)</h4>
+							}
+
+							@if (Objref.GetItemValue(i, 10, 2) != "")
+							{
+								<div class="data-panel__perex">@Objref.GetItemValueWithHMTL(i, 10, 2)</div>
+							}
+						</div>
+					}
+
+					@if (Objref.GetItemValue(i, 10, 3) != "" || Objref.GetItemValue(i, 10, 4) != "")
+					{
+						<div class="data-panel__count">
+							@if (Objref.GetItemValue(i, 10, 3) != "")
+							{
+								<span class="count">@Objref.GetItemValueWithHMTL(i, 10, 3)</span>
+							}
+
+							@if (Objref.GetItemValue(i, 10, 4) != "")
+							{
+								<p class="data-panel__count__perex">@Objref.GetItemValueWithHMTL(i, 10, 4)</p>
+							}
+						</div>
+					}
+				</div>
+			}
+		</div>
+	</div>
+</section>
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.DocHtml? Objref { get; set; }
+}

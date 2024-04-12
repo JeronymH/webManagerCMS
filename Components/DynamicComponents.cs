@@ -9,12 +9,12 @@ using webManagerCMS.Data.Tenants;
 namespace Components
 {
 	public class DynamicComponents : IDynamicComponents
-    {
+	{
 		public IDictionary<string, Type> Components => new Dictionary<string, Type>
 		{
-			{ "Component1", typeof(Component1) },
 			{ "TREE_CORE_0_0", typeof(PAGE_TREE_0_0) },
-			{ "PAGE_CORE_0_0", typeof(PAGE_CORE_0_0) }
+			{ "PAGE_CORE_0_0", typeof(PAGE_CORE_0_0) },
+			{ "DOC_HTML_5_0", typeof(DOC_HTML_5_0) }
 		};
 
 		public string test() {

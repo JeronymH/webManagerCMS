@@ -78,7 +78,7 @@ namespace webManagerCMS.Data.Models.PageContent
 
         private static string GetTemplate(PageContentPluginType templateName, int templateState, int templateNum)
         {
-            return $"{templateName}_{templateState}_{templateNum}";
+            return $"{templateName}_{templateNum}_{templateState}";
         }
 
         public string GetCustomProperty(string custPropName)

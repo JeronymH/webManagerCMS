@@ -11,16 +11,9 @@
 <body>
     <h3>PAGE_CORE_0_0</h3>
 
-    @Objref.RenderPlugin(tree)
-    <hr>
-    <hr>
-    @Objref.RenderTree(0,0)
-    <hr>
-    <hr>
-    <PAGE_TREE_0_0 Objref="tree" />
-    <hr>
-    <hr>
     <PAGE_HEADER Objref="Objref" />
+
+	@Objref.RenderPageContent(0)
 </body>
 
 </html>

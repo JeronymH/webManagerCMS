@@ -32,5 +32,6 @@ namespace webManagerCMS.Data.Tenants
 		string GetWebBaseUrl();
 		string GetComponentsPath();
 		string GetRootAlias();
+		Type? GetComponent(string componentName);
 	}
 }

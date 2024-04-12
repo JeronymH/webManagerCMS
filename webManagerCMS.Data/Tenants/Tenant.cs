@@ -60,5 +60,16 @@ namespace webManagerCMS.Data.Tenants
 			url += WWWSettings.MutationAlias + "/";
 			return url;
 		}
+
+		public Type? GetComponent(string componentName)
+		{
+			if (string.IsNullOrEmpty(componentName))
+				return null;
+
+			if (!Components.ContainsKey(componentName))
+				return null;
+
+			return Components[componentName];
+		}
 	}
 }

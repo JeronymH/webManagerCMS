@@ -13,7 +13,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 	{
 		public DocHtmlData? GetDocHtmlData(int idPage, int idPlugin)
 		{
-			using (var cmd = this.NewCommandProc("dbo.adm_pl_SelectDocHTML1"))
+			using (var cmd = this.NewCommandProc("dbo.pub_pl_SelectDocHTML1"))
 			{
 				cmd.AddParam("@IDWWWPage", idPage);
 				cmd.AddParam("@IDWWWPageContent", idPlugin);
@@ -36,6 +36,30 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 			}
 
 			return null;
+		}
+
+		public IEnumerable<FileAlias> LoadFileAliases(HashSet<int> fileIds)
+		{
+			using (var cmd = this.NewCommandProc("dbo.pub_pl_SelectFileAliases"))
+			{
+				cmd.AddParam("@IDWWW", this.IdWWW);
+				cmd.AddParam("@IDLanguage", this.IdLanguage);
+				cmd.AddParam("@FileIds", fileIds.ToCommaSeparatedString());
+
+				using (var dataReader = this.ExecReader(cmd))
+				{
+					while (dataReader.Read())
+					{
+						var idFile = (int)dataReader["IDFile"];
+
+						yield return new FileAlias()
+						{
+							IdFile = idFile,
+							Alias = idFile + "/" + dataReader["Alias"] as string
+						};
+					}
+				}
+			}
 		}
 	}
 }

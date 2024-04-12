@@ -27,5 +27,7 @@ namespace webManagerCMS.Data.Interfaces
         public string GetPageUrl(Page page);
 
         public string GetPageUrl(string pageAlias);
+
+        public string GetPageUrl(int idPage);
 	}
 }

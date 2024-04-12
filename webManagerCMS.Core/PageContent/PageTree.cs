@@ -104,5 +104,13 @@ namespace webManagerCMS.Core.PageContentNS
 			url += pageAlias + "/";
 			return url;
 		}
+
+		public string GetPageUrl(int idPage)
+		{
+            if (idPage == 0)
+                return "";
+
+			return GetPageUrl(Pages[idPage].PageAlias);
+		}
 	}
 }
