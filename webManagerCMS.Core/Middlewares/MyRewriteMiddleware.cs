@@ -43,7 +43,7 @@ namespace webManagerCMS.Core.Middlewares
             if (!match.Success)
 				return;
 
-            context.Response.Redirect("https://webmanager.lan/api/r/filemanager-gallery/" + match.Groups[1].Value);
+            context.Response.Redirect("http://prev6.s9.lan/r/files/" + match.Groups[1].Value);
         }
 
         private void GetMutationAlias(HttpContext context)

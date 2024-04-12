@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using webManagerCMS.Data.Interfaces;
 using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Models.PageContent;
 
@@ -20,5 +21,9 @@ namespace webManagerCMS.Data.Storage
 		DocHtmlData? GetDocHtmlData(int idPage, int idPlugin);
 
 		IEnumerable<FileAlias> LoadFileAliases(HashSet<int> fileIds);
+
+		IEnumerable<TreeDisplayDefinedRow> GetTreeDisplayDefinedRows(int idPage, int idPlugin, int pageSize, int templateNumber, IPageTree pageTree);
+
+		IEnumerable<TreeDisplayDefinedRowItem> GetTreeDisplayDefinedRowItems(int idRow, int templateNumber, IPageTree pageTree);
 	}
 }

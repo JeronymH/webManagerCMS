@@ -17,5 +17,7 @@ namespace webManagerCMS.Data.Tenants
 		int IdLanguage { get; }
 
 		bool IsAdminView { get; }
+
+		bool FilterPluginsByTimeIntervals { get; }
     }
 }

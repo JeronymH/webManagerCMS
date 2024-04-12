@@ -16,7 +16,7 @@ namespace webManagerCMS.Data.Models.PageContent
 		PICHEADER = 5,
 		LINKFOOTER = 6,
 		TXTHEADER = 7,
-		TREEDISPLAYDEFINED1 = 31,
+		TREEDISPLAYDEFINED1 = 31,	//DONE
 		DOC_HTML = 40				//DONE
 	}
 }

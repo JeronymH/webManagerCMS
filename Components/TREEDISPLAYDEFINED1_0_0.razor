@@ -1,0 +1,36 @@
+﻿
+
+
+
+
+
+
+@foreach (var row in Objref.GetTreeDisplayDefinedRows(100))
+{
+	<h1>@row.Title</h1>
+	<h2>@row.Subtitle</h2>
+	<h3>@row.Description</h3>
+	<h4>@((MarkupString)row.Note)</h4>
+	<h5>@row.Url</h5>
+	<h6>@row.ReflectDate</h6>
+	<h6>@row.Row</h6>
+	<hr />
+	<hr />
+	@foreach (var item in Objref.GetTreeDisplayDefinedRowItems(row.Id))
+	{
+		<h1>@item.Title</h1>
+		<h2>@item.Subtitle</h2>
+		<h3>@item.Description</h3>
+		<h4>@((MarkupString)item.Note)</h4>
+		<h5>@item.Url</h5>
+		<h5>@item.Row</h5>
+	}
+	<hr />
+	<hr />
+}
+
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.TreeDisplayDefined Objref { get; set; }
+}

@@ -91,8 +91,8 @@ namespace webManagerCMS.Core.PageContentNS
                     
                     break;
                 case PageContentPluginType.TREEDISPLAYDEFINED1:
-                    
-                    break;
+                    return new TreeDisplayDefined(plugin);
+
                 case PageContentPluginType.DOC_HTML:
                     return new DocHtml(plugin);
             }

@@ -19,6 +19,8 @@ namespace webManagerCMS.Data.Tenants
 
 		bool IsAdminView { get; set; }
 
+		bool FilterPluginsByTimeIntervals { get; set; }
+
         string WebBaseUrl { get; set; }
 
 		string RootFullPath { get; set; }

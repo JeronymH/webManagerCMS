@@ -229,7 +229,8 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                                 dataReader["Subtitle"] as string,
                                 dataReader["DESCR"] as string,
                                 dataReader["Note"] as string,
-                                dataReader["PictureFileAlias"] as string
+                                dataReader["PictureFileAlias"] as string,
+                                null
                             );
                     }
 				}

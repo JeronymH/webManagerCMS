@@ -21,5 +21,7 @@ namespace webManagerCMS.Core.Tenants
 		public int IdLanguage => this.Tenant?.WWWSettings.IdLanguage ?? throw new NullReferenceException("Unable to retrieve IdLanguage from current HttpContext.");
 
 		public bool IsAdminView => this.Tenant?.IsAdminView ?? throw new NullReferenceException("Unable to retrieve adminView settings from current HttpContext.");
+
+		public bool FilterPluginsByTimeIntervals => this.Tenant?.FilterPluginsByTimeIntervals ?? throw new NullReferenceException("Unable to retrieve adminView settings from current HttpContext.");
     }
 }

@@ -40,6 +40,8 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage.Base
 		public int IdLanguage => this.DataAccess.TenantAccess.IdLanguage;
 
 		public bool IsAdminView => this.DataAccess.TenantAccess.IsAdminView;
+
+		public bool FilterPluginsByTimeIntervals => this.DataAccess.TenantAccess.IsAdminView;
         #endregion
     }
 }

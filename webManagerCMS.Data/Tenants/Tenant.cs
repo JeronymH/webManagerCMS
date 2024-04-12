@@ -21,6 +21,8 @@ namespace webManagerCMS.Data.Tenants
 		//prepared for AdminView logic - Admin view emables non public data
 		public bool IsAdminView { get; set; } = false;
 
+		public bool FilterPluginsByTimeIntervals { get; set; }
+
         public string WebBaseUrl { get; set; }
 
 		public string RootFullPath { get; set; }

@@ -32,7 +32,7 @@ namespace webManagerCMS.Data.Models.PageContent
 
         protected Dictionary<string, string>? CustomProperties { get; set; }
 
-        public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, string? title, string? subtitle, string? description, string? note, string? pictureFileAlias)
+        public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, string? title, string? subtitle, string? description, string? note, string? pictureFileAlias, PageContentPluginParameters pluginParameters)
 		{
 			TemplateName = templateName;
 			TemplateNum = templateNum;
@@ -44,6 +44,7 @@ namespace webManagerCMS.Data.Models.PageContent
 			Description = description;
 			Note = note;
 			PictureFileAlias = pictureFileAlias;
+            PluginParameters = pluginParameters;
 		}
 
 		//This constructor is for content plugins without settings section -> TREE_CORE, PAGE_CORE, PICHEADER, LINKFOOTER...
@@ -62,7 +63,8 @@ namespace webManagerCMS.Data.Models.PageContent
             plugin.Subtitle,
             plugin.Description,
             plugin.Note,
-            plugin.PictureFileAlias
+            plugin.PictureFileAlias,
+            plugin.PluginParameters
         ){ }
 
 		//TODO: implement this function
