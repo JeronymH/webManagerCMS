@@ -217,11 +217,15 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 
 				using (var dataReader = this.ExecReader(cmd))
 				{
+                    int templateNumber;
 					while (dataReader.Read())
 					{
-                        yield return new PageContentPlugin(
+                        templateNumber = (int)dataReader["IDTemplateNum"];
+                        if (templateNumber < 0) templateNumber = 0;
+
+						yield return new PageContentPlugin(
 								(PageContentPluginType)Enum.ToObject(typeof(PageContentPluginType), (int)dataReader["IDClassCollection"]),
-                                (int)dataReader["IDTemplateNum"],
+								templateNumber,
                                 0,
                                 (int)dataReader["IDWWWPageContent"],
                                 (int)dataReader["IDWWWPage"],
@@ -229,6 +233,9 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                                 dataReader["Subtitle"] as string,
                                 dataReader["DESCR"] as string,
                                 dataReader["Note"] as string,
+                                dataReader["Note_Title"] as string,
+                                dataReader["Note_SubTitle"] as string,
+                                dataReader["Note_Perex"] as string,
                                 dataReader["PictureFileAlias"] as string,
                                 null
                             );

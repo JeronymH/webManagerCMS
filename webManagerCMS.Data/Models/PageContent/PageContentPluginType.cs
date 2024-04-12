@@ -8,7 +8,7 @@ namespace webManagerCMS.Data.Models.PageContent
 {
     public enum PageContentPluginType
     {
-		DOC_H1TEXT = -3,
+		DOC_H1TEXT = -3,			//DONE
         PAGE_CORE = 1,				//DONE
         TREE_CORE = 2,				//DONE
 		GALLERY1 = 3,

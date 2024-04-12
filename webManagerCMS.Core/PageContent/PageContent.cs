@@ -67,8 +67,8 @@ namespace webManagerCMS.Core.PageContentNS
             switch (plugin.TemplateName)
             {
                 case PageContentPluginType.DOC_H1TEXT:
-                    
-                    break;
+                    return new DocH1Text(plugin);
+
                 case PageContentPluginType.PAGE_CORE:
                     
                     break;

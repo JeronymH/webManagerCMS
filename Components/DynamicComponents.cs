@@ -15,7 +15,8 @@ namespace Components
 			{ "TREE_CORE_0_0", typeof(PAGE_TREE_0_0) },
 			{ "PAGE_CORE_0_0", typeof(PAGE_CORE_0_0) },
 			{ "DOC_HTML_5_0", typeof(DOC_HTML_5_0) },
-			{ "TREEDISPLAYDEFINED1_0_0", typeof(TREEDISPLAYDEFINED1_0_0) }
+			{ "TREEDISPLAYDEFINED1_0_0", typeof(TREEDISPLAYDEFINED1_0_0) },
+			{ "DOC_H1TEXT_0_0", typeof(DOC_H1TEXT_0_0) }
 		};
 
 		public string test() {
