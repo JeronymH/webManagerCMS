@@ -11,9 +11,9 @@ namespace webManagerCMS.Data.Models.PageContent
 		DOC_H1TEXT = -3,			//DONE
         PAGE_CORE = 1,				//DONE
         TREE_CORE = 2,				//DONE
-		GALLERY1 = 3,
+		GALLERY1 = 3,				//in progress...
 		NOTE1 = 4,
-		PICHEADER = 5,
+		PICHEADER = 5,				
 		LINKFOOTER = 6,
 		TXTHEADER = 7,
 		TREEDISPLAYDEFINED1 = 31,	//DONE

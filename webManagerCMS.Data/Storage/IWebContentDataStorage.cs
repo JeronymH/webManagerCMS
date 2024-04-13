@@ -19,11 +19,16 @@ namespace webManagerCMS.Data.Storage
 		IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId);
 
 		DocHtmlData? GetDocHtmlData(int idPage, int idPlugin);
-
 		IEnumerable<FileAlias> LoadFileAliases(HashSet<int> fileIds);
 
 		IEnumerable<TreeDisplayDefinedRow> GetTreeDisplayDefinedRows(int idPage, int idPlugin, int pageSize, int templateNumber, IPageTree pageTree);
-
 		IEnumerable<TreeDisplayDefinedRowItem> GetTreeDisplayDefinedRowItems(int idRow, int templateNumber, IPageTree pageTree);
+
+		int GetGalleryCountRow(int idPage, int idPlugin);
+		int GetGalleryCountRowPicture(int idDetail);
+		int GetGalleryDetailId(int idPage, int idPlugin);
+		IEnumerable<GalleryRow> GetGalleryRows(int idPage, int idPlugin, int pageSize, int templateNumber);
+		IEnumerable<GalleryRowPicture> GetGalleryRowPictures(int idDetail, int pageSize, int templateNumber, bool randomOrder);
+		GalleryRow? GetGalleryDetailRow(int idPage, int idPlugin, int idDetail, int templateNumber);
 	}
 }
