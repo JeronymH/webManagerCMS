@@ -1,0 +1,40 @@
+﻿<section class="section line gallery-wrapper">
+
+	<h1>@DetailItem.Title</h1>
+	<h2>@DetailItem.Subtitle</h2>
+	<h3>@DetailItem.Description</h3>
+	<h4>@DetailItem.Perex</h4>
+	<h5>@((MarkupString)DetailItem.Note)</h5>
+	<h4>@DetailItem.Picture1</h4>
+	<h4>@DetailItem.Picture2</h4>
+	<h4>@DetailItem.Picture3</h4>
+
+	@foreach (var item in Objref.GetGalleryRowPictures(100, false))
+	{
+		<div>
+			<h2>@item.Title</h2>
+			<h3>@item.Subtitle</h3>
+			<h4>@item.Description</h4>
+			<h5>@item.Author</h5>
+			<h5>@item.ReflectDate</h5>
+			<h5>@item.Picture1</h5>
+			<h5>@item.Picture2</h5>
+			<h5>@item.Picture3</h5>
+		</div>
+	}
+
+
+</section>
+
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.Gallery? Objref { get; set; }
+
+	public GalleryRow DetailItem { get; set; }
+
+	protected override void OnInitialized()
+	{
+		DetailItem = Objref.GetDetailRow();
+	}
+}

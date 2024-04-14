@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="/public/css/style.css" />
+	<base href="/" />
+</head>
+
+<body>
+	<h3>PAGE_CORE_0_0</h3>
+
+	<PAGE_HEADER Objref="Objref" />
+
+	@Objref.RenderPageDetailContent()
+</body>
+
+</html>
+
+
+
+@code {
+	[Parameter]
+	public PageContent? Objref { get; set; }
+}

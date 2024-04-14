@@ -101,7 +101,7 @@ namespace webManagerCMS.Core.PageContentNS
 			if (string.IsNullOrEmpty(pageAlias))
 				return url;
 
-			url += pageAlias + "/";
+			url += pageAlias + _tenantAccess.Tenant.WWWSettings.PageSuffix;
 			return url;
 		}
 

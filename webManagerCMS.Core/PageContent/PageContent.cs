@@ -52,7 +52,7 @@ namespace webManagerCMS.Core.PageContentNS
                 if (pageContentPlugin != null)
                 {
 				    component = _dataStorageAccess.TenantAccess.Tenant.GetComponent(pageContentPlugin.Template);
-                    if (component != null)
+                    if (component != null) //if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
                     {
                         builder.OpenComponent(0, component);
                         builder.AddAttribute(1, "Objref", pageContentPlugin);
@@ -62,6 +62,37 @@ namespace webManagerCMS.Core.PageContentNS
             }
 		};
 
+        public RenderFragment RenderPageDetailContent() => builder =>
+        {
+            PageContentPlugin? pageContentPlugin = null;
+            Type? component;
+
+            var idTableName = PluginParameters.urlAliases.Aliases[1].IdTableName ?? 0;
+            var idPage = PluginParameters.currentPage.Id;
+            var idPageContent = PluginParameters.urlAliases.Aliases[1].IdPageContent ?? 0;
+            var idDetail = PluginParameters.urlAliases.Aliases[1].Id ?? 0;
+            var templateNum = PluginParameters.urlAliases.Aliases[1].IdTemplateNum ?? 0;
+
+
+			switch (PluginParameters.urlAliases.Aliases[1].IdTableName)
+            {
+                case 8:
+                    pageContentPlugin = new Gallery(templateNum, TemplateState, PluginParameters, idPageContent, idPage, idDetail);
+					break;
+            }
+
+			if (pageContentPlugin != null)
+			{
+				component = _dataStorageAccess.TenantAccess.Tenant.GetComponent(pageContentPlugin.Template);
+				if (component != null) //if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
+				{
+					builder.OpenComponent(0, component);
+					builder.AddAttribute(1, "Objref", pageContentPlugin);
+					builder.CloseComponent();
+				}
+			}
+		};
+
         public PageContentPlugin GetPageContentPlugin(PageContentPlugin plugin)
         {
             switch (plugin.TemplateName)
@@ -69,27 +100,13 @@ namespace webManagerCMS.Core.PageContentNS
                 case PageContentPluginType.DOC_H1TEXT:
                     return new DocH1Text(plugin);
 
-                case PageContentPluginType.PAGE_CORE:
-                    
-                    break;
-                case PageContentPluginType.TREE_CORE:
-                    
-                    break;
                 case PageContentPluginType.GALLERY1:
-                    
-                    break;
+                    return new Gallery(plugin);
+
                 case PageContentPluginType.NOTE1:
                     
                     break;
-                case PageContentPluginType.PICHEADER:
-                    
-                    break;
-                case PageContentPluginType.LINKFOOTER:
-                    
-                    break;
-                case PageContentPluginType.TXTHEADER:
-                    
-                    break;
+
                 case PageContentPluginType.TREEDISPLAYDEFINED1:
                     return new TreeDisplayDefined(plugin);
 
