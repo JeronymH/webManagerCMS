@@ -28,7 +28,7 @@ namespace webManagerCMS.Data.Models.PageContent
         public string? Subtitle { get; set; }
         public string? Description { get; set; }
         public string? Note { get; set; }
-        public string? PictureFileAlias { get; set; }
+        public string? Picture { get; set; }
 
         public string? Note_Title { get; set; }
         public string? Note_Subtitle { get; set; }
@@ -50,7 +50,7 @@ namespace webManagerCMS.Data.Models.PageContent
 			Note_Title = note_Title;
 			Note_Subtitle = note_Subtitle;
 			Note_Perex = note_Perex;
-			PictureFileAlias = pictureFileAlias;
+			Picture = pictureFileAlias;
             PluginParameters = pluginParameters;
 		}
 
@@ -73,7 +73,7 @@ namespace webManagerCMS.Data.Models.PageContent
             plugin.Note_Title,
             plugin.Note_Subtitle,
             plugin.Note_Perex,
-            plugin.PictureFileAlias,
+            plugin.Picture,
             plugin.PluginParameters
         ){ }
 

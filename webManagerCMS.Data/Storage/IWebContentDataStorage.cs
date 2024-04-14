@@ -30,5 +30,8 @@ namespace webManagerCMS.Data.Storage
 		IEnumerable<GalleryRow> GetGalleryRows(int idPage, int idPlugin, int pageSize, int templateNumber);
 		IEnumerable<GalleryRowPicture> GetGalleryRowPictures(int idDetail, int pageSize, int templateNumber, bool randomOrder);
 		GalleryRow? GetGalleryDetailRow(int idPage, int idPlugin, int idDetail, int templateNumber);
+
+		HeaderPictureData? GetHeaderPicture(int idPage, int placeNumber, HeaderPictureSelectType selectType, int pictureNumber, bool randomOrder);
+		IEnumerable<HeaderPictureData> GetHeaderPictures(int idPage, int placeNumber, HeaderPictureSelectType selectType, bool randomOrder, int maxNumberOfItems);
 	}
 }

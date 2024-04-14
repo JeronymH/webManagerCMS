@@ -1,0 +1,17 @@
+﻿@foreach (var item in Objref.GetHeaderPictures(HeaderPictureSelectType.LVL, false, 3))
+{
+	<div>
+		@item.Title
+		@item.Subtitle<br />
+		@item.Description<br />
+		@item.Picture<br />
+		@item.PictureFull<br />
+		@item.ObjectCount<br />
+	</div>
+}
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.HeaderPicture Objref { get; set; }
+
+}

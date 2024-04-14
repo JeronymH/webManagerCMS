@@ -17,15 +17,20 @@ namespace webManagerCMS.Core.PageContentNS
             TemplateState = templateState;
             PluginParameters = pluginParameters;
 
-            _dataStorageAccess = dataStorageAccess;
+            IdPage = PluginParameters.currentPage.Id;
+
+			_dataStorageAccess = dataStorageAccess;
 		}
 
         public RenderFragment RenderPlugin(PageContentPlugin plugin) => builder =>
         {
-            var component = _dataStorageAccess.TenantAccess.Tenant.Components[plugin.Template];
-            builder.OpenComponent(0, component);
-            builder.AddAttribute(1, "Objref", plugin);
-            builder.CloseComponent();
+            var component = _dataStorageAccess.TenantAccess.Tenant.GetComponent(plugin.Template);
+			if (component != null) //if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
+            {
+			    builder.OpenComponent(0, component);
+                builder.AddAttribute(1, "Objref", plugin);
+                builder.CloseComponent();
+            }
         };
 
         public RenderFragment RenderPage()
@@ -41,7 +46,7 @@ namespace webManagerCMS.Core.PageContentNS
 
 		public RenderFragment RenderPageContent(int contentColumnId) => builder =>
 		{
-			var content = _dataStorageAccess.WebContentDataStorage.LoadPageContent(PluginParameters.currentPage.IdDB, 1, null);
+			var content = _dataStorageAccess.WebContentDataStorage.LoadPageContent(PluginParameters.currentPage.IdDB, contentColumnId, null);
             PageContentPlugin? pageContentPlugin;
 			Type? component;
 
@@ -68,7 +73,7 @@ namespace webManagerCMS.Core.PageContentNS
             Type? component;
 
             var idTableName = PluginParameters.urlAliases.Aliases[1].IdTableName ?? 0;
-            var idPage = PluginParameters.currentPage.Id;
+            var idPage = IdPage;
             var idPageContent = PluginParameters.urlAliases.Aliases[1].IdPageContent ?? 0;
             var idDetail = PluginParameters.urlAliases.Aliases[1].Id ?? 0;
             var templateNum = PluginParameters.urlAliases.Aliases[1].IdTemplateNum ?? 0;
@@ -103,10 +108,6 @@ namespace webManagerCMS.Core.PageContentNS
                 case PageContentPluginType.GALLERY1:
                     return new Gallery(plugin);
 
-                case PageContentPluginType.NOTE1:
-                    
-                    break;
-
                 case PageContentPluginType.TREEDISPLAYDEFINED1:
                     return new TreeDisplayDefined(plugin);
 
@@ -115,5 +116,33 @@ namespace webManagerCMS.Core.PageContentNS
             }
             return null;
         }
+
+        public RenderFragment RenderHeaderPicture(int placeNumber, HeaderPictureSelectType selectType, int pictureNumber, bool randomOrder)
+		{
+			HeaderPicture headerPicture = new HeaderPicture(IdPage, placeNumber, selectType, pictureNumber, randomOrder, PluginParameters);
+
+            return RenderPlugin(headerPicture);
+		}
+
+        public RenderFragment? RenderHeaderPictureWithMaxPlaceNumber(int maxPlaceNumber, HeaderPictureSelectType selectType, int pictureNumber, bool randomOrder)
+		{
+            if (maxPlaceNumber > 9) throw new ArgumentOutOfRangeException("The maximum allowed value of maxPlaceNumber is 9.");
+
+            for (int i = 0; i <= maxPlaceNumber; i++)
+            {
+			    HeaderPicture headerPicture = new HeaderPicture(IdPage, i, selectType, pictureNumber, randomOrder, PluginParameters);
+                if (headerPicture.Id > 0)
+					return RenderPlugin(headerPicture);
+			}
+
+            return null;
+		}
+
+		public RenderFragment RenderHeaderPictureList(int placeNumber)
+		{
+			HeaderPicture headerPicture = new HeaderPicture(IdPage, placeNumber, PluginParameters);
+
+			return RenderPlugin(headerPicture);
+		}
 	}
 }
