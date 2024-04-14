@@ -12,10 +12,10 @@ namespace webManagerCMS.Data.Models.PageContent
         PAGE_CORE = 1,				//DONE
         TREE_CORE = 2,				//DONE
 		GALLERY1 = 3,				//DONE
-		//NOTE1 = 4,					//NOT IMPLEMENTING!!!
+		//NOTE1 = 4,				//NOT IMPLEMENTING!!!
 		PICHEADER = 5,				//DONE
-		LINKFOOTER = 6,
-		TXTHEADER = 7,
+		LINKFOOTER = 6,				//DONE
+		//TXTHEADER = 7,			//NOT IMPLEMENTING!!!
 		TREEDISPLAYDEFINED1 = 31,	//DONE
 		DOC_HTML = 40				//DONE
 	}

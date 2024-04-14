@@ -19,7 +19,10 @@ namespace Components
 			{ "TREEDISPLAYDEFINED1_0_0", typeof(TREEDISPLAYDEFINED1_0_0) },
 			{ "DOC_H1TEXT_0_0", typeof(DOC_H1TEXT_0_0) },
 			{ "GALLERY1_0_0", typeof(GALLERY1_0_0) },
-			{ "GALLERY1_0_1", typeof(GALLERY1_0_1) }
+			{ "GALLERY1_0_1", typeof(GALLERY1_0_1) },
+			{ "PICHEADER_0_0", typeof(PICHEADER_0_0) },
+			{ "PICHEADER_2_0", typeof(PICHEADER_2_0) },
+			{ "LINKFOOTER_0_0", typeof(LINKFOOTER_0_0) }
 		};
 
 		public string test() {

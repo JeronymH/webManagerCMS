@@ -117,7 +117,8 @@ namespace webManagerCMS.Core.PageContentNS
             return null;
         }
 
-        public RenderFragment RenderHeaderPicture(int placeNumber, HeaderPictureSelectType selectType, int pictureNumber, bool randomOrder)
+		#region HeaderPicture
+		public RenderFragment RenderHeaderPicture(int placeNumber, HeaderPictureSelectType selectType, int pictureNumber, bool randomOrder)
 		{
 			HeaderPicture headerPicture = new HeaderPicture(IdPage, placeNumber, selectType, pictureNumber, randomOrder, PluginParameters);
 
@@ -143,6 +144,14 @@ namespace webManagerCMS.Core.PageContentNS
 			HeaderPicture headerPicture = new HeaderPicture(IdPage, placeNumber, PluginParameters);
 
 			return RenderPlugin(headerPicture);
+		}
+        #endregion
+
+        public RenderFragment RenderFooterLinkList(int templateNumber, int templateState, int placeNumber)
+        {
+			FooterLink footerLink = new FooterLink(IdPage, templateNumber, templateState, placeNumber, PluginParameters);
+
+			return RenderPlugin(footerLink);
 		}
 	}
 }
