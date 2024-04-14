@@ -72,7 +72,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                         yield return new LocalizedText()
                         {
                             IdLanguage = (int)dataReader["IDLanguage"],
-                            IdCategory = (int)dataReader["IDCategory"],
+                            //IdCategory = (int)dataReader["IDCategory"],
                             Code = (string)dataReader["Code"],
                             Text = (string)dataReader["Text"]
                         };

@@ -25,6 +25,9 @@
 		<h3>Links 3</h3>
 		@Objref.RenderFooterLinkList(0, 0, 2)
 	</div>
+
+	@Objref.GetLocalizedText("AllRightsReserved")<br/>
+	@Objref.GetLocalizedText("AddToFavorites")
 </body>
 
 </html>
@@ -38,7 +41,7 @@
 
 	protected override void OnInitialized()
 	{
-		tree =  new webManagerCMS.Core.PageContentNS.Plugins.PageTree(0, 0, Objref.PluginParameters);
+		tree = new webManagerCMS.Core.PageContentNS.Plugins.PageTree(0, 0, Objref.PluginParameters);
 	}
 	public webManagerCMS.Core.PageContentNS.Plugins.PageTree tree { get; set; }
 }

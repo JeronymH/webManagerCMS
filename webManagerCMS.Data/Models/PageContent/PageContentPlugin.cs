@@ -88,15 +88,26 @@ namespace webManagerCMS.Data.Models.PageContent
 		}
 
 
-		//TODO: implement this function
-		public string GetLocalizedText(int idLanguage, string textCode)
+		//TODO: Implement fallback for returning text with default IdLanguage
+		public string? GetLocalizedText(int idLanguage, string textCode)
         {
-            return "";
+            var identifier = LocalizedText.GetIdentifier(idLanguage, textCode);
+			PluginParameters.dataStorageAccess.SystemDataStorage.GetLocalizedTexts(PluginParameters.tenantAccess.IdWWW, true).TryGetValue(identifier, out var localizedText);
+
+            if (localizedText != null)
+                return localizedText.Text;
+
+			return null;
         }
 
         public string GetLocalizedText(SystemLanguageType languageType, string textCode)
         {
             return GetLocalizedText((int)languageType, textCode);
+        }
+
+        public string GetLocalizedText(string textCode)
+        {
+            return GetLocalizedText(PluginParameters.tenantAccess.IdLanguage, textCode);
         }
 
         private static string GetTemplate(PageContentPluginType templateName, int templateState, int templateNum)
@@ -117,5 +128,10 @@ namespace webManagerCMS.Data.Models.PageContent
         {
 
         }
+
+        public string GetFileUrl(string fileAlias)
+        {
+            return $"/r/files/{fileAlias}";
+		}
     }
 }
