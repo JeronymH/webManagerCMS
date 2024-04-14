@@ -33,5 +33,7 @@ namespace webManagerCMS.Data.Storage
 
 		HeaderPictureData? GetHeaderPicture(int idPage, int placeNumber, HeaderPictureSelectType selectType, int pictureNumber, bool randomOrder);
 		IEnumerable<HeaderPictureData> GetHeaderPictures(int idPage, int placeNumber, HeaderPictureSelectType selectType, bool randomOrder, int maxNumberOfItems);
+
+		IEnumerable<FooterLinkItem> GetFooterLinkItems(int idPage, int placeNumber, FooterLinkSelectType selectType, bool randomOrder, IPageTree pageTree);
 	}
 }

@@ -11,11 +11,20 @@
 <body>
     <h3>PAGE_CORE_0_0</h3>
 
-	@Objref.RenderHeaderPictureList(2)
-
     <PAGE_HEADER Objref="Objref" />
 
+	@Objref.RenderHeaderPictureList(2)
+
+
 	@Objref.RenderPageContent(0)
+	<div style="bg-color: red;">
+		<h3>Links 1</h3>
+		@Objref.RenderFooterLinkList(0, 0, 0)
+		<h3>Links 2</h3>
+		@Objref.RenderFooterLinkList(0, 0, 1)
+		<h3>Links 3</h3>
+		@Objref.RenderFooterLinkList(0, 0, 2)
+	</div>
 </body>
 
 </html>

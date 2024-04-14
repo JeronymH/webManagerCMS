@@ -1,0 +1,22 @@
+﻿@foreach (var item in Objref.GetFooterLinkItems(FooterLinkSelectType.LVL, false))
+{
+	<div>
+		@item.Id
+		@item.Prefix<br />
+		@item.Suffix<br />
+		@item.Title<br />
+		@item.Description<br />
+		@item.LinkTarget<br />
+		@item.Picture<br />
+		@item.Url<br />
+		@item.Row<br />
+	</div>
+	<br />
+	<br />
+}
+
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.FooterLink Objref { get; set; }
+}
