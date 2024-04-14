@@ -21,7 +21,9 @@ namespace webManagerCMS.Data.Tenants
 
 		bool FilterPluginsByTimeIntervals { get; set; }
 
-        string WebBaseUrl { get; set; }
+		bool WebDevelopmentBehaviorEnabled { get; set; }
+
+		string WebBaseUrl { get; set; }
 
 		string RootFullPath { get; set; }
 

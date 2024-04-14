@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using webManagerCMS.Data.Models;
+using webManagerCMS.Data.Storage;
 
 
 namespace webManagerCMS.Data.Tenants
@@ -22,6 +23,8 @@ namespace webManagerCMS.Data.Tenants
 		public bool IsAdminView { get; set; } = false;
 
 		public bool FilterPluginsByTimeIntervals { get; set; }
+
+		public bool WebDevelopmentBehaviorEnabled { get; set; }
 
         public string WebBaseUrl { get; set; }
 

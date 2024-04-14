@@ -77,6 +77,17 @@ namespace webManagerCMS.Data.Models.PageContent
             plugin.PluginParameters
         ){ }
 
+		public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, PageContentPluginParameters pluginParameters)
+		{
+			TemplateName = templateName;
+			TemplateNum = templateNum;
+			TemplateState = templateState;
+			Id = id;
+			IdPage = idPage;
+			PluginParameters = pluginParameters;
+		}
+
+
 		//TODO: implement this function
 		public string GetLocalizedText(int idLanguage, string textCode)
         {

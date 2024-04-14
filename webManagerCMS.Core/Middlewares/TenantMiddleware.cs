@@ -50,6 +50,7 @@ namespace webManagerCMS.Core.Middlewares
 
 			if (applicationSettings.Tenants.ContainsKey(tenantKey))
 				tenant = applicationSettings.Tenants[tenantKey];
+				tenant.WebDevelopmentBehaviorEnabled = applicationSettings.WebDevelopmentBehaviorEnabled;
 
 			if (tenant == null)
 				throw new AccessDeniedException($"Unable to get a tenant for the [{tenantKey}] domain - bad domain or tenant data.");

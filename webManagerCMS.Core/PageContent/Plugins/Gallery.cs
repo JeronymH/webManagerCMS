@@ -15,6 +15,13 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 			InitCountRow();
 		}
 
+		public Gallery(int templateNum, int templateState, PageContentPluginParameters? pluginParameters, int id, int idPage, int idDetail) : base(PageContentPluginType.GALLERY1, templateNum, templateState, id, idPage, pluginParameters)
+		{
+			_dataStorageAccess = pluginParameters.dataStorageAccess;
+
+			IdDetail = idDetail;
+		}
+
 		public int CountRow { get; private set; }
 
 		private int IdDetail {  get; set; }

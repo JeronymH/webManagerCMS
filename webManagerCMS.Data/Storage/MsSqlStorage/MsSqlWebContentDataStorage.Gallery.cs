@@ -187,8 +187,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 					{
 						return new GalleryRow()
 						{
-							Id = (int)dataReader["IDTreeDisplayDefined1"],
-							AliasValue = dataReader["AliasValue"] as string,
+							Id = (int)dataReader["IDGallery1"],
 							Title = dataReader["Title"] as string,
 							Subtitle = dataReader["SubTitle"] as string,
 							Description = dataReader["DESCR"] as string,
