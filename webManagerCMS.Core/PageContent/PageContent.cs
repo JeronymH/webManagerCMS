@@ -9,7 +9,7 @@ namespace webManagerCMS.Core.PageContentNS
     public class PageContent : PageContentPlugin
     {
         private IDataStorageAccess _dataStorageAccess;
-
+        
         public PageContent(int templateNum, int templateState, PageContentPluginParameters pluginParameters, IDataStorageAccess dataStorageAccess) : base(0) {
             TemplateName = PageContentPluginType.PAGE_CORE;
 
@@ -21,6 +21,9 @@ namespace webManagerCMS.Core.PageContentNS
 
 			_dataStorageAccess = dataStorageAccess;
 		}
+
+        public static int ErrorTemplateNum = -1;
+        public static int ErrorTemplateState = 0;
 
         public RenderFragment RenderPlugin(PageContentPlugin plugin) => builder =>
         {

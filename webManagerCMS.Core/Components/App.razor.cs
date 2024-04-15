@@ -20,7 +20,7 @@ namespace webManagerCMS.Core.Components
 		[Inject]
 		IHttpContextAccessor? httpContextAccessor { get; set; }
 
-		public PageContentNS.PageContent? PageContent { get; set; }
+		public PageContent? PageContent { get; set; }
 
 		protected override void OnInitialized()
 		{
@@ -37,15 +37,13 @@ namespace webManagerCMS.Core.Components
                 urlAliases = urlAliases
 			};
 
-            PageContent = new PageContentNS.PageContent(page.TemplateNum, urlAliases.ActState, pluginParameters, DataStorageAccess);
-
 			if (urlAliases.CheckAllData())
 			{
-
+				PageContent = new PageContent(page.TemplateNum, urlAliases.ActState, pluginParameters, DataStorageAccess);
             }
 			else
 			{
-
+				PageContent = new PageContent(PageContent.ErrorTemplateNum, PageContent.ErrorTemplateState, pluginParameters, DataStorageAccess);
 			}
 		}
 
