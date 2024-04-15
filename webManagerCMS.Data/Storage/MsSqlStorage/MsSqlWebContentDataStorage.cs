@@ -53,6 +53,12 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                             PageAlias = alias,
                             IsHomePage = (short)dataReader["IsHomePage"] == 1 ? true : false,
                             VisibleInTree = (short)dataReader["VisibleInTree"] == -1 ? true : false,
+
+                            SEOTitle = dataReader["Title"] as string,
+                            SEOSubtitle = dataReader["SubTitle"] as string,
+                            SEOKeywords = dataReader["Keywords"] as string,
+                            SEODescription = dataReader["Description"] as string,
+                            SEOSocialMetaTags = dataReader["SocialMetaTags"] as string,
                         };
                     }
                     return null;
@@ -94,6 +100,12 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                             PageAlias = alias,
                             IsHomePage = (short)dataReader["IsHomePage"] == 1 ? true : false,
                             VisibleInTree = (int)dataReader["VisibleInTree"] == -1 ? true : false,
+
+                            SEOTitle = dataReader["Title"] as string,
+                            SEOSubtitle = dataReader["SubTitle"] as string,
+                            SEOKeywords = dataReader["Keywords"] as string,
+                            SEODescription = dataReader["Description"] as string,
+                            SEOSocialMetaTags = dataReader["SocialMetaTags"] as string,
                         };
                     }
                     return null;

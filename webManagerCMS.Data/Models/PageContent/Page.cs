@@ -21,5 +21,13 @@ namespace webManagerCMS.Data.Models.PageContent
         public string PageAlias { get; set; }
         public bool IsHomePage { get; set; }
         public bool VisibleInTree { get; set; }
+
+        #region SEO
+        public string? SEOTitle { get; set; }
+        public string? SEOSubtitle { get; set; }
+        public string? SEOKeywords { get; set; }
+        public string? SEODescription { get; set; }
+        public string? SEOSocialMetaTags { get; set; }
+        #endregion
     }
 }
