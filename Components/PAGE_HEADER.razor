@@ -1,47 +1,60 @@
 ﻿
 
-
-
 <header class="header" id="header">
 	<div class="container">
-		<div class="header__bottom">
-			<a class="header__logo" href="@Objref.PluginParameters.tenantAccess.Tenant.GetWebBaseUrl()">
-				<span class="icon icon--logo"><svg><use xlink:href="/public/images/sprite.svg#logo"></use></svg></span>
-			</a>
-			<nav class="header__nav-primary">
-				<ul>
-					@Objref.RenderTree(0,0)
-				</ul>
-			</nav>
+		<a class="header__logo" href="@Objref.PluginParameters.tenantAccess.Tenant.GetWebBaseUrl()">
+			<span class="icon icon--logo"><svg><use xlink:href="/public/images/sprite.svg#logo"></use></svg></span>
+		</a>
+		<div class="header__actions">
 			<nav class="header__nav-secondary">
-				<ul class="header__nav-secondary__actions">
+				<ul>
+					@Objref.RenderTree(0, 0)
 					<li>
-						<button class="header__search js-open-search">
-							<svg class="svg-icon svg-icon--search"><use xlink:href="/public/images/sprite.svg#lupa"></use></svg>
-						</button>
+						@if (Objref.PluginParameters.tenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.Czech)
+						{
+							<a href="/en/" class="lang-switch">english</a>
+						}
+						@if (Objref.PluginParameters.tenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.English)
+						{
+							<a href="/" class="lang-switch">česky</a>
+						}
 					</li>
 				</ul>
 			</nav>
-
-			<div class="header-mobile__actions">
-				<button class="header__search js-open-search">
-					<svg class="svg-icon svg-icon--search">
-						<use xlink:href="/public/images/sprite.svg#lupa"></use>
-					</svg>
-				</button>
-				<button class="header-mobile__expander" id="header-expander" aria-label="">
-					<span class="hamburger">
-						<span class="hamburger__inner"></span>
-					</span>
-				</button>
-			</div>
 		</div>
-	</div>
-	<div class="header-mobile__bg">
-		<svg><use xlink:href="/public/images/sprite.svg#header-bg"></use></svg>
 	</div>
 </header>
 
+<header class="header-mobile" id="header-mobile">
+	<div class="container">
+		<div class="header-mobile__inner">
+			<a class="header-mobile__logo" href="@Objref.PluginParameters.tenantAccess.Tenant.GetWebBaseUrl()">
+				<span class="icon icon--logo"><svg><use xlink:href="/public/images/sprite.svg#logo"></use></svg></span>
+			</a>
+			<div class="header-mobile__actions"></div>
+			<button class="header-mobile__expander" id="header-expander" aria-label="@Objref.GetLocalizedText("ToogleMenu")">
+				<span class="hamburger">
+					<span class="hamburger__inner"></span>
+				</span>
+			</button>
+		</div>
+	</div>
+	<nav class="menu-mobile header-mobile__menu">
+		<ul class="menu-mobile__secondary">
+			@Objref.RenderTree(0, 0)
+			<li>
+				@if (Objref.PluginParameters.tenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.Czech)
+				{
+					<a href="/en/" class="lang-switch">english</a>
+				}
+				@if (Objref.PluginParameters.tenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.English)
+				{
+					<a href="/" class="lang-switch">česky</a>
+				}
+			</li>
+		</ul>
+	</nav>
+</header>
 
 @code {
 	[Parameter]
