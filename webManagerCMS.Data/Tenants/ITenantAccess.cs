@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using webManagerCMS.Data.Models;
 
 namespace webManagerCMS.Data.Tenants
 {
@@ -15,6 +16,8 @@ namespace webManagerCMS.Data.Tenants
 		int IdWWWRoot { get; }
 
 		int IdLanguage { get; }
+
+		SystemLanguageType Language { get; }
 
 		bool IsAdminView { get; }
 

@@ -10,32 +10,30 @@
 	@if (!string.IsNullOrEmpty(Objref.PluginParameters.currentPage.SEODescription)) {<meta name="description" content="@Objref.PluginParameters.currentPage.SEODescription" />}
 	@if (Objref.PluginParameters.currentPage.TemplateNum != PageContent.ErrorTemplateNum) {<title>@Objref.PluginParameters.currentPage.SEOTitle</title>}
 	else {<title>404</title>}
-	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon" />
-	<meta name="generator" content="Studio9 webManager, see https://webmanager.studio9.cz/" />                                                                                                           
 	<meta name="robots" content="index,follow" />                                                                                                                                                                                                        
 	<meta name="googlebot" content="index,follow,snippet,archive" />
+
+	<link href="/public/css/style.css?ver=1.0.0" rel="stylesheet" type="text/css" />
+	<style>.gs_reveal{opacity:0;visibility:hidden;will-change:transform,opacity}</style>
+	<noscript><style>.gs_reveal{opacity:1;visibility:visible}</style></noscript>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h3>PAGE_CORE_0_0</h3>
+	<PAGE_HEADER Objref="Objref" />
 
-    <PAGE_HEADER Objref="Objref" />
-
-	@Objref.RenderHeaderPictureList(2)
-
-
-	@Objref.RenderPageContent(0)
-	<div style="bg-color: red;">
-		<h3>Links 1</h3>
-		@Objref.RenderFooterLinkList(0, 0, 0)
-		<h3>Links 2</h3>
-		@Objref.RenderFooterLinkList(0, 0, 1)
-		<h3>Links 3</h3>
-		@Objref.RenderFooterLinkList(0, 0, 2)
+	<div class="content-wrapper" id="content">
+		@Objref.RenderPageContent(0)
 	</div>
 
-	@Objref.GetLocalizedText("AllRightsReserved")<br/>
-	@Objref.GetLocalizedText("AddToFavorites")
+	<PAGE_FOOTER Objref="Objref" />
+
+	<script src="/public/js/libs/jquery.min.js?ver=3.5.1" type="text/javascript"></script>
+	<script src="/public/js/scripts.js?ver=1.0.0" type="text/javascript"></script>
+	<script src="/public/js/custom.js?ver=1.0.0" type="text/javascript"></script>
+	<script src="/public/js/fanapp.js?ver=1.0.0" type="text/javascript"></script>
 </body>
 
 </html>

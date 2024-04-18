@@ -1,4 +1,5 @@
 ﻿using webManagerCMS.Core.Middlewares;
+using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Tenants;
 
 namespace webManagerCMS.Core.Tenants
@@ -19,6 +20,8 @@ namespace webManagerCMS.Core.Tenants
 		public int IdWWWRoot => this.Tenant?.WWWSettings.IdWWWRoot ?? throw new NullReferenceException("Unable to retrieve IdWWWRoot from current HttpContext.");
 
 		public int IdLanguage => this.Tenant?.WWWSettings.IdLanguage ?? throw new NullReferenceException("Unable to retrieve IdLanguage from current HttpContext.");
+
+		public SystemLanguageType Language => (SystemLanguageType)this.IdLanguage;
 
 		public bool IsAdminView => this.Tenant?.IsAdminView ?? throw new NullReferenceException("Unable to retrieve adminView settings from current HttpContext.");
 

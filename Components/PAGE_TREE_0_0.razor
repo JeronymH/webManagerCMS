@@ -1,16 +1,7 @@
 ﻿@foreach (var item in @Objref.PluginParameters.pageTree.GetPagesForMenu())
 {
 	<li>
-		<a href="@Objref.PluginParameters.pageTree.GetPageUrl(item)">
-			@item.Name
-		</a>
-	</li>
-}
-
-@foreach (var item in @Objref.PluginParameters.pageTree.GetPagesForMenu("socialni-site"))
-{
-	<li>
-		<a href="@Objref.PluginParameters.pageTree.GetPageUrl(item)">
+		<a href="@Objref.PluginParameters.pageTree.GetPageUrl(item)" class="@GetActiveClass(item.Id)">
 			@item.Name
 		</a>
 	</li>
@@ -19,4 +10,10 @@
 @code {
 	[Parameter]
 	public webManagerCMS.Core.PageContentNS.Plugins.PageTree? Objref { get; set; }
+
+	public string? GetActiveClass(int id)
+	{
+		if (id == Objref.PluginParameters.currentPage.Id) return "is-active";
+		return null;
+	}
 }

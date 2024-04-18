@@ -1,19 +1,19 @@
-﻿@foreach (var item in Objref.GetFooterLinkItems(FooterLinkSelectType.ALL, false))
-{
-	<div>
-		@item.Id
-		@item.Prefix<br />
-		@item.Suffix<br />
-		@item.Title<br />
-		@item.Description<br />
-		@item.LinkTarget<br />
-		@item.Picture<br />
-		@item.Url<br />
-		@item.Row<br />
-	</div>
-	<br />
-	<br />
-}
+﻿<ul>
+	@foreach (var item in Objref.GetFooterLinkItems(FooterLinkSelectType.ALL, false))
+	{
+		<li>
+			@if (!string.IsNullOrEmpty(@item.Url))
+			{
+				<a href="@item.Url" target="@item.LinkTarget">
+					@item.Prefix @item.Title @item.Suffix
+				</a>
+			} else
+			{
+				@item.Prefix @item.Title @item.Suffix
+			}
+		</li>
+	}
+</ul>
 
 
 @code {

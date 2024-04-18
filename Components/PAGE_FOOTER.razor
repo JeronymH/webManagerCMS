@@ -1,0 +1,57 @@
+﻿<footer class="footer">
+	<div class="footer__top">
+		<div class="row">
+			<div class="col-3 sm:col-7">
+				@Objref.RenderFooterLinkList(0, 0, 0)
+			</div>
+
+			<div class="col-3 sm:col-7">
+				<div class="footer__social social-media">
+					@foreach (var item in @Objref.PluginParameters.pageTree.GetPagesForMenu("socialni-site"))
+					{
+						<div class="social-media__item">
+							<a href="@Objref.PluginParameters.pageTree.GetPageUrl(item)" target="_blank">
+								<div class="social-media__icon">
+									<svg><use xlink:href="@DynamicComponents.GetSocialMediaIcon(@item.Name)"></use></svg>
+								</div>
+							</a>
+						</div>
+					}
+				</div>
+			</div>
+
+			<div class="col-3 sm:col-2 gs_reveal">
+				<span class="icon icon--footer-dots"><svg><use xlink:href="/public/images/sprite.svg#footer-dots"></use></svg></span>
+				<span class="icon icon--footer-dots-sm"><svg><use xlink:href="/public/images/sprite.svg#footer-dots-sm"></use></svg></span>
+			</div>
+			<div class="col-3 sm:col-3">
+				<button class="back-to-top">
+					<span class="icon icon--arrow-up"><svg><use xlink:href="/public/images/sprite.svg#arrow-up"></use></svg></span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="footer__bottom">
+		<div class="row">
+			<div class="col-4 md:col-12">
+				<ul class="footer__copyright">
+					<li>@DateTime.Now.Year.ToString() &#169; @Objref.GetLocalizedText("Miriki-Text")</li>
+					<li><a href="@DynamicComponents.GetTermsConditionsURL(Objref.PluginParameters.tenantAccess.Language, Objref.PluginParameters.tenantAccess.Tenant)">@Objref.GetLocalizedText("Mikiri-FooterTerms&Conditions")</a>
+						/ <a href="@DynamicComponents.GetCookiePolicyURL(Objref.PluginParameters.tenantAccess.Language, Objref.PluginParameters.tenantAccess.Tenant)">@Objref.GetLocalizedText("Mikiri-FooterCookiePolicy")</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-8 md:col-12 footer__bottom__icons">
+				<img src="/public/images/eu.svg" alt="@Objref.GetLocalizedText("Mikiri-FooterEUImgAlt")">
+				<img src="/public/images/ministerstvok.svg" alt="@Objref.GetLocalizedText("Mikiri-FooterMinistryOfCultureImgAlt")">
+				<img src="/public/images/npo.svg" alt="@Objref.GetLocalizedText("Mikiri-FooterNationalRecoveryPlanImgAlt")">
+			</div>
+		</div>
+	</div>
+</footer>
+
+
+@code {
+	[Parameter]
+	public PageContent? Objref { get; set; }
+}

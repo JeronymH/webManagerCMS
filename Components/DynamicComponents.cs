@@ -4,6 +4,8 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using webManagerCMS.Data.Models;
+using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Tenants;
 
 namespace Components
@@ -25,8 +27,41 @@ namespace Components
 			{ "LINKFOOTER_0_0", typeof(LINKFOOTER_0_0) }
 		};
 
-		public string test() {
-			return "xxx";
+		public static string GetTermsConditionsURL(SystemLanguageType language, ITenant tenant) {
+			switch (language)
+			{
+				case SystemLanguageType.Czech:
+					return tenant.GetRootAlias() + "terms-&-conditions/";
+				case SystemLanguageType.English:
+					return tenant.GetRootAlias() + "terms-&-conditions/";
+				default:
+					return tenant.GetRootAlias() + "terms-&-conditions/";
+			}
+		}
+
+		public static string GetCookiePolicyURL(SystemLanguageType language, ITenant tenant) {
+			switch (language)
+			{
+				case SystemLanguageType.Czech:
+					return tenant.GetRootAlias() + "gdpr/";
+				case SystemLanguageType.English:
+					return tenant.GetRootAlias() + "gdpr/";
+				default:
+					return tenant.GetRootAlias() + "gdpr/";
+			}
+		}
+
+		public static string GetSocialMediaIcon(string name) {
+			switch (name.ToLower())
+			{
+				case "instagram":
+					return "/public/images/sprite.svg#instagram";
+				case "facebook":
+					return "/public/images/sprite.svg#facebook";
+				case "youtube":
+					return "/public/images/sprite.svg#youtube";
+			}
+			return "";
 		}
 
         public string test2()
