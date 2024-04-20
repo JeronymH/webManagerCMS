@@ -41,7 +41,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage.Base
 
 		public bool IsAdminView => this.DataAccess.TenantAccess.IsAdminView;
 
-		public bool FilterPluginsByTimeIntervals => this.DataAccess.TenantAccess.IsAdminView;
+		public bool FilterPluginsByTimeIntervals => this.DataAccess.TenantAccess.FilterPluginsByTimeIntervals;
         #endregion
     }
 }
