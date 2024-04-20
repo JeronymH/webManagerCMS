@@ -92,16 +92,22 @@ namespace webManagerCMS.Core.PageContentNS
 
 		public string GetPageUrl(Page page)
 		{
-            return GetPageUrl(page.PageAlias);
+            if (!string.IsNullOrEmpty(page.Url))
+				return GetPageUrl(page.Url, true);
+
+			return GetPageUrl(page.PageAlias, false);
 		}
 
-		public string GetPageUrl(string pageAlias)
+		public string GetPageUrl(string pageUrl, bool absolutUrl)
 		{
-			string url = _tenantAccess.Tenant.GetRootAlias();
-			if (string.IsNullOrEmpty(pageAlias))
+            if (absolutUrl) return pageUrl;
+
+            string url = _tenantAccess.Tenant.GetRootAlias();
+
+			if (string.IsNullOrEmpty(pageUrl))
 				return url;
 
-			url += pageAlias + _tenantAccess.Tenant.WWWSettings.PageSuffix;
+			url += pageUrl + _tenantAccess.Tenant.WWWSettings.PageSuffix;
 			return url;
 		}
 
@@ -110,7 +116,7 @@ namespace webManagerCMS.Core.PageContentNS
             if (idPage == 0)
                 return "";
 
-			return GetPageUrl(Pages[idPage].PageAlias);
+			return GetPageUrl(Pages[idPage]);
 		}
 	}
 }
