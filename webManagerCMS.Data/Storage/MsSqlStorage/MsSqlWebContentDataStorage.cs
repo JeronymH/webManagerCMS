@@ -73,12 +73,9 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 cmd.AddParam("@IDWWW", this.IdWWW);
                 cmd.AddParam("@IDWWWRoot", this.IdWWWRoot);
                 cmd.AddParam("@PageAlias", pageAlias);
-                if (this.IsAdminView)
-                    cmd.AddParam("@IsAdmin", 1);
-                else
-                    cmd.AddParam("@IsAdmin", null);
+				cmd.AddParam("@IsAdmin", this.IsAdminView ? 1 : null);
 
-                using (var dataReader = this.ExecReader(cmd))
+				using (var dataReader = this.ExecReader(cmd))
                 {
                     if (dataReader.Read())
                     {
@@ -111,6 +108,40 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                     return null;
                 }
             }
+        }
+
+        public Page GetPageFromHistory(string? pageAlias)
+        {
+            using (var cmd = this.NewCommandProc("dbo.pubSelectPageAliasHistory"))
+            {
+                cmd.AddParam("@IDWWW", this.IdWWW);
+                cmd.AddParam("@IDWWWRoot", this.IdWWWRoot);
+                cmd.AddParam("@PageAlias", pageAlias);
+				cmd.AddParam("@maxHistoryPeriod", this.Tenant.WWWSettings.PageAliasMaxHistoryPeriod);
+				cmd.AddParam("@IsAdmin", this.IsAdminView ? 1 : null);
+
+				using (var dataReader = this.ExecReader(cmd))
+                {
+                    int historyIdPage = 0;
+                    string historyPageAlias = "";
+
+					while (dataReader.Read())
+					{
+                        historyIdPage = (int)dataReader["IDWWWPage"];
+                        historyPageAlias = dataReader["PageAlias"] as string;
+
+                        if (!string.IsNullOrEmpty(historyPageAlias) && historyIdPage > 0)
+                        {
+                            break;
+                        }
+					}
+					return new Page()
+					{
+						Id = historyIdPage,
+						PageAlias = historyPageAlias,
+					}; ;
+				}
+			}
         }
 
         public Alias? GetAlias(int step, int idPage, int idAliasTableName, int templateNumber, string alias)
@@ -158,6 +189,51 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
             }
         }
 
+        public Alias? GetAliasFromHistory(int step, int idPage, int idAliasTableName, string alias)
+        {
+            using (var cmd = this.NewCommandProc("dbo.pubSelectAlias"))
+            {
+                if (idAliasTableName > 0)
+                {
+                    cmd.AddParam("@IDWWWPage", 0);
+                    cmd.AddParam("@IDAliasTableName", step);
+                } 
+                else
+                {
+                    cmd.AddParam("@IDWWWPage", idPage);
+                }
+
+                cmd.AddParam("@IDWWWRoot", this.IdWWWRoot);
+                cmd.AddParam("@AliasValue", alias);
+                cmd.AddParam("@Step", step);
+				cmd.AddParam("@maxHistoryPeriod", this.Tenant.WWWSettings.PageAliasMaxHistoryPeriod);
+
+				using (var dataReader = this.ExecReader(cmd))
+				{
+					int historyIdAlias = 0, idTableName = 0;
+					string historyAlias = "";
+
+					while (dataReader.Read())
+					{
+						historyIdAlias = (int)dataReader["IDWWWRootAlias"];
+						historyAlias = dataReader["AliasValue"] as string;
+						idTableName = (int)dataReader["NextGlobal_IDAliasTableName"];
+
+						if (!string.IsNullOrEmpty(historyAlias) && historyIdAlias > 0)
+						{
+							break;
+						}
+					}
+					return new Alias()
+					{
+						Id = historyIdAlias,
+						Name = historyAlias,
+						IdTableName = idTableName
+					}; ;
+				}
+			}
+        }
+
         public Dictionary<int, Page> LoadPagesDictionary(bool fromCache)
         {
             Func<Dictionary<int, Page>> getPagesDictionaryFunc = () => this.LoadPagesDictionary();
@@ -180,12 +256,9 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 cmd.AddParam("@IDWWWRoot", this.IdWWWRoot);
                 cmd.AddParam("@IDRow", Convert.ToInt32(0));
                 cmd.AddParam("@Typ", "TREE");
-				if (this.IsAdminView)
-					cmd.AddParam("@IsAdmin", 1);
-				else
-					cmd.AddParam("@IsAdmin", null);
+				cmd.AddParam("@IsAdmin", this.IsAdminView ? 1 : null);
 
-                using (var dataReader = this.ExecReader(cmd))
+				using (var dataReader = this.ExecReader(cmd))
                 {
                     while (dataReader.Read())
                     {
@@ -222,10 +295,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 				cmd.AddParam("@IDWWWContentCols", contentColumnId);
 				cmd.AddParam("@IDLanguage", this.IdLanguage);
 				if (onlyOnePlugin != null) cmd.AddParam("@OnlyOneClass", onlyOnePlugin.Value);
-				if (this.IsAdminView)
-					cmd.AddParam("@IsAdmin", 1);
-				else
-					cmd.AddParam("@IsAdmin", null);
+				cmd.AddParam("@IsAdmin", this.IsAdminView ? 1 : null);
 
 				using (var dataReader = this.ExecReader(cmd))
 				{

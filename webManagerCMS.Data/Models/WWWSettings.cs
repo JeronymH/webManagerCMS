@@ -12,5 +12,9 @@ namespace webManagerCMS.Data.Models
         public int IdLanguage { get; set; }
         public string MutationAlias { get; set; }
         public string PageSuffix { get; set; }
-    }
+		/// <summary>
+		/// Represents allowed history for page alias in months
+		/// </summary>
+		public int PageAliasMaxHistoryPeriod { get; set; }
+	}
 }

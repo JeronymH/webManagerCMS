@@ -2,9 +2,11 @@
 using webManagerCMS.Core.PageContentNS;
 using webManagerCMS.Core.PageContentNS.Plugins;
 using webManagerCMS.Data.Interfaces;
+using webManagerCMS.Data.Models;
 using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 using webManagerCMS.Data.Tenants;
+using Page = webManagerCMS.Data.Models.PageContent.Page;
 using PageTree = webManagerCMS.Core.PageContentNS.PageTree;
 
 namespace webManagerCMS.Core.Components
@@ -43,6 +45,8 @@ namespace webManagerCMS.Core.Components
             }
 			else
 			{
+				CheckAliasHistory(urlAliases.QueryAliases[0]);
+
 				page = DataStorageAccess?.WebContentDataStorage.GetHomePage();
 				pluginParameters.currentPage = page;
 				PageContent = new PageContent(PageContent.ErrorTemplateNum, PageContent.ErrorTemplateState, pluginParameters, DataStorageAccess);
@@ -100,6 +104,71 @@ namespace webManagerCMS.Core.Components
 
 
 			return urlAliases;
+		}
+
+		private void CheckAliasHistory (string alias)
+		{
+			//load PageTree without cache - after implementing API invalidating cache this wont be necessary
+			var pageTree = new PageTree(DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(false), TenantAccess);
+			var page = pageTree.GetPageByAlias(alias);
+
+			if (page == null)
+				page = new Page();
+
+			if (!string.IsNullOrEmpty(page.PageAlias) && page.Id > 0) return;
+
+			var historyPage = DataStorageAccess?.WebContentDataStorage.GetPageFromHistory(alias);
+
+			page = pageTree.GetPageByAlias(historyPage.PageAlias);
+
+			if (string.IsNullOrEmpty(page.PageAlias) || page.Id <= 0) return;
+
+			var url = DataStorageAccess?.TenantAccess.Tenant.GetRootAlias() + page.PageAlias;
+			url = GetHistoryUrlAlias(page, url);
+
+			if (string.IsNullOrEmpty(url)) return;
+
+			httpContextAccessor.HttpContext.Response.Redirect(url);
+		}
+
+		private string GetHistoryUrlAlias(Page page, string url)
+		{
+			var urlAliases = new UrlAliases(httpContextAccessor);
+			Alias? alias = null;
+			bool aliasLoaded = false;
+
+			var idAliasTableName = 0;
+			var step = 1;
+
+			for (int i = step; i < urlAliases.QueryAliases.Length; i++)
+			{
+				if (string.IsNullOrEmpty(urlAliases.QueryAliases[i]))
+					break;
+
+				alias = DataStorageAccess?.WebContentDataStorage.GetAlias(step, page.Id, idAliasTableName, 0, urlAliases.QueryAliases[i]);
+				if (alias != null)
+				{
+					idAliasTableName = alias.IdTableName?? 0;
+					url += "/" + urlAliases.QueryAliases[i];
+					aliasLoaded = true;
+				}
+				if (!aliasLoaded)
+				{
+					alias = DataStorageAccess?.WebContentDataStorage.GetAliasFromHistory(step, page.Id, idAliasTableName, urlAliases.QueryAliases[i]);
+					if (alias != null)
+					{
+						idAliasTableName = alias.IdTableName ?? 0;
+						url += "/" + urlAliases.QueryAliases[i];
+						aliasLoaded = true;
+					}
+				}
+				step++;
+
+				if (!aliasLoaded)
+					break;
+			}
+
+			return url + DataStorageAccess.TenantAccess.Tenant.WWWSettings.PageSuffix;
 		}
 	}
 }
