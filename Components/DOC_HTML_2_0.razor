@@ -1,0 +1,40 @@
+﻿<section class="section slider__wrapper" id="@("C" + Objref.Id)">
+	<div class="container">
+		@if (!string.IsNullOrEmpty(@Objref.GetItemValue(1)))
+		{
+			<p class="slider__title gs_reveal gs_reveal_fromLeft">@Objref.GetItemValueWithHTML(1)</p>
+		}
+		<div class="f-carousel slider">
+			<div class="f-carousel__viewport">
+				@for (int i = 1; i <= Objref.GetDynamicIntervalCount("txt", 10, 1); i++)
+				{
+					<figure class="f-carousel__slide">
+						@if (!string.IsNullOrEmpty(Objref.GetItemValue(i, 10, 3)))
+						{
+							<IMG_LAZY Picture="@Objref.GetItemValue(i, 10, 3)" Preloader="/public/images/preloader.svg" />
+							<div class="preloader"></div>
+						}
+						<figcaption>
+							@if (!string.IsNullOrEmpty(@Objref.GetItemValue(i, 10, 1)))
+							{
+								<h3>@Objref.GetItemValueWithHTML(i, 10, 1)</h3>
+							}
+							@Objref.GetItemValueWithHTML(i, 10, 2)
+						</figcaption>
+					</figure>
+				}
+			</div>
+		</div>
+		@if (!string.IsNullOrEmpty(Objref.GetItemValue(3)) && !string.IsNullOrEmpty(Objref.GetItemValue(8)))
+		{
+			<a href="@Objref.GetItemValue(3)" class="button gs_reveal gs_reveal_fromLeft">
+				@Objref.GetItemValueWithHTML(8)
+			</a>
+		}
+	</div>
+</section>
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.DocHtml? Objref { get; set; }
+}

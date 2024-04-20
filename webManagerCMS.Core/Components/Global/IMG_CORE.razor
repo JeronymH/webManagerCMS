@@ -1,0 +1,38 @@
+﻿@if (Lazyload)
+{
+	<img class="lazyload" data-src="@GetPictureUrl()" src="@Preloader" data-parent-fit="cover" data-aspectratio="1" alt="@Alt" loading="lazy" />
+} else
+{
+	<img src="@GetPictureUrl()" data-parent-fit="cover" data-aspectratio="1" alt="@Alt" />
+}
+
+@code {
+	[Parameter]
+	public string? Picture { get; set; }
+	[Parameter]
+	public string? Preloader { get; set; }
+	[Parameter]
+	public string? Alt { get; set; }
+	[Parameter]
+	public bool Lazyload { get; set; }
+
+	public string? GetPictureUrl()
+	{
+		return GetPictureUrl(Picture);
+	}
+
+	public static string? GetPictureUrl(string? picture)
+	{
+		if (string.IsNullOrEmpty(picture))
+			return null;
+
+		if (picture.Substring(0, 9) == "/r/files/")
+			picture = picture.Substring(9);
+
+		if (string.IsNullOrEmpty(picture))
+			return null;
+
+		picture = "http://prev6.s9.lan/r/files/" + picture;
+		return picture;
+	}
+}

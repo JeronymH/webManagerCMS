@@ -22,7 +22,7 @@ namespace webManagerCMS.Core.Middlewares
 			if (context.Request.Path.Value != null)
 			{
                 EnableStaticFiles(context);
-                RedirectToResizer(context);
+                //RedirectToResizer(context);
                 GetMutationAlias(context);
                 GetPageAliasLvl(context, 0);
                 GetPageAliasLvl(context, 1);
@@ -44,6 +44,7 @@ namespace webManagerCMS.Core.Middlewares
 				return;
 
             context.Response.Redirect("http://prev6.s9.lan/r/files/" + match.Groups[1].Value);
+            SkipRemainingRules = true;
         }
 
         private void GetMutationAlias(HttpContext context)

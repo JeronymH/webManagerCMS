@@ -7,7 +7,6 @@ var rNum = '';
 $(document).ready(function(){
     header.init();
     scrollToAnchor.init();
-    dotAnimation.init();
     backToTop.init();
 	gsReveal.init();
 

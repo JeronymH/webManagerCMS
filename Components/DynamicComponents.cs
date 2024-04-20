@@ -15,15 +15,19 @@ namespace Components
 		public IDictionary<string, Type> Components => new Dictionary<string, Type>
 		{
 			{ "TREE_CORE_0_0", typeof(PAGE_TREE_0_0) },
+			{ "PAGE_CORE_-1_0", typeof(ERROR_PAGE) },
 			{ "PAGE_CORE_0_0", typeof(PAGE_CORE_0_0) },
 			{ "PAGE_CORE_0_1", typeof(PAGE_CORE_0_1) },
-			{ "DOC_HTML_5_0", typeof(DOC_HTML_5_0) },
+			{ "DOC_HTML_0_0", typeof(DOC_HTML_0_0) },
+			{ "DOC_HTML_1_0", typeof(DOC_HTML_1_0) },
+			{ "DOC_HTML_2_0", typeof(DOC_HTML_2_0) },
+			{ "DOC_HTML_3_0", typeof(DOC_HTML_3_0) },
+			{ "DOC_HTML_4_0", typeof(DOC_HTML_4_0) },
 			{ "TREEDISPLAYDEFINED1_0_0", typeof(TREEDISPLAYDEFINED1_0_0) },
 			{ "DOC_H1TEXT_0_0", typeof(DOC_H1TEXT_0_0) },
 			{ "GALLERY1_0_0", typeof(GALLERY1_0_0) },
-			{ "GALLERY1_0_1", typeof(GALLERY1_0_1) },
-			{ "PICHEADER_0_0", typeof(PICHEADER_0_0) },
-			{ "PICHEADER_2_0", typeof(PICHEADER_2_0) },
+			{ "GALLERY1_1_0", typeof(GALLERY1_1_0) },
+			{ "GALLERY1_1_1", typeof(GALLERY1_1_1) },
 			{ "LINKFOOTER_0_0", typeof(LINKFOOTER_0_0) }
 		};
 
@@ -31,11 +35,11 @@ namespace Components
 			switch (language)
 			{
 				case SystemLanguageType.Czech:
-					return tenant.GetRootAlias() + "terms-&-conditions/";
+					return tenant.GetRootAlias() + "terms-conditions/";
 				case SystemLanguageType.English:
-					return tenant.GetRootAlias() + "terms-&-conditions/";
+					return tenant.GetRootAlias() + "terms-conditions/";
 				default:
-					return tenant.GetRootAlias() + "terms-&-conditions/";
+					return tenant.GetRootAlias() + "terms-conditions/";
 			}
 		}
 
@@ -48,6 +52,30 @@ namespace Components
 					return tenant.GetRootAlias() + "gdpr/";
 				default:
 					return tenant.GetRootAlias() + "gdpr/";
+			}
+		}
+
+		public static string GetServicesUrl(SystemLanguageType language, ITenant tenant) {
+			switch (language)
+			{
+				case SystemLanguageType.Czech:
+					return tenant.GetRootAlias() + "sluzby/";
+				case SystemLanguageType.English:
+					return tenant.GetRootAlias() + "services/";
+				default:
+					return tenant.GetRootAlias() + "services/";
+			}
+		}
+
+		public static string GetRealizationsUrl(SystemLanguageType language, ITenant tenant) {
+			switch (language)
+			{
+				case SystemLanguageType.Czech:
+					return tenant.GetRootAlias() + "realizace/";
+				case SystemLanguageType.English:
+					return tenant.GetRootAlias() + "realizations/";
+				default:
+					return tenant.GetRootAlias() + "realizations/";
 			}
 		}
 

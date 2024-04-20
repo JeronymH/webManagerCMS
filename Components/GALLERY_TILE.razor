@@ -1,0 +1,30 @@
+﻿<div class="col-4 sm:col-12">
+	<a href="@Url" class="card gs_reveal gs_reveal_fromLeft">
+		@if (!string.IsNullOrEmpty(Picture))
+		{
+			<div class="card__image" style="padding-top: 66.666666667%">
+				<IMG_LAZY Picture="@Picture" Preloader="/public/images/preloader.svg" Alt="@Title" />
+				<div class="preloader"></div>
+			</div>
+		}
+		@if (!string.IsNullOrEmpty(Title))
+		{
+			<p class="card__label">@Title</p>
+		}
+		@if (!string.IsNullOrEmpty(Perex))
+		{
+			<p class="card__perex">@Perex</p>
+		}
+	</a>
+</div>
+
+@code {
+	[Parameter]
+	public string? Picture { get; set; }
+	[Parameter]
+	public string? Url { get; set; }
+	[Parameter]
+	public string? Title { get; set; }
+	[Parameter]
+	public string? Perex { get; set; }
+}

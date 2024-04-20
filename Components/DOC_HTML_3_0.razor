@@ -1,0 +1,30 @@
+﻿<section class="section icon-row" id="@("C" + Objref.Id)">
+	<div class="container">
+		<div class="row">
+			@for (int i = 1; i <= Objref.GetDynamicIntervalCount("txt", 10, 1); i++)
+			{
+				<div class="col-4 md:col-6 xs:col-12">
+					<div class="icon-row__content gs_reveal gs_reveal_fromLeft">
+						<div class="icon-row__icon">
+							<IMG_LAZY Picture="@Objref.GetItemValue(i, 10, 3)" Preloader="/public/images/preloader.svg" />
+							<div class="preloader"></div>
+						</div>
+						@if (!string.IsNullOrEmpty(@Objref.GetItemValue(i, 10, 1)))
+						{
+							<p class="icon-row__title">@Objref.GetItemValueWithHTML(i, 10, 1)</p>
+						}
+						@if (!string.IsNullOrEmpty(@Objref.GetItemValue(i, 10, 2)))
+						{
+							<div class="icon-row__perex">@Objref.GetItemValueWithHTML(i, 10, 2)</div>
+						}
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</section>
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.DocHtml? Objref { get; set; }
+}

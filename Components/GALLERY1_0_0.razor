@@ -1,31 +1,26 @@
-﻿
-
-@if (Objref.CountRow == 1)
-{
-	<GALLERY1_0_1 Objref="Objref" />
-} else
-{
-	<section class="section nav-tiles-pharmacies-wrapper">
-		<div class="container">
-			<div class="nav-tiles-pharmacies">
-				<div class="row g-sm">
-					@foreach (var item in Objref.GetGalleryRows(100))
+﻿<section class="section img__cols" id="@("C" + Objref.Id)">
+	<div class="container">
+		<div class="row">
+			@foreach (var item in Objref.GetGalleryRows(100))
+			{
+				<div class="col-4 sm:col-6 xs:col-12">
+					@if (!string.IsNullOrEmpty(@item.Picture1))
 					{
-						<div class="col-3 md:col-6">
-							<a href="@Objref.GetRowURL(item)">
-								<h1>@item.Title</h1>
-								<h2>@item.Subtitle</h2>
-								<h3>@item.Description</h3>
-								<h4>@((MarkupString)item.Note)</h4>
-							</a>
+						<div class="img cover">
+							<IMG_LAZY Picture="@item.Picture1" Preloader="/public/images/preloader.svg" ALT="@item.Title" />
+							<div class="preloader"></div>
 						</div>
 					}
+					@if (!string.IsNullOrEmpty(@item.Description))
+					{
+						<p class="img__perex">@item.Description</p>
+					}
 				</div>
-			</div>
+			}
 		</div>
-	</section>
+	</div>
+</section>
 
-}
 
 @code {
 	[Parameter]

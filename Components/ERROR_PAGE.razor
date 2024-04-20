@@ -6,10 +6,7 @@
 	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="HandheldFriendly" content="true" />
-	@if (!string.IsNullOrEmpty(Objref.PluginParameters.currentPage.SEOKeywords)) {<meta name="keywords" content="@Objref.PluginParameters.currentPage.SEOKeywords" />}
-	@if (!string.IsNullOrEmpty(Objref.PluginParameters.currentPage.SEODescription)) {<meta name="description" content="@Objref.PluginParameters.currentPage.SEODescription" />}
-	@if (Objref.PluginParameters.currentPage.TemplateNum != PageContent.ErrorTemplateNum) {<title>@Objref.PluginParameters.currentPage.SEOTitle</title>}
-	else {<title>404</title>}
+	<title>404</title>
 	<meta name="robots" content="index,follow" />                                                                                                                                                                                                        
 	<meta name="googlebot" content="index,follow,snippet,archive" />
 
@@ -25,7 +22,23 @@
 	<PAGE_HEADER Objref="Objref" />
 
 	<div class="content-wrapper" id="content">
-		@Objref.RenderPageContent(1)
+		<section id="err404" class="section error-message">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-8 md:col-12">
+						<h1 class="error-message__title gs_reveal gs_reveal_fromLeft">404</h1>
+						<p class="error-message__text gs_reveal gs_reveal_fromLeft">@Objref.GetLocalizedText("Studio9-404NotFound")</p>
+						<p class="error-message__text gs_reveal gs_reveal_fromLeft">@Objref.GetLocalizedText("Studio9-404WrongLink")</p>
+
+						<p class="error-message__spacer"></p>
+
+						<p class="error-message__text --light gs_reveal gs_reveal_fromLeft">@((MarkupString)string.Format(Objref.GetLocalizedText("Studio9-404GoToHomep"), "<a href=\"" + Objref.PluginParameters.tenantAccess.Tenant.GetWebBaseUrl() + "\">", "</a>"))</p>
+						<p class="error-message__text --light gs_reveal gs_reveal_fromLeft">@((MarkupString)string.Format(Objref.GetLocalizedText("Studio9-404Services"), "<a href=\"" + @DynamicComponents.GetServicesUrl(Objref.PluginParameters.tenantAccess.Language, Objref.PluginParameters.tenantAccess.Tenant) + "\">", "</a>"))</p>
+						<p class="error-message__text --light gs_reveal gs_reveal_fromLeft">@((MarkupString)string.Format(Objref.GetLocalizedText("Studio9-404Realizations"), "<a href=\"" + @DynamicComponents.GetRealizationsUrl(Objref.PluginParameters.tenantAccess.Language, Objref.PluginParameters.tenantAccess.Tenant) + "\">", "</a>"))</p>
+					</div>
+				</div>
+			</div>
+		</section>
 	</div>
 
 	<PAGE_FOOTER Objref="Objref" />

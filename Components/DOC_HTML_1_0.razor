@@ -1,0 +1,19 @@
+﻿<section class="section text-wrapper --right" id="@("C" + Objref.Id)">
+	<div class="container">
+		@if (!string.IsNullOrEmpty(@Objref.GetItemValue(1)))
+		{
+			<p class="text-wrapper__subtitle gs_reveal gs_reveal_fromRight">@Objref.GetItemValueWithHTML(1)</p>
+		}
+		@if (!string.IsNullOrEmpty(Objref.GetItemValue(3)) && !string.IsNullOrEmpty(Objref.GetItemValue(8)))
+		{
+			<a href="@Objref.GetItemValue(3)" class="button button--outline gs_reveal gs_reveal_fromRight">
+				@Objref.GetItemValueWithHTML(8)
+			</a>
+		}
+	</div>
+</section>
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.DocHtml? Objref { get; set; }
+}

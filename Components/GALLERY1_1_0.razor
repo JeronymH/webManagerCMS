@@ -1,0 +1,19 @@
+﻿<section class="section cards" id="@("C" + Objref.Id)">
+	<div class="container">
+		@if (!string.IsNullOrEmpty(Objref.Title))
+		{
+			<p class="section__title gs_reveal gs_reveal_fromLeft">@Objref.Title</p>
+		}
+		<div class="row">
+			@foreach (var item in Objref.GetGalleryRows(100))
+			{
+				<GALLERY_TILE Picture="@item.Picture1" Url="@Objref.GetRowURL(item)" Title="@item.Title" Perex="@item.Perex" />
+			}
+		</div>
+	</div>
+</section>
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.Gallery? Objref { get; set; }
+}

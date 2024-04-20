@@ -1,0 +1,71 @@
+﻿<section class="section headercrumbs gs_reveal gs_reveal_fromLeft">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="breadcrumbs text-sm">
+					<a href="@(Objref.PluginParameters.dataStorageAccess.TenantAccess.Tenant.GetRootAlias() + @RootPage.PageAlias + "/")">@RootPage.Name.ToLower()</a>
+					<h1><a href="#">@DetailItem.Title</a></h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@if (!string.IsNullOrEmpty(@DetailItem.Picture1))
+{
+	<div class="img__full gs_reveal">
+		<IMG_SRC Picture="@DetailItem.Picture1" Alt="@DetailItem.Title" />
+	</div>
+}
+
+<section class="section text-wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-6 sm:col-12">
+				@if (!string.IsNullOrEmpty(@DetailItem.Description))
+				{
+					<p class="text-wrapper__perex gs_reveal gs_reveal_fromLeft">@DetailItem.Description</p>
+				}
+			</div>
+			<div class="col-6 sm:col-12 text-wrapper__table">
+				@if (!string.IsNullOrEmpty(@DetailItem.Note))
+				{
+					<div class="gs_reveal gs_reveal_fromRight">
+						@((MarkupString)DetailItem.Note)
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section">
+	<div class="container">
+		<div class="gallery">
+			@foreach (var item in Objref.GetGalleryRowPictures(100, false))
+			{
+				<a href="@IMG_CORE.GetPictureUrl(@item.Picture1)" data-fancybox="gallery" class="gallery__item">
+					<div class="gallery__image cover">
+						<IMG_LAZY Picture="@item.Picture1" Preloader="/public/images/preloader.svg" Alt="@item.Title" />
+						<div class="preloader"></div>
+					</div>
+				</a>
+			}
+		</div>
+	</div>
+</section>
+
+@code {
+	[Parameter]
+	public webManagerCMS.Core.PageContentNS.Plugins.Gallery? Objref { get; set; }
+
+	public GalleryRow DetailItem { get; set; }
+
+	public Page RootPage { get; set; }
+
+	protected override void OnInitialized()
+	{
+		DetailItem = Objref.GetDetailRow();
+		RootPage = @Objref.PluginParameters.pageTree.GetPageByAlias(@Objref.PluginParameters.urlAliases.Aliases[0].AliasName);
+	}
+}

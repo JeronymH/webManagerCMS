@@ -1,9 +1,19 @@
-﻿<h3>DOC_H1TEXT_0_0</h3>
+﻿<section class="section text-page" id="@("C" + Objref.Id)">
+	@if (!string.IsNullOrEmpty(Objref.Note_Title))
+	{
+		<h1 class="text-page__title">@Objref.Note_Title</h1>
+	}
+	@if (!string.IsNullOrEmpty(Objref.Note_Perex))
+	{
+		<p class="text-page__subtitle">@Objref.Note_Perex</p>
+	}
+	@if (!string.IsNullOrEmpty(Objref.Note))
+	{
+		<p class="text-page__subtitle">@((MarkupString)Objref.Note)</p>
+	}
+</section>
 
-<h1>@Objref.Note_Title</h1>
-<h1>@Objref.Note_Subtitle</h1>
-<h1>@Objref.Note_Perex</h1>
-<h1>@((MarkupString)Objref.Note)</h1>
+
 @code {
 	[Parameter]
 	public webManagerCMS.Core.PageContentNS.Plugins.DocH1Text? Objref { get; set; }

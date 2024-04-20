@@ -1,0 +1,11 @@
+﻿<IMG_CORE Picture="@Picture" Preloader="@Preloader" Alt="@Alt" LazyLoad="@Lazyload"/>
+@code {
+	[Parameter]
+	public string? Picture { get; set; }
+	[Parameter]
+	public string? Preloader { get; set; }
+	[Parameter]
+	public string? Alt { get; set; }
+
+	private static bool Lazyload = true;
+}
