@@ -43,6 +43,8 @@ namespace webManagerCMS.Core.Components
             }
 			else
 			{
+				page = DataStorageAccess?.WebContentDataStorage.GetHomePage();
+				pluginParameters.currentPage = page;
 				PageContent = new PageContent(PageContent.ErrorTemplateNum, PageContent.ErrorTemplateState, pluginParameters, DataStorageAccess);
 			}
 		}
@@ -63,6 +65,9 @@ namespace webManagerCMS.Core.Components
 
 			if (page == null && alias == "")
 				page = DataStorageAccess?.WebContentDataStorage.GetHomePage();
+
+			if (page == null)
+				page = new Page();
 
 			return page;
 		}

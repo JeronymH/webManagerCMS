@@ -17,7 +17,7 @@ namespace webManagerCMS.Core.PageContentNS
             TemplateState = templateState;
             PluginParameters = pluginParameters;
 
-            IdPage = PluginParameters.currentPage.Id;
+            IdPage = PluginParameters.currentPage == null ? 0 : PluginParameters.currentPage.Id;
 
 			_dataStorageAccess = dataStorageAccess;
 		}
