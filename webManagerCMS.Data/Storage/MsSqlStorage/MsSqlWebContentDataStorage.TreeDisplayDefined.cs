@@ -24,10 +24,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 				cmd.AddParam("@IDLanguage", this.IdLanguage);
 				cmd.AddParam("@OnlyCount", Convert.ToInt32(0));
 				cmd.AddParam("@IsNote", -1);
-				if (this.IsAdminView)
-					cmd.AddParam("@IsAdmin", 1);
-				else
-					cmd.AddParam("@IsAdmin", null);
+				cmd.AddParam("@IsAdmin", this.IsAdminView ? 1 : null);
 				if (this.FilterPluginsByTimeIntervals)
 					cmd.AddParam("@FilterByIntervals", 1);
 
@@ -70,10 +67,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 				cmd.AddParam("@TemplateNum", templateNumber);
 				cmd.AddParam("@IDWWW", this.IdWWW);
 				cmd.AddParam("@IDLanguage", this.IdLanguage);
-				if (this.IsAdminView)
-					cmd.AddParam("@IsAdmin", 1);
-				else
-					cmd.AddParam("@IsAdmin", null);
+				cmd.AddParam("@IsAdmin", this.IsAdminView ? 1 : null);
 
 
 				using (var dataReader = this.ExecReader(cmd))

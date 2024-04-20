@@ -17,10 +17,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 			{
 				cmd.AddParam("@IDWWWPage", idPage);
 				cmd.AddParam("@IDWWWPageContent", idPlugin);
-				if (this.IsAdminView)
-					cmd.AddParam("@IsAdmin", 1);
-				else
-					cmd.AddParam("@IsAdmin", null);
+				cmd.AddParam("@IsAdmin", this.IsAdminView ? 1 : null);
 
 				using (var dataReader = this.ExecReader(cmd))
 				{
