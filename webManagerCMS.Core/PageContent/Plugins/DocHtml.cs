@@ -101,17 +101,17 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 			return GetItemValue(number);
 		}
 
-		public MarkupString GetItemValueWithHMTL(string name)
+		public MarkupString GetItemValueWithHTML(string name)
 		{
 			return (MarkupString)GetItemValue(name);
 		}
 
-		public MarkupString GetItemValueWithHMTL(int number)
+		public MarkupString GetItemValueWithHTML(int number)
 		{
 			return (MarkupString)GetItemValue(number);
 		}
 
-		public MarkupString GetItemValueWithHMTL(int i, int nameMultiplier, int nameAddNumber)
+		public MarkupString GetItemValueWithHTML(int i, int nameMultiplier, int nameAddNumber)
 		{
 			return (MarkupString)GetItemValue(i, nameMultiplier, nameAddNumber);
 		}
