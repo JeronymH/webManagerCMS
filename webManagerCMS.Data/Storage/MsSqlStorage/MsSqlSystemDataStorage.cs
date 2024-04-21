@@ -38,7 +38,8 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                             IdLanguage = (int)dataReader["IDLanguage"],
                             MutationAlias = (string)dataReader["AliasInURL"],
                             PageSuffix = (string)dataReader["PageSuffix"],
-							PageAliasMaxHistoryPeriod = (int)dataReader["PageAliasMaxHistoryPeriod"]
+							PageAliasMaxHistoryPeriod = (int)dataReader["PageAliasMaxHistoryPeriod"],
+							FilterPluginsByTimeIntervals = (bool)dataReader["FilterPluginsByTimeIntervals"]
 						};
                     }
                     return null;

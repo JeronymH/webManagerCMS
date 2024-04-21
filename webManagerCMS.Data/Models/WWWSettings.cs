@@ -16,5 +16,6 @@ namespace webManagerCMS.Data.Models
 		/// Represents allowed history for page alias in months
 		/// </summary>
 		public int PageAliasMaxHistoryPeriod { get; set; }
+		public bool FilterPluginsByTimeIntervals { get; set; }
 	}
 }

@@ -25,6 +25,6 @@ namespace webManagerCMS.Core.Tenants
 
 		public bool IsAdminView => this.Tenant?.IsAdminView ?? throw new NullReferenceException("Unable to retrieve adminView settings from current HttpContext.");
 
-		public bool FilterPluginsByTimeIntervals => this.Tenant?.FilterPluginsByTimeIntervals ?? throw new NullReferenceException("Unable to retrieve adminView settings from current HttpContext.");
+		public bool FilterPluginsByTimeIntervals => this.Tenant?.WWWSettings.FilterPluginsByTimeIntervals ?? throw new NullReferenceException("Unable to retrieve adminView settings from current HttpContext.");
     }
 }
