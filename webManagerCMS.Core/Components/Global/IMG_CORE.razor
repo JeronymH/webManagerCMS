@@ -26,13 +26,21 @@
 		if (string.IsNullOrEmpty(picture))
 			return null;
 
-		if (picture.Substring(0, 9) == "/r/files/")
-			picture = picture.Substring(9);
+		if (picture.Length > 9)
+		{
+			if (picture.Substring(0, 9) == "/r/files/")
+				picture = picture.Substring(9);
+		}
 
 		if (string.IsNullOrEmpty(picture))
 			return null;
 
-		picture = "http://prev6.s9.lan/r/files/" + picture;
+		//TODO: implement resizer
+		//picture = "http://prev6.s9.lan/r/files/" + picture;
+
+		//rewrtite url to /public/images/ and remove ID from url
+		picture = "/public/images/" + picture.Substring(6);
+
 		return picture;
 	}
 }

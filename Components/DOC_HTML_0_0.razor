@@ -1,10 +1,5 @@
 ﻿<section class="section intro @Objref.GetItemValue(7)" id="@("C" + Objref.Id)">
 	<div class="row">
-		<div class="ball-wrapper ball --top --center">
-			<div class="dottarget1">
-				<div class="dotted"></div>
-			</div>
-		</div>
 		<div class="col-6 md:col-12">
 			@if (!string.IsNullOrEmpty(Objref.GetFileItemValue("txt4")))
 			{
@@ -37,7 +32,12 @@
 				{
 					<div class="intro__content__bottom__perex gs_reveal gs_reveal_fromRight">@Objref.GetItemValueWithHTML(6)</div>
 				}
-
+				@if (!string.IsNullOrEmpty(Objref.GetFileItemValue("txt5")))
+				{
+					<div class="intro__content__img cover gs_reveal gs_reveal_fromRight">
+						<IMG_SRC Picture="@Objref.GetFileItemValue("txt5")" Alt="@Objref.GetItemValue(2)" />
+					</div>
+				}
 			</div>
 		</div>
 	</div>

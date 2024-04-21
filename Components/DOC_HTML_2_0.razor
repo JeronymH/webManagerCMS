@@ -11,7 +11,7 @@
 					<figure class="f-carousel__slide">
 						@if (!string.IsNullOrEmpty(Objref.GetItemValue(i, 10, 3)))
 						{
-							<IMG_LAZY Picture="@Objref.GetItemValue(i, 10, 3)" Preloader="/public/images/preloader.svg" />
+							<IMG_LAZY Picture="@Objref.GetFileItemValue(i, 10, 3)" Preloader="/public/images/preloader.svg" />
 							<div class="preloader"></div>
 						}
 						<figcaption>

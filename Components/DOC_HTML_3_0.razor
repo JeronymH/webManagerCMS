@@ -6,7 +6,7 @@
 				<div class="col-4 md:col-6 xs:col-12">
 					<div class="icon-row__content gs_reveal gs_reveal_fromLeft">
 						<div class="icon-row__icon">
-							<IMG_LAZY Picture="@Objref.GetItemValue(i, 10, 3)" Preloader="/public/images/preloader.svg" />
+							<IMG_LAZY Picture="@Objref.GetFileItemValue(i, 10, 3)" Preloader="/public/images/preloader.svg" />
 							<div class="preloader"></div>
 						</div>
 						@if (!string.IsNullOrEmpty(@Objref.GetItemValue(i, 10, 1)))
