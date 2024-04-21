@@ -132,6 +132,17 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 			return Files[idFile].Alias;
 		}
 
+		public string GetFileItemValue(int i, int nameMultiplier, int nameAddNumber)
+		{
+			int number = ((i * nameMultiplier) + nameAddNumber);
+			return GetFileItemValue(number);
+		}
+
+		public string GetFileItemValue(int number)
+		{
+			return GetFileItemValue("txt" + number);
+		}
+
 		public int GetDynamicIntervalCount(string namePrefix, int nameMultiplier, int nameAddNumber)
 		{
 			int count = 1;

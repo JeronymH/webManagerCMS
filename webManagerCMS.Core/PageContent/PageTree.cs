@@ -116,7 +116,10 @@ namespace webManagerCMS.Core.PageContentNS
             if (idPage == 0)
                 return "";
 
-			return GetPageUrl(Pages[idPage]);
+            if (!Pages.TryGetValue(idPage, out var page))
+                return "";
+
+			return GetPageUrl(page);
 		}
 	}
 }
