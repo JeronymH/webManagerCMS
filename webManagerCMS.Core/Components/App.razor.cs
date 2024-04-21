@@ -115,11 +115,11 @@ namespace webManagerCMS.Core.Components
 			if (page == null)
 				page = new Page();
 
-			if (!string.IsNullOrEmpty(page.PageAlias) && page.Id > 0) return;
-
-			var historyPage = DataStorageAccess?.WebContentDataStorage.GetPageFromHistory(alias);
-
-			page = pageTree.GetPageByAlias(historyPage.PageAlias);
+			if (string.IsNullOrEmpty(page.PageAlias) || page.Id <= 0)
+			{
+				var historyPage = DataStorageAccess?.WebContentDataStorage.GetPageFromHistory(alias);
+				page = pageTree.GetPageByAlias(historyPage.PageAlias);
+			}
 
 			if (string.IsNullOrEmpty(page.PageAlias) || page.Id <= 0) return;
 
@@ -149,7 +149,7 @@ namespace webManagerCMS.Core.Components
 				if (alias != null)
 				{
 					idAliasTableName = alias.IdTableName?? 0;
-					url += "/" + urlAliases.QueryAliases[i];
+					url += "/" + alias.Name;
 					aliasLoaded = true;
 				}
 				if (!aliasLoaded)
@@ -158,7 +158,7 @@ namespace webManagerCMS.Core.Components
 					if (alias != null)
 					{
 						idAliasTableName = alias.IdTableName ?? 0;
-						url += "/" + urlAliases.QueryAliases[i];
+						url += "/" + alias.Name;
 						aliasLoaded = true;
 					}
 				}

@@ -191,7 +191,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 
         public Alias? GetAliasFromHistory(int step, int idPage, int idAliasTableName, string alias)
         {
-            using (var cmd = this.NewCommandProc("dbo.pubSelectAlias"))
+            using (var cmd = this.NewCommandProc("dbo.pubSelectAliasHistory"))
             {
                 if (idAliasTableName > 0)
                 {
@@ -217,7 +217,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
 					{
 						historyIdAlias = (int)dataReader["IDWWWRootAlias"];
 						historyAlias = dataReader["AliasValue"] as string;
-						idTableName = (int)dataReader["NextGlobal_IDAliasTableName"];
+						idTableName = (dataReader["NextGlobal_IDAliasTableName"] as int?) ?? 0;
 
 						if (!string.IsNullOrEmpty(historyAlias) && historyIdAlias > 0)
 						{
