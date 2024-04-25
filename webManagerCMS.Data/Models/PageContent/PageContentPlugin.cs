@@ -27,16 +27,11 @@ namespace webManagerCMS.Data.Models.PageContent
         public string? Title {  get; set; }
         public string? Subtitle { get; set; }
         public string? Description { get; set; }
-        public string? Note { get; set; }
         public string? Picture { get; set; }
-
-        public string? Note_Title { get; set; }
-        public string? Note_Subtitle { get; set; }
-        public string? Note_Perex { get; set; }
 
         protected Dictionary<string, string>? CustomProperties { get; set; }
 
-        public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, string? title, string? subtitle, string? description, string? note, string? note_Title, string? note_Subtitle, string? note_Perex, string? pictureFileAlias, IPageContentPluginParameters pluginParameters)
+        public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, string? title, string? subtitle, string? description, string? pictureFileAlias, IPageContentPluginParameters pluginParameters)
 		{
 			TemplateName = templateName;
 			TemplateNum = templateNum;
@@ -46,10 +41,6 @@ namespace webManagerCMS.Data.Models.PageContent
 			Title = title;
 			Subtitle = subtitle;
 			Description = description;
-			Note = note;
-			Note_Title = note_Title;
-			Note_Subtitle = note_Subtitle;
-			Note_Perex = note_Perex;
 			Picture = pictureFileAlias;
             PluginParameters = pluginParameters;
 		}
@@ -69,10 +60,6 @@ namespace webManagerCMS.Data.Models.PageContent
             plugin.Title,
             plugin.Subtitle,
             plugin.Description,
-            plugin.Note,
-            plugin.Note_Title,
-            plugin.Note_Subtitle,
-            plugin.Note_Perex,
             plugin.Picture,
             plugin.PluginParameters
         ){ }

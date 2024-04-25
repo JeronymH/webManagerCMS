@@ -1,15 +1,15 @@
 ﻿<section class="section text-page" id="@("C" + Objref.Id)">
-	@if (!string.IsNullOrEmpty(Objref.Note_Title))
+	@if (!string.IsNullOrEmpty(Objref.PluginContent.Title))
 	{
-		<h1 class="text-page__title">@Objref.Note_Title</h1>
+		<h1 class="text-page__title">@Objref.PluginContent.Title</h1>
 	}
-	@if (!string.IsNullOrEmpty(Objref.Note_Perex))
+	@if (!string.IsNullOrEmpty(Objref.PluginContent.Perex))
 	{
-		<p class="text-page__subtitle">@Objref.Note_Perex</p>
+		<p class="text-page__subtitle">@Objref.PluginContent.Perex</p>
 	}
-	@if (!string.IsNullOrEmpty(Objref.Note))
+	@if (!string.IsNullOrEmpty(Objref.PluginContent.Note))
 	{
-		<p class="text-page__subtitle">@((MarkupString)Objref.Note)</p>
+		<p class="text-page__subtitle">@((MarkupString)Objref.PluginContent.Note)</p>
 	}
 </section>
 

@@ -20,6 +20,8 @@ namespace webManagerCMS.Data.Storage
 		IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId, PageContentPluginType? onlyOnePlugin);
 		IEnumerable<PageContentPlugin> LoadPageContent(int pageId, int contentColumnId);
 
+		DocH1TextData? GetDocH1TextData(int idPage, int idPlugin);
+
 		DocHtmlData? GetDocHtmlData(int idPage, int idPlugin);
 		IEnumerable<FileAlias> LoadFileAliases(HashSet<int> fileIds);
 
