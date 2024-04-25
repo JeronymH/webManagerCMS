@@ -1,7 +1,7 @@
-﻿@foreach (var item in @Objref.PluginParameters.pageTree.GetPagesForMenu())
+﻿@foreach (var item in @Objref.PluginParameters.PageTree.GetPagesForMenu())
 {
 	<li>
-		<a href="@Objref.PluginParameters.pageTree.GetPageUrl(item)" class="@GetActiveClass(item.Id)">
+		<a href="@Objref.PluginParameters.PageTree.GetPageUrl(item)" class="@GetActiveClass(item.Id)">
 			@item.Name.ToLower()
 		</a
 	</li>
@@ -13,7 +13,7 @@
 
 	public string? GetActiveClass(int id)
 	{
-		if (id == Objref.PluginParameters.currentPage.Id) return "is-active";
+		if (id == Objref.PluginParameters.CurrentPage.Id) return "is-active";
 		return null;
 	}
 }

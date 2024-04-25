@@ -6,9 +6,9 @@
 	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><![endif]-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="HandheldFriendly" content="true" />
-	@if (!string.IsNullOrEmpty(Objref.PluginParameters.currentPage.SEOKeywords)) {<meta name="keywords" content="@Objref.PluginParameters.currentPage.SEOKeywords" />}
-	@if (!string.IsNullOrEmpty(Objref.PluginParameters.currentPage.SEODescription)) {<meta name="description" content="@Objref.PluginParameters.currentPage.SEODescription" />}
-	@if (Objref.PluginParameters.currentPage.TemplateNum != PageContent.ErrorTemplateNum) {<title>@Objref.PluginParameters.currentPage.SEOTitle</title>}
+	@if (!string.IsNullOrEmpty(Objref.PluginParameters.CurrentPage.SEOKeywords)) {<meta name="keywords" content="@Objref.PluginParameters.CurrentPage.SEOKeywords" />}
+	@if (!string.IsNullOrEmpty(Objref.PluginParameters.CurrentPage.SEODescription)) {<meta name="description" content="@Objref.PluginParameters.CurrentPage.SEODescription" />}
+	@if (Objref.PluginParameters.CurrentPage.TemplateNum != PageContent.ErrorTemplateNum) {<title>@Objref.PluginParameters.CurrentPage.SEOTitle</title>}
 	else {<title>404</title>}
 	<meta name="robots" content="index,follow" />                                                                                                                                                                                                        
 	<meta name="googlebot" content="index,follow,snippet,archive" />

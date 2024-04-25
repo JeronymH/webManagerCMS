@@ -25,18 +25,21 @@ namespace webManagerCMS.Core.Services.ComponentService
 
 			foreach (KeyValuePair<string, Tenant> tenant in _applicationSettings.Tenants)
             {
-				path = tenant.Value.GetComponentsPath();
-				assembly = LoadAssembly(path);
+				if (!DynamicComponents.ContainsKey(tenant.Value.IdWWW))
+				{
+					path = tenant.Value.GetComponentsPath();
+					assembly = LoadAssembly(path);
 
-				component = GetTypeWithInterface(assembly);
-				DynamicComponents.Add(tenant.Value.IdWWW, component);
+					component = GetTypeWithInterface(assembly);
+					DynamicComponents.Add(tenant.Value.IdWWW, component);
+				}
 			}
 		}
 
 		public IDynamicComponents GetTenantDynamicComponent(int IdWWW)
 		{
 			return DynamicComponents[IdWWW].Select(x => (IDynamicComponents)Activator.CreateInstance(x))
-				.SingleOrDefault(x => x.Components.Count > 0); ;
+				.SingleOrDefault(x => x.Components.Count > 0);
 		}
 
 		private Assembly LoadAssembly(string path)
@@ -48,7 +51,7 @@ namespace webManagerCMS.Core.Services.ComponentService
 		private IEnumerable<Type> GetTypeWithInterface(Assembly asm)
 		{
 			var it = typeof(IDynamicComponents);
-			return GetLoadableTypes(asm).Where(it.IsAssignableFrom).ToList();
+			return GetLoadableTypes(asm).Where(it.IsAssignableFrom);
 		}
 
 		private IEnumerable<Type> GetLoadableTypes(Assembly assembly)

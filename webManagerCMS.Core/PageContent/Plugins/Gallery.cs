@@ -1,4 +1,5 @@
-﻿using webManagerCMS.Data.Models.PageContent;
+﻿using webManagerCMS.Data.Interfaces;
+using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 
 namespace webManagerCMS.Core.PageContentNS.Plugins
@@ -9,15 +10,15 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 
 		public Gallery(PageContentPlugin plugin) : base(plugin)
 		{
-			_dataStorageAccess = plugin.PluginParameters.dataStorageAccess;
+			_dataStorageAccess = plugin.PluginParameters.DataStorageAccess;
 
 			TemplateName = PageContentPluginType.GALLERY1;
 			InitCountRow();
 		}
 
-		public Gallery(int templateNum, int templateState, PageContentPluginParameters? pluginParameters, int id, int idPage, int idDetail) : base(PageContentPluginType.GALLERY1, templateNum, templateState, id, idPage, pluginParameters)
+		public Gallery(int templateNum, int templateState, IPageContentPluginParameters? pluginParameters, int id, int idPage, int idDetail) : base(PageContentPluginType.GALLERY1, templateNum, templateState, id, idPage, pluginParameters)
 		{
-			_dataStorageAccess = pluginParameters.dataStorageAccess;
+			_dataStorageAccess = pluginParameters.DataStorageAccess;
 
 			IdDetail = idDetail;
 		}
@@ -77,7 +78,7 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 
 		public string GetRowURL(GalleryRow row)
 		{
-			return PluginParameters.pageTree.GetPageUrl(PluginParameters.currentPage)
+			return PluginParameters.PageTree.GetPageUrl(PluginParameters.CurrentPage)
 					+ row.AliasValue + _dataStorageAccess.TenantAccess.Tenant.WWWSettings.PageSuffix;
 		}
 	}

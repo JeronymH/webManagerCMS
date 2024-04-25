@@ -18,7 +18,7 @@ namespace webManagerCMS.Data.Models.PageContent
         public int TemplateNum { get; set; }
         public int TemplateState { get; set; }
 
-        public PageContentPluginParameters? PluginParameters { get; set; }
+        public IPageContentPluginParameters? PluginParameters { get; set; }
 
         public int Id { get; set; }
         public int IdPage { get; set; }
@@ -36,7 +36,7 @@ namespace webManagerCMS.Data.Models.PageContent
 
         protected Dictionary<string, string>? CustomProperties { get; set; }
 
-        public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, string? title, string? subtitle, string? description, string? note, string? note_Title, string? note_Subtitle, string? note_Perex, string? pictureFileAlias, PageContentPluginParameters pluginParameters)
+        public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, string? title, string? subtitle, string? description, string? note, string? note_Title, string? note_Subtitle, string? note_Perex, string? pictureFileAlias, IPageContentPluginParameters pluginParameters)
 		{
 			TemplateName = templateName;
 			TemplateNum = templateNum;
@@ -77,7 +77,7 @@ namespace webManagerCMS.Data.Models.PageContent
             plugin.PluginParameters
         ){ }
 
-		public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, PageContentPluginParameters pluginParameters)
+		public PageContentPlugin(PageContentPluginType templateName, int templateNum, int templateState, int id, int idPage, IPageContentPluginParameters pluginParameters)
 		{
 			TemplateName = templateName;
 			TemplateNum = templateNum;
@@ -92,7 +92,7 @@ namespace webManagerCMS.Data.Models.PageContent
 		public string? GetLocalizedText(int idLanguage, string textCode)
         {
             var identifier = LocalizedText.GetIdentifier(idLanguage, textCode);
-			PluginParameters.dataStorageAccess.SystemDataStorage.GetLocalizedTexts(PluginParameters.tenantAccess.IdWWW, true).TryGetValue(identifier, out var localizedText);
+			PluginParameters.DataStorageAccess.SystemDataStorage.GetLocalizedTexts(PluginParameters.TenantAccess.IdWWW, true).TryGetValue(identifier, out var localizedText);
 
             if (localizedText != null)
                 return localizedText.Text;
@@ -107,7 +107,7 @@ namespace webManagerCMS.Data.Models.PageContent
 
         public string GetLocalizedText(string textCode)
         {
-            return GetLocalizedText(PluginParameters.tenantAccess.IdLanguage, textCode);
+            return GetLocalizedText(PluginParameters.TenantAccess.IdLanguage, textCode);
         }
 
         private static string GetTemplate(PageContentPluginType templateName, int templateState, int templateNum)

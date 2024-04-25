@@ -17,6 +17,8 @@ using System.Text.RegularExpressions;
 using S9.Core.Middlewares;
 using webManagerCMS.Core.Extentions;
 using webManagerCMS.Core.Configuration;
+using webManagerCMS.Data.Interfaces;
+using webManagerCMS.Data.Models.PageContent;
 
 var builder = WebApplication.CreateBuilder(args);
 //TODO: complete logging
@@ -44,6 +46,10 @@ builder.Services.AddSingleton<IComponentService>(_ =>
 	service.LoadDynamicComponents();
 	return service;
 });
+
+//Page content plugin parameters
+builder.Services.AddScoped<IPageContentPluginParameters, PageContentPluginParameters>();
+
 
 // Cache storage access
 var cacheStorageConfigSettings = new CacheStorageConfigSettings();

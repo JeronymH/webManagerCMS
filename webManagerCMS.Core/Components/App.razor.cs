@@ -20,6 +20,9 @@ namespace webManagerCMS.Core.Components
 		ITenantAccess? TenantAccess { get; set; }
 
 		[Inject]
+		IPageContentPluginParameters? PluginParameters { get; set; }
+
+		[Inject]
 		IHttpContextAccessor? httpContextAccessor { get; set; }
 
 		public PageContent? PageContent { get; set; }
@@ -30,26 +33,19 @@ namespace webManagerCMS.Core.Components
 			var urlAliases = GetUrlAliases(page);
 			var pageTree = new PageTree(DataStorageAccess.WebContentDataStorage.LoadPagesDictionary(true), TenantAccess);
 
-			var pluginParameters = new PageContentPluginParameters() {
-				dataStorageAccess = DataStorageAccess,
-				tenantAccess = TenantAccess,
-                contextAccessor = httpContextAccessor,
-				currentPage = page,
-				pageTree = pageTree,
-                urlAliases = urlAliases
-			};
+			PluginParameters.Init(DataStorageAccess, TenantAccess, httpContextAccessor, page, pageTree, urlAliases);
 
 			if (urlAliases.CheckAllData())
 			{
-				PageContent = new PageContent(page.TemplateNum, urlAliases.ActState, pluginParameters, DataStorageAccess);
+				PageContent = new PageContent(page.TemplateNum, urlAliases.ActState, PluginParameters, DataStorageAccess);
             }
 			else
 			{
 				CheckAliasHistory(urlAliases.QueryAliases[0]);
 
 				page = DataStorageAccess?.WebContentDataStorage.GetHomePage();
-				pluginParameters.currentPage = page;
-				PageContent = new PageContent(PageContent.ErrorTemplateNum, PageContent.ErrorTemplateState, pluginParameters, DataStorageAccess);
+				PluginParameters.CurrentPage = page;
+				PageContent = new PageContent(PageContent.ErrorTemplateNum, PageContent.ErrorTemplateState, PluginParameters, DataStorageAccess);
 			}
 		}
 

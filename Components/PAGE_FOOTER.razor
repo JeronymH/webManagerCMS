@@ -7,10 +7,10 @@
 
 			<div class="col-6 sm:col-9">
 				<div class="footer__social social-media">
-					@foreach (var item in @Objref.PluginParameters.pageTree.GetPagesForMenu("socialni-site"))
+					@foreach (var item in @Objref.PluginParameters.PageTree.GetPagesForMenu("socialni-site"))
 					{
 						<div class="social-media__item">
-							<a href="@Objref.PluginParameters.pageTree.GetPageUrl(item)" target="_blank">
+							<a href="@Objref.PluginParameters.PageTree.GetPageUrl(item)" target="_blank">
 								<div class="social-media__icon">
 									<svg><use xlink:href="@DynamicComponents.GetSocialMediaIcon(@item.Name)"></use></svg>
 								</div>
@@ -37,8 +37,8 @@
 			<div class="col-6 xs:col-12">
 				<ul class="footer__copyright" style="text-align: right;">
 					<li>
-						<a href="@DynamicComponents.GetTermsConditionsURL(Objref.PluginParameters.tenantAccess.Language, Objref.PluginParameters.tenantAccess.Tenant)">@Objref.GetLocalizedText("Studio9-FooterTerms&Conditions")</a>
-						/ <a href="@DynamicComponents.GetCookiePolicyURL(Objref.PluginParameters.tenantAccess.Language, Objref.PluginParameters.tenantAccess.Tenant)">@Objref.GetLocalizedText("Studio9-FooterCookiePolicy")</a>
+						<a href="@DynamicComponents.GetTermsConditionsURL(Objref.PluginParameters.TenantAccess.Language, Objref.PluginParameters.TenantAccess.Tenant)">@Objref.GetLocalizedText("Studio9-FooterTerms&Conditions")</a>
+						/ <a href="@DynamicComponents.GetCookiePolicyURL(Objref.PluginParameters.TenantAccess.Language, Objref.PluginParameters.TenantAccess.Tenant)">@Objref.GetLocalizedText("Studio9-FooterCookiePolicy")</a>
 					</li>
 				</ul>
 			</div>

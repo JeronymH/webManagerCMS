@@ -1,4 +1,5 @@
-﻿using webManagerCMS.Data.Models.PageContent;
+﻿using webManagerCMS.Data.Interfaces;
+using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 
 namespace webManagerCMS.Core.PageContentNS.Plugins
@@ -7,10 +8,10 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 	{
 		private IDataStorageAccess _dataStorageAccess;
 
-		public HeaderPicture(int idPage, int placeNumber, PageContentPluginParameters pluginParameters) : base(0)
+		public HeaderPicture(int idPage, int placeNumber, IPageContentPluginParameters pluginParameters) : base(0)
 		{
 			PluginParameters = pluginParameters;
-			_dataStorageAccess = PluginParameters.dataStorageAccess;
+			_dataStorageAccess = PluginParameters.DataStorageAccess;
 
 			TemplateName = PageContentPluginType.PICHEADER;
 			TemplateNum = placeNumber;
@@ -20,7 +21,7 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 			PlaceNumber = placeNumber;
 		}
 
-		public HeaderPicture(int idPage, int placeNumber, HeaderPictureSelectType selectType, int pictureNumber, bool randomOrder, PageContentPluginParameters pluginParameters) : this(idPage, placeNumber, pluginParameters)
+		public HeaderPicture(int idPage, int placeNumber, HeaderPictureSelectType selectType, int pictureNumber, bool randomOrder, IPageContentPluginParameters pluginParameters) : this(idPage, placeNumber, pluginParameters)
 		{
 			InitData(PlaceNumber, selectType, pictureNumber, randomOrder);
 		}

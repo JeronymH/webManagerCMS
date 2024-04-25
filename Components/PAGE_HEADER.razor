@@ -2,7 +2,7 @@
 
 <header class="header" id="header">
 	<div class="container">
-		<a class="header__logo" href="@Objref.PluginParameters.tenantAccess.Tenant.GetRootAlias()" style="align-items: flex-start;">
+		<a class="header__logo" href="@Objref.PluginParameters.TenantAccess.Tenant.GetRootAlias()" style="align-items: flex-start;">
 			<span class="icon icon--logo" style="width: 64px; height: 100px;"><svg><use xlink:href="/public/images/sprite.svg#logo"></use></svg></span>
 		</a>
 		<div class="header__actions">
@@ -10,11 +10,11 @@
 				<ul>
 					@Objref.RenderTree(0, 0)
 					<li>
-						@if (Objref.PluginParameters.tenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.Czech)
+						@if (Objref.PluginParameters.TenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.Czech)
 						{
 							<a href="/en/" class="lang-switch">english</a>
 						}
-						@if (Objref.PluginParameters.tenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.English)
+						@if (Objref.PluginParameters.TenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.English)
 						{
 							<a href="/" class="lang-switch">česky</a>
 						}
@@ -28,7 +28,7 @@
 <header class="header-mobile" id="header-mobile">
 	<div class="container">
 		<div class="header-mobile__inner">
-			<a class="header-mobile__logo" href="@Objref.PluginParameters.tenantAccess.Tenant.GetWebBaseUrl()">
+			<a class="header-mobile__logo" href="@Objref.PluginParameters.TenantAccess.Tenant.GetWebBaseUrl()">
 				<span class="icon icon--logo" style="width: 54px; height: 54px;"><svg><use xlink:href="/public/images/sprite.svg#logo"></use></svg></span>
 			</a>
 			<div class="header-mobile__actions"></div>
@@ -43,11 +43,11 @@
 		<ul class="menu-mobile__secondary">
 			@Objref.RenderTree(0, 0)
 			<li>
-				@if (Objref.PluginParameters.tenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.Czech)
+				@if (Objref.PluginParameters.TenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.Czech)
 				{
 					<a href="/en/" class="lang-switch">english</a>
 				}
-				@if (Objref.PluginParameters.tenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.English)
+				@if (Objref.PluginParameters.TenantAccess.Language == webManagerCMS.Data.Models.SystemLanguageType.English)
 				{
 					<a href="/" class="lang-switch">česky</a>
 				}

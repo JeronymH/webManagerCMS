@@ -10,14 +10,14 @@ namespace webManagerCMS.Core.PageContentNS
     {
         private IDataStorageAccess _dataStorageAccess;
         
-        public PageContent(int templateNum, int templateState, PageContentPluginParameters pluginParameters, IDataStorageAccess dataStorageAccess) : base(0) {
+        public PageContent(int templateNum, int templateState, IPageContentPluginParameters pluginParameters, IDataStorageAccess dataStorageAccess) : base(0) {
             TemplateName = PageContentPluginType.PAGE_CORE;
 
             TemplateNum = templateNum;
             TemplateState = templateState;
             PluginParameters = pluginParameters;
 
-            IdPage = PluginParameters.currentPage == null ? 0 : PluginParameters.currentPage.Id;
+            IdPage = PluginParameters.CurrentPage == null ? 0 : PluginParameters.CurrentPage.Id;
 
 			_dataStorageAccess = dataStorageAccess;
 		}
@@ -49,7 +49,7 @@ namespace webManagerCMS.Core.PageContentNS
 
 		public RenderFragment RenderPageContent(int contentColumnId) => builder =>
 		{
-			var content = _dataStorageAccess.WebContentDataStorage.LoadPageContent(PluginParameters.currentPage.IdDB, contentColumnId, null);
+			var content = _dataStorageAccess.WebContentDataStorage.LoadPageContent(PluginParameters.CurrentPage.IdDB, contentColumnId, null);
             PageContentPlugin? pageContentPlugin;
 			Type? component;
 
@@ -75,14 +75,14 @@ namespace webManagerCMS.Core.PageContentNS
             PageContentPlugin? pageContentPlugin = null;
             Type? component;
 
-            var idTableName = PluginParameters.urlAliases.Aliases[1].IdTableName ?? 0;
+            var idTableName = PluginParameters.UrlAliases.Aliases[1].IdTableName ?? 0;
             var idPage = IdPage;
-            var idPageContent = PluginParameters.urlAliases.Aliases[1].IdPageContent ?? 0;
-            var idDetail = PluginParameters.urlAliases.Aliases[1].Id ?? 0;
-            var templateNum = PluginParameters.urlAliases.Aliases[1].IdTemplateNum ?? 0;
+            var idPageContent = PluginParameters.UrlAliases.Aliases[1].IdPageContent ?? 0;
+            var idDetail = PluginParameters.UrlAliases.Aliases[1].Id ?? 0;
+            var templateNum = PluginParameters.UrlAliases.Aliases[1].IdTemplateNum ?? 0;
 
 
-			switch (PluginParameters.urlAliases.Aliases[1].IdTableName)
+			switch (PluginParameters.UrlAliases.Aliases[1].IdTableName)
             {
                 case 8:
                     pageContentPlugin = new Gallery(templateNum, TemplateState, PluginParameters, idPageContent, idPage, idDetail);

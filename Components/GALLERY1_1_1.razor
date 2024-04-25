@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="breadcrumbs text-sm">
-					<a href="@(Objref.PluginParameters.dataStorageAccess.TenantAccess.Tenant.GetRootAlias() + @RootPage.PageAlias + "/")">@RootPage.Name.ToLower()</a>
+					<a href="@(Objref.PluginParameters.DataStorageAccess.TenantAccess.Tenant.GetRootAlias() + @RootPage.PageAlias + "/")">@RootPage.Name.ToLower()</a>
 					<h1><a href="#">@DetailItem.Title</a></h1>
 				</div>
 			</div>
@@ -66,6 +66,6 @@
 	protected override void OnInitialized()
 	{
 		DetailItem = Objref.GetDetailRow();
-		RootPage = @Objref.PluginParameters.pageTree.GetPageByAlias(@Objref.PluginParameters.urlAliases.Aliases[0].AliasName);
+		RootPage = @Objref.PluginParameters.PageTree.GetPageByAlias(@Objref.PluginParameters.UrlAliases.Aliases[0].AliasName);
 	}
 }

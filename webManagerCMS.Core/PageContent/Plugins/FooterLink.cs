@@ -1,4 +1,5 @@
-﻿using webManagerCMS.Data.Models.PageContent;
+﻿using webManagerCMS.Data.Interfaces;
+using webManagerCMS.Data.Models.PageContent;
 using webManagerCMS.Data.Storage;
 
 namespace webManagerCMS.Core.PageContentNS.Plugins
@@ -7,10 +8,10 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 	{
 		private IDataStorageAccess _dataStorageAccess;
 
-		public FooterLink(int idPage, int templateNumber, int templateState, int placeNumber, PageContentPluginParameters pluginParameters) : base(0)
+		public FooterLink(int idPage, int templateNumber, int templateState, int placeNumber, IPageContentPluginParameters pluginParameters) : base(0)
 		{
 			PluginParameters = pluginParameters;
-			_dataStorageAccess = PluginParameters.dataStorageAccess;
+			_dataStorageAccess = PluginParameters.DataStorageAccess;
 
 			TemplateName = PageContentPluginType.LINKFOOTER;
 			TemplateNum = templateNumber;
@@ -24,7 +25,7 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 
 		public IEnumerable<FooterLinkItem> GetFooterLinkItems(FooterLinkSelectType selectType, bool randomOrder)
 		{
-			return _dataStorageAccess.WebContentDataStorage.GetFooterLinkItems(IdPage, PlaceNumber, selectType, randomOrder, PluginParameters.pageTree);
+			return _dataStorageAccess.WebContentDataStorage.GetFooterLinkItems(IdPage, PlaceNumber, selectType, randomOrder, PluginParameters.PageTree);
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 
 		public DocHtml(PageContentPlugin plugin) : base(plugin)
 		{
-			_dataStorageAccess = plugin.PluginParameters.dataStorageAccess;
+			_dataStorageAccess = plugin.PluginParameters.DataStorageAccess;
 
 			TemplateName = PageContentPluginType.DOC_HTML;
 			InitData();
@@ -60,7 +60,7 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 					var isPage = itemElement.Attributes["isPage"]?.Value == "true";
 
 					if (isPage && int.TryParse(value, out int idPage))
-						values.Add(id, PluginParameters.pageTree.GetPageUrl(idPage));
+						values.Add(id, PluginParameters.PageTree.GetPageUrl(idPage));
 					else
 					{
 						values.Add(id, value);

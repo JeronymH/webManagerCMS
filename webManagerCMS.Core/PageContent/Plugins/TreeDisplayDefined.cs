@@ -9,7 +9,7 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 
 		public TreeDisplayDefined(PageContentPlugin plugin) : base(plugin)
 		{
-			_dataStorageAccess = plugin.PluginParameters.dataStorageAccess;
+			_dataStorageAccess = plugin.PluginParameters.DataStorageAccess;
 
 			TemplateName = PageContentPluginType.TREEDISPLAYDEFINED1;
 		}
@@ -19,14 +19,14 @@ namespace webManagerCMS.Core.PageContentNS.Plugins
 		public IEnumerable<TreeDisplayDefinedRow> GetTreeDisplayDefinedRows(int pageSize)
 		{
 			if (Rows == null)
-				Rows = _dataStorageAccess.WebContentDataStorage.GetTreeDisplayDefinedRows(IdPage, Id, pageSize, TemplateNum, PluginParameters.pageTree);
+				Rows = _dataStorageAccess.WebContentDataStorage.GetTreeDisplayDefinedRows(IdPage, Id, pageSize, TemplateNum, PluginParameters.PageTree);
 
 			return Rows;
 		}
 
 		public IEnumerable<TreeDisplayDefinedRowItem> GetTreeDisplayDefinedRowItems(int idRow)
 		{
-			return _dataStorageAccess.WebContentDataStorage.GetTreeDisplayDefinedRowItems(idRow, TemplateNum, PluginParameters.pageTree);
+			return _dataStorageAccess.WebContentDataStorage.GetTreeDisplayDefinedRowItems(idRow, TemplateNum, PluginParameters.PageTree);
 		}
 	}
 }

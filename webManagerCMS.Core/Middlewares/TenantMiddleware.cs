@@ -42,7 +42,7 @@ namespace webManagerCMS.Core.Middlewares
 			if (mutationAlias == null)
                 mutationAlias = "";
 
-            //when developing, domain is always with different port, so this removes the port for tenantKey
+            //when developing, look for localhost tenant
             if (applicationSettings.WebDevelopmentBehaviorEnabled)
                 tenantKey = "localhost";
 
@@ -59,7 +59,13 @@ namespace webManagerCMS.Core.Middlewares
 				tenant.DomainName = domain;
 				tenant.DynamicComponents = this._componentService.GetTenantDynamicComponent(tenant.IdWWW);
 				tenant.Components = (Dictionary<string, Type>)tenant.DynamicComponents.Components;
-                tenant.WWWSettings = this._dataStorageAccess.SystemDataStorage.GetWWWSettings(tenant.IdWWW, tenant.GetWebBaseUrl(), mutationAlias, applicationSettings.WebDevelopmentBehaviorEnabled);
+                tenant.WWWSettings = this._dataStorageAccess.SystemDataStorage.GetWWWSettings
+																				(	
+																					tenant.IdWWW,
+																					tenant.GetWebBaseUrl(),
+																					mutationAlias,
+																					applicationSettings.WebDevelopmentBehaviorEnabled
+																				);
             }
 
 			context.Items[ConstHttpContextItemKeyTenant] = tenant;

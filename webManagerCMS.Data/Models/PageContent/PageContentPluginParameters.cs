@@ -10,13 +10,28 @@ using webManagerCMS.Data.Interfaces;
 
 namespace webManagerCMS.Data.Models.PageContent
 {
-    public class PageContentPluginParameters
+    public class PageContentPluginParameters : IPageContentPluginParameters
     {
-        public IDataStorageAccess dataStorageAccess { get; set; }
-        public ITenantAccess tenantAccess { get; set; }
-        public IHttpContextAccessor contextAccessor { get; set; }
-        public Page currentPage { get; set; }
-        public IPageTree pageTree { get; set; }
-        public IUrlAliases urlAliases { get; set; }
-    }
+        public IDataStorageAccess DataStorageAccess { get; set; }
+        public ITenantAccess TenantAccess { get; set; }
+        public IHttpContextAccessor ContextAccessor { get; set; }
+        public Page CurrentPage { get; set; }
+        public IPageTree PageTree { get; set; }
+        public IUrlAliases UrlAliases { get; set; }
+
+        public void Init(IDataStorageAccess dataStorageAccess,
+                    ITenantAccess tenantAccess,
+                    IHttpContextAccessor contextAccessor,
+                    Page currentPage,
+                    IPageTree pageTree,
+                    IUrlAliases urlAliases)
+        {
+			DataStorageAccess = dataStorageAccess;
+            TenantAccess = tenantAccess;
+            ContextAccessor = contextAccessor;
+            CurrentPage = currentPage;
+            PageTree = pageTree;
+            UrlAliases = urlAliases;
+		}
+	}
 }
