@@ -1,27 +1,6 @@
-﻿<!DOCTYPE html>
-<html lang="cs">
+﻿
 
-<head>
-	<meta charset="utf-8" />
-	<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><![endif]-->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="HandheldFriendly" content="true" />
-	@if (!string.IsNullOrEmpty(Objref.PluginParameters.CurrentPage.SEOKeywords)) {<meta name="keywords" content="@Objref.PluginParameters.CurrentPage.SEOKeywords" />}
-	@if (!string.IsNullOrEmpty(Objref.PluginParameters.CurrentPage.SEODescription)) {<meta name="description" content="@Objref.PluginParameters.CurrentPage.SEODescription" />}
-	@if (Objref.PluginParameters.CurrentPage.TemplateNum != PageContent.ErrorTemplateNum) {<title>@Objref.PluginParameters.CurrentPage.SEOTitle</title>}
-	else {<title>404</title>}
-	<meta name="robots" content="index,follow" />                                                                                                                                                                                                        
-	<meta name="googlebot" content="index,follow,snippet,archive" />
-
-	<link href="/public/css/style.css?ver=1.0.0" rel="stylesheet" type="text/css" />
-	<style>.gs_reveal{opacity:0;visibility:hidden;will-change:transform,opacity}</style>
-	<noscript><style>.gs_reveal{opacity:1;visibility:visible}</style></noscript>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-</head>
-
-<body>
+<MAIN_LAYOUT>
 	<PAGE_HEADER Objref="Objref" />
 
 	<div class="content-wrapper" id="content">
@@ -29,16 +8,7 @@
 	</div>
 
 	<PAGE_FOOTER Objref="Objref" />
-
-	<script src="/public/js/libs/jquery.min.js?ver=3.5.1" type="text/javascript"></script>
-	<script src="/public/js/scripts.js?ver=1.0.0" type="text/javascript"></script>
-	<script src="/public/js/custom.js?ver=1.0.0" type="text/javascript"></script>
-	<script src="/public/js/fanapp.js?ver=1.0.0" type="text/javascript"></script>
-</body>
-
-</html>
-
-
+</MAIN_LAYOUT>
 
 @code {
 	[Parameter]
