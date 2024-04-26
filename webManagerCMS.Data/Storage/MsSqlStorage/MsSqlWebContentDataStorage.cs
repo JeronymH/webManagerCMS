@@ -150,7 +150,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
             {
                 if (idAliasTableName > 0)
                 {
-                    cmd.AddParam("@IDWWWPage", 0);
+                    cmd.AddParam("@IDWWWPage", Convert.ToInt32(0));
                     cmd.AddParam("@IDAliasTableName", step);
                 } 
                 else
@@ -195,8 +195,7 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
             {
                 if (idAliasTableName > 0)
                 {
-                    cmd.AddParam("@IDWWWPage", 0);
-                    cmd.AddParam("@IDAliasTableName", step);
+                    cmd.AddParam("@IDWWWPage", Convert.ToInt32(0));
                 } 
                 else
                 {
@@ -208,28 +207,32 @@ namespace webManagerCMS.Data.Storage.MsSqlStorage
                 cmd.AddParam("@Step", step);
 				cmd.AddParam("@maxHistoryPeriod", this.Tenant.WWWSettings.PageAliasMaxHistoryPeriod);
 
-				using (var dataReader = this.ExecReader(cmd))
-				{
-					int historyIdAlias = 0, idTableName = 0;
-					string historyAlias = "";
+                using (var dataReader = this.ExecReader(cmd))
+                {
+                    int historyIdAlias = 0, idTableName = 0;
+                    string historyAlias = "";
 
-					while (dataReader.Read())
-					{
-						historyIdAlias = (int)dataReader["IDWWWRootAlias"];
-						historyAlias = dataReader["AliasValue"] as string;
-						idTableName = (dataReader["NextGlobal_IDAliasTableName"] as int?) ?? 0;
+                    while (dataReader.Read())
+                    {
+                        historyIdAlias = (int)dataReader["IDWWWRootAlias"];
+                        historyAlias = dataReader["AliasValue"] as string;
+                        idTableName = (dataReader["NextGlobal_IDAliasTableName"] as int?) ?? 0;
 
-						if (!string.IsNullOrEmpty(historyAlias) && historyIdAlias > 0)
-						{
-							break;
-						}
-					}
-					return new Alias()
-					{
-						Id = historyIdAlias,
-						Name = historyAlias,
-						IdTableName = idTableName
-					}; ;
+                        if (!string.IsNullOrEmpty(historyAlias) && historyIdAlias > 0)
+                        {
+                            break;
+                        }
+                    }
+                    if (historyIdAlias > 0)
+                    { 
+                        return new Alias()
+                        {
+                            Id = historyIdAlias,
+                            Name = historyAlias,
+                            IdTableName = idTableName
+                        };
+                    }
+                    return null;
 				}
 			}
         }

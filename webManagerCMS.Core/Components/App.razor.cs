@@ -138,6 +138,8 @@ namespace webManagerCMS.Core.Components
 
 			for (int i = step; i < urlAliases.QueryAliases.Length; i++)
 			{
+				aliasLoaded = false;
+
 				if (string.IsNullOrEmpty(urlAliases.QueryAliases[i]))
 					break;
 
@@ -145,7 +147,7 @@ namespace webManagerCMS.Core.Components
 				if (alias != null)
 				{
 					idAliasTableName = alias.IdTableName?? 0;
-					url += "/" + alias.Name;
+					url += "/" + urlAliases.QueryAliases[i];
 					aliasLoaded = true;
 				}
 				if (!aliasLoaded)
