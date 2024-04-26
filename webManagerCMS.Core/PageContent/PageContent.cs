@@ -20,6 +20,8 @@ namespace webManagerCMS.Core.PageContentNS
             IdPage = PluginParameters.CurrentPage == null ? 0 : PluginParameters.CurrentPage.Id;
 
 			_dataStorageAccess = dataStorageAccess;
+
+            if (TemplateNum == ErrorTemplateNum) pluginParameters.ContextAccessor.HttpContext.Response.StatusCode = 404;
 		}
 
         public static int ErrorTemplateNum = -1;
@@ -28,7 +30,7 @@ namespace webManagerCMS.Core.PageContentNS
         public RenderFragment RenderPlugin(PageContentPlugin plugin) => builder =>
         {
             var component = _dataStorageAccess.TenantAccess.Tenant.GetComponent(plugin.Template);
-			if (component != null) //if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
+			if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
             {
 			    builder.OpenComponent(0, component);
                 builder.AddAttribute(1, "Objref", plugin);
@@ -50,27 +52,27 @@ namespace webManagerCMS.Core.PageContentNS
 		public RenderFragment RenderPageContent(int contentColumnId) => builder =>
 		{
 			var content = _dataStorageAccess.WebContentDataStorage.LoadPageContent(PluginParameters.CurrentPage.IdDB, contentColumnId, null);
-            PageContentPlugin? pageContentPlugin;
+			PageContentPlugin? pageContentPlugin;
 			Type? component;
 
 			foreach (var plugin in content)
-            {
-                plugin.PluginParameters = PluginParameters; 
+			{
+				plugin.PluginParameters = PluginParameters;
 				pageContentPlugin = GetPageContentPlugin(plugin);
-                if (pageContentPlugin != null)
-                {
-				    component = _dataStorageAccess.TenantAccess.Tenant.GetComponent(pageContentPlugin.Template);
-                    if (component != null) //if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
-                    {
-                        builder.OpenComponent(0, component);
-                        builder.AddAttribute(1, "Objref", pageContentPlugin);
-                        builder.CloseComponent();
-                    }
-                }
-            }
+				if (pageContentPlugin != null)
+				{
+					component = _dataStorageAccess.TenantAccess.Tenant.GetComponent(pageContentPlugin.Template);
+					if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
+					{
+						builder.OpenComponent(0, component);
+						builder.AddAttribute(1, "Objref", pageContentPlugin);
+						builder.CloseComponent();
+					}
+				}
+			}
 		};
 
-        public RenderFragment RenderPageDetailContent() => builder =>
+		public RenderFragment RenderPageDetailContent() => builder =>
         {
             PageContentPlugin? pageContentPlugin = null;
             Type? component;
@@ -92,7 +94,7 @@ namespace webManagerCMS.Core.PageContentNS
 			if (pageContentPlugin != null)
 			{
 				component = _dataStorageAccess.TenantAccess.Tenant.GetComponent(pageContentPlugin.Template);
-				if (component != null) //if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
+				if (component != null || _dataStorageAccess.TenantAccess.Tenant.WebDevelopmentBehaviorEnabled)
 				{
 					builder.OpenComponent(0, component);
 					builder.AddAttribute(1, "Objref", pageContentPlugin);
