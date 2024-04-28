@@ -1,13 +1,27 @@
-﻿<section class="section cards" id="@("C" + Objref.Id)">
+﻿<script>console.log("before document ready: " + document.querySelectorAll(".cards .col-4").length)</script>
+
+
+
+<section class="section cards" id="@("C" + Objref.Id)">
 	<div class="container">
 		@if (!string.IsNullOrEmpty(Objref.Title))
 		{
 			<p class="section__title gs_reveal gs_reveal_fromLeft">@Objref.Title</p>
 		}
 		<div class="row">
-			@foreach (var item in Objref.GetGalleryRows(100))
+			@if (gallery == null)
 			{
-				<GALLERY_TILE Picture="@item.Picture1" Url="@Objref.GetRowURL(item)" Title="@item.Title" Perex="@item.Perex" />
+				<div class="col-12">
+					<p><em>Loading...</em></p>
+				</div>
+			}
+			else
+			{
+				@foreach (var item in gallery)
+				{
+					<GALLERY_TILE	Picture="@item.Picture1" Url="@Objref.GetRowURL(item)"
+									Title="@item.Title" Perex="@item.Perex" />
+				}				
 			}
 		</div>
 	</div>
@@ -16,4 +30,11 @@
 @code {
 	[Parameter]
 	public webManagerCMS.Core.PageContentNS.Plugins.Gallery? Objref { get; set; }
+
+	public IEnumerable<GalleryRow>? gallery;
+
+	protected override async Task OnInitializedAsync()
+	{
+		gallery = Objref.GetGalleryRows(100000);
+	}
 }

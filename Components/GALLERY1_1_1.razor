@@ -63,7 +63,7 @@
 
 	public Page RootPage { get; set; }
 
-	protected override void OnInitialized()
+	protected override void OnParametersSet()
 	{
 		DetailItem = Objref.GetDetailRow();
 		RootPage = @Objref.PluginParameters.PageTree.GetPageByAlias(@Objref.PluginParameters.UrlAliases.Aliases[0].AliasName);

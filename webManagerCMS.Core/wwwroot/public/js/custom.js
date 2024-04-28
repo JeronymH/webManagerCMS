@@ -14,7 +14,10 @@ $(document).ready(function(){
 	rNum = $("#rNum").text().replace(/^\s+|\s+$/g, '');
 
 	init_gMap();
+	console.log("after document ready: " + $(".cards .col-4").length)
 });
+
+console.log("before document ready: " + $(".cards .col-4").length)
 
 function init_gMap() {
 	if ($(".gMap").length) {
