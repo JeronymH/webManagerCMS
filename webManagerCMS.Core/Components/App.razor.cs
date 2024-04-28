@@ -124,6 +124,7 @@ namespace webManagerCMS.Core.Components
 
 			if (string.IsNullOrEmpty(url)) return;
 
+			//TODO: end response immediately
 			httpContextAccessor.HttpContext.Response.Redirect(url);
 		}
 

@@ -21,10 +21,11 @@ namespace webManagerCMS.Core.PageContentNS
 
 			_dataStorageAccess = dataStorageAccess;
 
-            if (TemplateNum == ErrorTemplateNum) pluginParameters.ContextAccessor.HttpContext.Response.StatusCode = 404;
+			//TODO: after CheckAliasHistory function is completed, uncomment this row
+			//if (TemplateNum == ErrorTemplateNum) pluginParameters.ContextAccessor.HttpContext.Response.StatusCode = 404;
 		}
 
-        public static int ErrorTemplateNum = -1;
+		public static int ErrorTemplateNum = -1;
         public static int ErrorTemplateState = 0;
 
         public RenderFragment RenderPlugin(PageContentPlugin plugin) => builder =>
